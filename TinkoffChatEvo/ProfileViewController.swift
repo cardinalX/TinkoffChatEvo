@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ProfileViewController: UIViewController {
     
     // MARK: UI Outlets
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -43,7 +43,6 @@ class ViewController: UIViewController {
         🧠 Работать с новым технологиями
         👩‍🚀 Wubba Lubba Dub Dub!
         """
-        // Do any additional setup after loading the view.
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -54,13 +53,8 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print(editButton.frame)
-        //Геометрия (границы) в viewDidLoad еще не установлены, поэтому там нельзя (криво работает) обрабатывать значения геометрии
+        // Геометрия (границы) в viewDidLoad еще не установлены, поэтому там нельзя (криво работает) обрабатывать значения геометрии
         // Application moved from <Appearing> to <Appeared>
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-       // Application moved from <Autolayouted> to <Autolayouting>
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,18 +64,9 @@ class ViewController: UIViewController {
         avatarImageView.layer.cornerRadius = cameraButton.layer.cornerRadius
         editButton.layer.cornerRadius = 15
         // editButton.clipsToBounds = true
-        // попробовать IBDesignable/IBInspectable
+        
+        // try to replace with IBDesignable/IBInspectable
         // Application moved from <Autolayouting> to <Autolayouted>
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // Application moved from <Appeared> to <Disappearing>
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // Application moved from <Disappearing> to <Disappeared>
     }
     
     // MARK: IBAction

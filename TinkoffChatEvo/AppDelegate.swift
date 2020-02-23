@@ -9,18 +9,6 @@
 import UIKit
 import CoreData
 
-class Log {
-    static var isLogOn = true
-    
-    static func printMessage(message: String)
-    {
-        if isLogOn {
-            print(message)
-        }
-        else {return}
-    }
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

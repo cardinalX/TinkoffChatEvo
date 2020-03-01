@@ -16,6 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let mainViewController = ConversationsListViewController(nibName: "ConversationsListViewController", bundle: nil)
+        //let mainViewController = ConversationsListViewController(nibName: "ConversationsListViewController", bundle: nil)
+        let navigationViewController = UINavigationController(rootViewController: mainViewController)
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = navigationViewController
+        window?.makeKeyAndVisible()
+        
+        
         // Application moved from <NotRunning> to <Inactive>
         return true
     }

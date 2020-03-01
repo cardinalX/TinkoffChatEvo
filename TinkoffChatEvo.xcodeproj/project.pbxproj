@@ -14,6 +14,15 @@
 		5005654B23F722F40090B1E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5005654A23F722F40090B1E8 /* Assets.xcassets */; };
 		5005654E23F722F40090B1E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5005654C23F722F40090B1E8 /* LaunchScreen.storyboard */; };
 		5005655923F722F50090B1E8 /* TinkoffChatEvoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005655823F722F50090B1E8 /* TinkoffChatEvoTests.swift */; };
+		8961306C240BFCE300FF25B7 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8961306A240BFCE300FF25B7 /* ConversationViewController.swift */; };
+		8961306D240BFCE300FF25B7 /* ConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8961306B240BFCE300FF25B7 /* ConversationViewController.xib */; };
+		89613072240C0E7B00FF25B7 /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89613070240C0E7B00FF25B7 /* MessageViewCell.swift */; };
+		89613073240C0E7B00FF25B7 /* MessageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89613071240C0E7B00FF25B7 /* MessageViewCell.xib */; };
+		89626F1F2409BD6F00CEFF9F /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89626F1D2409BD6F00CEFF9F /* ConversationCell.swift */; };
+		89626F202409BD6F00CEFF9F /* ConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89626F1E2409BD6F00CEFF9F /* ConversationCell.xib */; };
+		8962F00324098D91008A4879 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962F00124098D91008A4879 /* ConversationsListViewController.swift */; };
+		8962F00424098D91008A4879 /* ConversationsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8962F00224098D91008A4879 /* ConversationsListViewController.xib */; };
+		F0386E252403163F00F8814C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0386E232403163F00F8814C /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +47,15 @@
 		5005655423F722F50090B1E8 /* TinkoffChatEvoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatEvoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5005655823F722F50090B1E8 /* TinkoffChatEvoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffChatEvoTests.swift; sourceTree = "<group>"; };
 		5005655A23F722F50090B1E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8961306A240BFCE300FF25B7 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		8961306B240BFCE300FF25B7 /* ConversationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationViewController.xib; sourceTree = "<group>"; };
+		89613070240C0E7B00FF25B7 /* MessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewCell.swift; sourceTree = "<group>"; };
+		89613071240C0E7B00FF25B7 /* MessageViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageViewCell.xib; sourceTree = "<group>"; };
+		89626F1D2409BD6F00CEFF9F /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
+		89626F1E2409BD6F00CEFF9F /* ConversationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationCell.xib; sourceTree = "<group>"; };
+		8962F00124098D91008A4879 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
+		8962F00224098D91008A4879 /* ConversationsListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsListViewController.xib; sourceTree = "<group>"; };
+		F0386E232403163F00F8814C /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,9 +97,12 @@
 		5005653D23F722F20090B1E8 /* TinkoffChatEvo */ = {
 			isa = PBXGroup;
 			children = (
+				89613069240BF46F00FF25B7 /* xib and storyboard */,
 				5005653E23F722F20090B1E8 /* AppDelegate.swift */,
 				5005654223F722F20090B1E8 /* ProfileViewController.swift */,
-				5005654423F722F20090B1E8 /* Main.storyboard */,
+				8961306E240C0C3100FF25B7 /* ListConversation */,
+				8961306F240C0C4900FF25B7 /* Conversation */,
+				F0386E232403163F00F8814C /* CameraViewController.swift */,
 				5005654A23F722F40090B1E8 /* Assets.xcassets */,
 				5005654C23F722F40090B1E8 /* LaunchScreen.storyboard */,
 				5005654F23F722F40090B1E8 /* Info.plist */,
@@ -97,6 +118,36 @@
 				5005655A23F722F50090B1E8 /* Info.plist */,
 			);
 			path = TinkoffChatEvoTests;
+			sourceTree = "<group>";
+		};
+		89613069240BF46F00FF25B7 /* xib and storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				5005654423F722F20090B1E8 /* Main.storyboard */,
+				8962F00224098D91008A4879 /* ConversationsListViewController.xib */,
+				89626F1E2409BD6F00CEFF9F /* ConversationCell.xib */,
+			);
+			path = "xib and storyboard";
+			sourceTree = "<group>";
+		};
+		8961306E240C0C3100FF25B7 /* ListConversation */ = {
+			isa = PBXGroup;
+			children = (
+				8962F00124098D91008A4879 /* ConversationsListViewController.swift */,
+				89626F1D2409BD6F00CEFF9F /* ConversationCell.swift */,
+			);
+			path = ListConversation;
+			sourceTree = "<group>";
+		};
+		8961306F240C0C4900FF25B7 /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				8961306A240BFCE300FF25B7 /* ConversationViewController.swift */,
+				8961306B240BFCE300FF25B7 /* ConversationViewController.xib */,
+				89613070240C0E7B00FF25B7 /* MessageViewCell.swift */,
+				89613071240C0E7B00FF25B7 /* MessageViewCell.xib */,
+			);
+			path = Conversation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,9 +231,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89613073240C0E7B00FF25B7 /* MessageViewCell.xib in Resources */,
 				5005654E23F722F40090B1E8 /* LaunchScreen.storyboard in Resources */,
+				8962F00424098D91008A4879 /* ConversationsListViewController.xib in Resources */,
 				5005654B23F722F40090B1E8 /* Assets.xcassets in Resources */,
+				8961306D240BFCE300FF25B7 /* ConversationViewController.xib in Resources */,
 				5005654623F722F20090B1E8 /* Main.storyboard in Resources */,
+				89626F202409BD6F00CEFF9F /* ConversationCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,7 +255,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89613072240C0E7B00FF25B7 /* MessageViewCell.swift in Sources */,
+				8961306C240BFCE300FF25B7 /* ConversationViewController.swift in Sources */,
 				5005654323F722F20090B1E8 /* ProfileViewController.swift in Sources */,
+				8962F00324098D91008A4879 /* ConversationsListViewController.swift in Sources */,
+				89626F1F2409BD6F00CEFF9F /* ConversationCell.swift in Sources */,
+				F0386E252403163F00F8814C /* CameraViewController.swift in Sources */,
 				5005653F23F722F20090B1E8 /* AppDelegate.swift in Sources */,
 				5005654923F722F20090B1E8 /* TinkoffChatEvo.xcdatamodeld in Sources */,
 			);

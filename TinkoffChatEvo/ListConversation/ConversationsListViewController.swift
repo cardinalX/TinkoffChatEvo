@@ -10,6 +10,9 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBAction func userProfileButton(_ sender: Any) {
+        performSegue(withIdentifier: "Main", sender: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

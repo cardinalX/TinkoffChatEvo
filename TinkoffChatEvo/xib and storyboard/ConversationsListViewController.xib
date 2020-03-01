@@ -20,18 +20,34 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0wA-g7-BY0">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="110" width="414" height="752"/>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uXB-JN-MKh">
+                    <rect key="frame" x="176" y="40" width="62" height="62"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="uXB-JN-MKh" secondAttribute="height" multiplier="1:1" id="6XH-7i-Brs"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="PlaceholderUser"/>
+                    <connections>
+                        <action selector="userProfileButton:" destination="-1" eventType="touchUpInside" id="8dl-Gs-Uyt"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="0wA-g7-BY0" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="M3F-2V-bCw"/>
+                <constraint firstItem="uXB-JN-MKh" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Ue0-fo-a8v"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="uXB-JN-MKh" secondAttribute="top" constant="4" id="Wb2-D3-olr"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uXB-JN-MKh" secondAttribute="trailing" constant="176" id="c3Y-oI-wDg"/>
                 <constraint firstItem="0wA-g7-BY0" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="cwC-ya-V7e"/>
                 <constraint firstItem="0wA-g7-BY0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kyx-D8-fp9"/>
-                <constraint firstItem="0wA-g7-BY0" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="wGx-9V-7Xx"/>
+                <constraint firstItem="0wA-g7-BY0" firstAttribute="top" secondItem="uXB-JN-MKh" secondAttribute="bottom" constant="8" id="zKY-0j-Ga9"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
         </view>
     </objects>
+    <resources>
+        <image name="PlaceholderUser" width="300" height="300"/>
+    </resources>
 </document>

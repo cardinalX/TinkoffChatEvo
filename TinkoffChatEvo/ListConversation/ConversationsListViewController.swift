@@ -223,22 +223,12 @@ extension ConversationsListViewController: UITableViewDataSource{
         return 0
     }
     
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let conversationViewController = ConversationViewController()
         
         if  let tableSection = TableSection(rawValue: indexPath.section){
-            conversationViewController.setTitleController(dialog: sortedData[tableSection]?[indexPath.row].name ?? "Название диалога")
+            conversationViewController.title = sortedData[tableSection]?[indexPath.row].name ?? "Название диалога"
         }
-        
-        //sortedData[tableSection]?[indexPath.row]
-        /*
-        let identifier = String(describing: ConversationCell.self)
-        let cell = tableView.cellForRow(at: indexPath) as? ConversationCell
-        //guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationCell
-        if  let tableSection = TableSection(rawValue: indexPath.section),
-            let dialog = sortedData[tableSection]?[indexPath.row] {
-            
-        }*/
         
         navigationController?.pushViewController(conversationViewController, animated: true)
     }

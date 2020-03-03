@@ -13,7 +13,6 @@ class ConversationViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.title = (@"Title")
         //view.backgroundColor = UIColor(named: "TinkoffColor")
         self.navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.barTintColor = UIColor(named: "TinkoffColor")
@@ -34,10 +33,6 @@ class ConversationViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-    
-    func setTitleController(dialog: String){
-        title = dialog
     }
 
     // MARK: - Table view data source

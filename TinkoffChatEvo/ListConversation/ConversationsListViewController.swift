@@ -10,8 +10,18 @@ import UIKit
 
 class ConversationsListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    
     @IBAction func userProfileButton(_ sender: Any) {
-        performSegue(withIdentifier: "Main", sender: nil)
+        //почему не работает?
+        // profileViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        
+        let storyBoard = UIStoryboard(name: "ProfileViewController", bundle: nil)
+        guard let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController
+            else { print("Error when unwrapping VC withIdentifier ProfileViewController"); return}
+        
+        profileViewController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+        self.present(profileViewController, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     override func viewDidLoad() {
@@ -21,19 +31,12 @@ class ConversationsListViewController: UIViewController {
         view.backgroundColor = UIColor(named: "TinkoffColor")
         self.navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.barTintColor = UIColor(named: "TinkoffColor")
-        //self.navigationController?.navigationBar.
         
         tableView.register(UINib(nibName: String(describing: ConversationCell.self), bundle: Bundle.main), forCellReuseIdentifier: String(describing: ConversationCell.self))
         tableView.dataSource = self
         tableView.delegate = self
         
         sortedData = sortData(filter: data)
-        /*print(sortedData[.history]?.count)
-        print(sortedData[.online]?.count)*/
-        
-        /*sortedData2 = sortData2()
-        print(type(of: sortedData2))
-        print(sortedData2[0])*/
     }
     
     /*

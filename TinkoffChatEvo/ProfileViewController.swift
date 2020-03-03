@@ -22,6 +22,10 @@ class ProfileViewController: UIViewController {
         print("editButton in", #function, editButton?.frame as Any) /// Фрейма пока нет, получим nil
     }
     
+    /*convenience init () {
+        self.init(nibName: "ProfileViewController", bundle: nil)
+    }*/
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -22,10 +22,6 @@ class ProfileViewController: UIViewController {
         print("editButton in", #function, editButton?.frame as Any) /// Фрейма пока нет, получим nil
     }
     
-    /*convenience init () {
-        self.init(nibName: "ProfileViewController", bundle: nil)
-    }*/
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,7 +63,6 @@ class ProfileViewController: UIViewController {
         cameraButton.layer.cornerRadius = cameraButton.frame.size.width / 2
         avatarImageView.layer.cornerRadius = cameraButton.layer.cornerRadius
         editButton.layer.cornerRadius = 15
-        // editButton.clipsToBounds = true
         
         // try to replace with IBDesignable/IBInspectable
         // Application moved from <Autolayouting> to <Autolayouted>
@@ -81,17 +76,9 @@ class ProfileViewController: UIViewController {
         let alert = UIAlertController(title: "Добавление фото профиля", message: "Выберете способ добавления", preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Установить из галлереи", style: UIAlertAction.Style.default) { (action: UIAlertAction) -> Void in
-            
         })
         
         alert.addAction(UIAlertAction(title: "Сделать фото", style: UIAlertAction.Style.default) { (action: UIAlertAction) -> Void in
-            
-            /*
-            let camera = CameraViewController()
-            self.setBackground(vc: camera)
-            let viewController = storyboard?.instantiateViewController(withIdentifier: "MainMenu") as! UIViewController
-            self.present(viewController, animated: true)
-             */
         })
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (sender: UIAlertAction) -> Void in
@@ -100,27 +87,5 @@ class ProfileViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private let backgroundViewContainer = UIView()
-    
-    public func setBackground(vc: UIViewController) {
-
-        // Setting background only first time
-        if backgroundViewContainer.subviews.count > 0 {
-            return
-        }
-
-        addChild(vc)
-        backgroundViewContainer.addSubview(vc.view)
-
-        vc.view.translatesAutoresizingMaskIntoConstraints = false
-        vc.view.topAnchor.constraint(equalTo: backgroundViewContainer.topAnchor).isActive = true
-        vc.view.bottomAnchor.constraint(equalTo: backgroundViewContainer.bottomAnchor).isActive = true
-        vc.view.leadingAnchor.constraint(equalTo: backgroundViewContainer.leadingAnchor).isActive = true
-        vc.view.trailingAnchor.constraint(equalTo: backgroundViewContainer.trailingAnchor).isActive = true
-
-        vc.didMove(toParent: self)
-
-    }
-        
 }
 

@@ -38,7 +38,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="1BX-SM-FEy" secondAttribute="trailing" constant="16" id="BNu-bj-yE9"/>
-                    <constraint firstItem="vp2-NV-1S2" firstAttribute="leading" secondItem="Dmz-78-tcv" secondAttribute="trailing" constant="20" id="P0A-Fs-HVm"/>
+                    <constraint firstItem="vp2-NV-1S2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Dmz-78-tcv" secondAttribute="trailing" constant="20" id="P0A-Fs-HVm"/>
                     <constraint firstItem="1BX-SM-FEy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="YAB-tM-QLY"/>
                     <constraint firstItem="vp2-NV-1S2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="ZbK-tl-gEA"/>
                     <constraint firstAttribute="trailing" secondItem="vp2-NV-1S2" secondAttribute="trailing" constant="16" id="eaH-xd-z6N"/>

@@ -12,9 +12,6 @@ class ConversationsListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func userProfileButton(_ sender: Any) {
-        //почему не работает?
-        // profileViewController = self.storyboard!.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        
         let storyBoard = UIStoryboard(name: "ProfileViewController", bundle: nil)
         guard let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController
             else { print("Error when unwrapping VC withIdentifier ProfileViewController"); return}
@@ -39,16 +36,20 @@ class ConversationsListViewController: UIViewController {
         sortedData = sortData(filter: data)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     // MARK: - DATA
+    
+    // Data variable to track our sorted data
+    enum TableSection: Int {
+        case online = 0, history, total
+    }
+    var sortedData = [TableSection: [ConversationCell.ConversationCellModel]]()
+    
+    func sortData(filter arrayData: [ConversationCell.ConversationCellModel]) -> [TableSection: [ConversationCell.ConversationCellModel]]{
+        sortedData[.history] = arrayData.filter({$0.isOnline == false})
+        sortedData[.online] = arrayData.filter({$0.isOnline == true})
+        return sortedData
+    }
+    
     var data =
         [ConversationCell.ConversationCellModel(name: "Олег Тиньков",
                                                 message: "Привет, вот какой-нибудь набросоук текст последнего сообщения в диалоге",
@@ -162,18 +163,6 @@ class ConversationsListViewController: UIViewController {
                                                 isOnline: false,
                                                 hasUnreadMessages: true),
     ]
-    
-    // Data variable to track our sorted data
-    enum TableSection: Int {
-        case online = 0, history, total
-    }
-    var sortedData = [TableSection: [ConversationCell.ConversationCellModel]]()
-    
-    func sortData(filter arrayData: [ConversationCell.ConversationCellModel]) -> [TableSection: [ConversationCell.ConversationCellModel]]{
-        sortedData[.history] = arrayData.filter({$0.isOnline == false})
-        sortedData[.online] = arrayData.filter({$0.isOnline == true})
-        return sortedData
-    }
 
 }
 
@@ -202,8 +191,6 @@ extension ConversationsListViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        /*if (section == 0) { return "Online" }
-        else { return "History" }*/
         switch TableSection(rawValue: section) {
         case .online:
             return "Online"

@@ -7,7 +7,6 @@ class Company{
     var developer1: Developer?
     var developer2: Developer?
     
-    //4.Создать функцию, которая возвращает компанию со всеми связями и данными
     init(ceo: CEOCompany?, manager: ProductManager?, developer1: Developer?, developer2: Developer, name: String){
         self.ceo = ceo
         self.manager = manager
@@ -32,27 +31,42 @@ class Employee{
 class CEOCompany: Employee {
     weak var manager: ProductManager?
     
-    //Действия CEO реализовать через замыкания, а не через функции:
-    var printManager: () -> Void { return
-        {
+    // решил оставить еще такой вариант, чтобы узнать, какой из вариантов более практичный, поскольку в чате ничего не уточнили
+    // мне printManager2 кажется менее гибким, но более предсказуемым
+    var printManager2: () -> Void { return{
             print("\(type(of: self.manager)) - \(self.manager?.name ?? "nil manager")\n")
         }
     }
     
-    var sayManagerPrintDevelopers: () -> Void {
-        return { self.manager?.printAllDevelopers() }
+    lazy var printManager = { [weak self] in
+        print("\(type(of: self?.manager)) - \(self?.manager?.name ?? "nil manager")\n")
     }
     
-    var sayManagerPrintAllCompany: () -> Void {
-        return { self.manager?.printAllEmployeesCompany() }
+    lazy var sayManagerPrintDevelopers = { [weak self] in
+        self?.manager?.printAllDevelopers()
+    }
+    
+    lazy var sayManagerPrintAllCompany = { [weak self] in
+        self?.manager?.printAllEmployeesCompany()
     }
     
     deinit {
         print("CEOCompany deinit")
     }
+    
+    // это можно не читать, дублирует функциональность замыкания выше, но сделал на случай, если имелось ввиду, что надо все делать из этого класса. Хотя мне кажется это как-то избыточно
+    var sayManagerPrintAllCompany3: () -> Void { return {
+            self.manager?.doSomething = {
+                print("\(type(of: self.manager?.ceo)) - \(self.manager?.ceo?.name ?? "nil ceo")")
+                print("\(type(of: self.manager)) - \(self.manager?.name ?? "nil manager")")
+                self.manager?.printAllDevelopers()
+            }
+            self.manager?.doSomething()
+        }
+    }
 }
 
-class ProductManager: Employee{
+class ProductManager: Employee {
     var ceo: CEOCompany?
     var developer1: Developer?
     var developer2: Developer?
@@ -89,13 +103,16 @@ class ProductManager: Employee{
         print("\(self.name), \(message). From: \(sender.name)")
     }
     
+    var doSomething: () -> Void = {}
+    var deviverSomething: (Developer, String) -> Void = {_,_ in }
+    
     deinit {
         print("ProductManager deinit")
     }
 }
 
 //Разработчики могут
-//• Общаться между собой и искать пути, как найти другого разработчика, чтобы иметь возможность с ним пообщаться, например: “Ты говнокодер”, “Я отправил тебе pull-request”.
+//• Общаться между собой и искать пути, как найти другого разработчика, чтобы иметь возможность с ним пообщаться, например: “Ты ”, “Я отправил тебе pull-request”.
 //• Спрашивать продукт-менеджера: “Продукт-менеджер, дай ТЗ”, “Продукт-менеджер, дай мне новую задачу"
 //• Общаться с CEO: “CEO, я хочу зарплату больше"
 
@@ -107,6 +124,7 @@ class Developer:Employee {
         self.manager = manager
     }
         
+    //тоже всё можно было реализовать на замыканиях, но в задании не было таких указаний, поэтому применял более читаемые функции
     func messageToCEO(message: String){
         self.manager?.messageToCEO(from: self, message: message)
     }
@@ -121,6 +139,27 @@ class Developer:Employee {
     
     deinit {
         print("Developer deinit")
+    }
+    
+    
+    
+    
+    // а это сделал, на случай, если все-таки нужно было все делать на замыканиях,
+    // дальше можно пропустить, если этого можно было и не делать
+    func sayToDeveloperViaDeliver(message: String){
+            self.manager?.deviverSomething = { (sender: Developer, message: String) in
+                if (sender === self.manager?.developer1) {
+                    print("\(self.manager?.developer2?.name ?? "nil developer2"), \(message)")
+                }
+                else {
+                    print("\(self.manager?.developer1?.name ?? "nil developer1"), \(message)")
+                }
+            }
+            self.manager?.deviverSomething(self, message)
+    }
+    
+    lazy var sayManagerToDeveloperClosure = { [weak self] (message: String) in
+        self!.manager?.messageToDeveloper(from: self!, message: message)
     }
 }
 
@@ -149,6 +188,11 @@ func example(){
     
     let piedCompany = Company(ceo: ceoHendricks, manager: managerJianYang, developer1: developerGilfoyle, developer2: developerDinesh, name: "Pied Paper")
     print("\n\(piedCompany.name)\n")
+    
+    // для достоверности, что такие реализации тоже работают
+    ceoHendricks.sayManagerPrintAllCompany3()
+    developerGilfoyle.sayManagerToDeveloperClosure("Пример через замыкания вызывающего функцию менеджера из разработчика")
+    developerDinesh.sayToDeveloperViaDeliver(message: "Пример через переопределение замыкания из разработчика")
 }
 
 example()

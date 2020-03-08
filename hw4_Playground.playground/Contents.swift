@@ -16,7 +16,7 @@ class Company{
     }
     
     deinit {
-        print("Company deinit")
+        print("Company \(self.name) deinit")
     }
 }
 
@@ -51,7 +51,7 @@ class CEOCompany: Employee {
     }
     
     deinit {
-        print("CEOCompany deinit")
+        print("CEOCompany \(self.name) deinit")
     }
     
     // это можно не читать, дублирует функциональность замыкания выше, но сделал на случай, если имелось ввиду, что надо все делать из этого класса. Хотя мне кажется это как-то избыточно
@@ -88,10 +88,10 @@ class ProductManager: Employee {
 
     func messageToDeveloper(from sender: Developer, message: String){
         if (sender === developer1) {
-            print("\(self.developer2?.name ?? "nil developer2"), \(message)")
+            print("\(self.developer2?.name ?? "nil developer2"), \(message). From: \(sender.name)")
         }
         else {
-            print("\(self.developer1?.name ?? "nil developer1"), \(message)")
+            print("\(self.developer1?.name ?? "nil developer1"), \(message). From: \(sender.name)")
         }
     }
     
@@ -107,7 +107,7 @@ class ProductManager: Employee {
     var deviverSomething: (Developer, String) -> Void = {_,_ in }
     
     deinit {
-        print("ProductManager deinit")
+        print("ProductManager \(self.name) deinit")
     }
 }
 
@@ -138,7 +138,7 @@ class Developer:Employee {
     }
     
     deinit {
-        print("Developer deinit")
+        print("Developer \(self.name) deinit")
     }
     
     
@@ -149,17 +149,17 @@ class Developer:Employee {
     func sayToDeveloperViaDeliver(message: String){
             self.manager?.deviverSomething = { (sender: Developer, message: String) in
                 if (sender === self.manager?.developer1) {
-                    print("\(self.manager?.developer2?.name ?? "nil developer2"), \(message)")
+                    print("\(self.manager?.developer2?.name ?? "nil developer2"), \(message). From: \(sender.name)")
                 }
                 else {
-                    print("\(self.manager?.developer1?.name ?? "nil developer1"), \(message)")
+                    print("\(self.manager?.developer1?.name ?? "nil developer1"), \(message). From: \(sender.name)")
                 }
             }
             self.manager?.deviverSomething(self, message)
     }
     
     lazy var sayManagerToDeveloperClosure = { [weak self] (message: String) in
-        self!.manager?.messageToDeveloper(from: self!, message: message)
+        self?.manager?.messageToDeveloper(from: self!, message: message)
     }
 }
 
@@ -179,8 +179,9 @@ func example(){
     ceoHendricks.sayManagerPrintDevelopers()
     ceoHendricks.sayManagerPrintAllCompany()
     
-    developerDinesh.messageToOtherDeveloper(message: "Я отправил тебе pull-request.")
-    developerGilfoyle.messageToOtherDeveloper(message: "Обязательно посмотрю когда закончу все ненужные дела \n")
+    developerDinesh.messageToOtherDeveloper(message: "Я отправил тебе pull-request")
+    developerGilfoyle.messageToOtherDeveloper(message: "Обязательно посмотрю когда закончу все ненужные дела")
+    print()
     developerDinesh.messageToCEO(message: "У Гилфойла зарплата больше, хочу такую же")
     developerGilfoyle.messageToCEO(message: "Сделай зарплату Динэшу меньше, я заплачу")
     developerDinesh.messageToManager(message: "Дай ТЗ")
@@ -193,6 +194,7 @@ func example(){
     ceoHendricks.sayManagerPrintAllCompany3()
     developerGilfoyle.sayManagerToDeveloperClosure("Пример через замыкания вызывающего функцию менеджера из разработчика")
     developerDinesh.sayToDeveloperViaDeliver(message: "Пример через переопределение замыкания из разработчика")
+    print()
 }
 
 example()

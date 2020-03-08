@@ -16,7 +16,6 @@ class ConversationsListViewController: UIViewController {
         guard let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController
             else { print("Error when unwrapping VC withIdentifier ProfileViewController"); return}
         
-        profileViewController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         self.present(profileViewController, animated: true, completion: nil)
         //self.navigationController?.pushViewController(profileViewController, animated: true)
     }
@@ -219,7 +218,7 @@ extension ConversationsListViewController: UITableViewDataSource{
         if  let tableSection = TableSection(rawValue: indexPath.section){
             conversationViewController.title = sortedData[tableSection]?[indexPath.row].name ?? "Название диалога"
         }
-        
+
         navigationController?.pushViewController(conversationViewController, animated: true)
     }
     

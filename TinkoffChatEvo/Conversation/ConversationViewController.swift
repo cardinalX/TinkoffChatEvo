@@ -63,5 +63,8 @@ class ConversationViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 74
     }
+    @IBAction func edgeSwipeBack(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
     
 }

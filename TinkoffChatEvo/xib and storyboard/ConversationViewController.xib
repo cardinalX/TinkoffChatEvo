@@ -18,12 +18,19 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <gestureRecognizers/>
             <viewLayoutGuide key="safeArea" id="vLr-E1-eTs"/>
             <connections>
                 <outlet property="dataSource" destination="-1" id="Tng-2m-Rnh"/>
                 <outlet property="delegate" destination="-1" id="9aC-8N-iBw"/>
+                <outletCollection property="gestureRecognizers" destination="VXJ-gq-rSC" appends="YES" id="Xfh-Vp-dkD"/>
             </connections>
             <point key="canvasLocation" x="132" y="154"/>
         </tableView>
+        <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="VXJ-gq-rSC">
+            <connections>
+                <action selector="edgeSwipeBack:" destination="-1" id="ill-Lw-FqF"/>
+            </connections>
+        </screenEdgePanGestureRecognizer>
     </objects>
 </document>

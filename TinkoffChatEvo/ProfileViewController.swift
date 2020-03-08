@@ -87,9 +87,5 @@ class ProfileViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    @IBAction func goToConversationsList(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
 }
 

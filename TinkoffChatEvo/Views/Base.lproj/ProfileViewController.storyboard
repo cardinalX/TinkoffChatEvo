@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Profile View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="ProfileViewController" id="BYZ-38-t0r" customClass="ProfileViewController" customModule="TinkoffChatEvo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlaceholderUser" translatesAutoresizingMaskIntoConstraints="NO" id="LBc-jd-vpF">
+                                <rect key="frame" x="50" y="20" width="220" height="220"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="LBc-jd-vpF" secondAttribute="height" multiplier="1:1" id="Ndd-Vc-X9i"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFO-iA-yrx" userLabel="Camera Button">
+                                <rect key="frame" x="197.5" y="167.5" width="72.5" height="72.5"/>
+                                <color key="backgroundColor" red="0.2454464734" green="0.28555738930000002" blue="0.94094562530000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="QFO-iA-yrx" secondAttribute="height" multiplier="1:1" id="rts-1C-jg3"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="15" minY="15" maxX="15" maxY="15"/>
+                                <state key="normal" image="slr-Camera"/>
+                                <state key="selected" image="slr-Camera"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="addImageCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CvA-3T-6Tj"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZcC-cB-If2">
+                                <rect key="frame" x="20" y="294.5" width="280" height="81.5"/>
+                                <string key="text">👨‍💻 Хочу научится прогать под iOS
+🧠 Работать с новым технологиями
+👩‍🚀 Wubba Lubba Dub Dub!</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhz-Ov-Opy">
+                                <rect key="frame" x="20" y="498" width="280" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Led-vs-ck2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Редактировать">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="editProfile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="53y-88-ucf"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Максим Лебедев" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fa-v1-D3W">
+                                <rect key="frame" x="20" y="248" width="280" height="38.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="73P-fb-D3D">
+                                <rect key="frame" x="20" y="452" width="280" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="GCD Save"/>
+                                <connections>
+                                    <action selector="gcdSaveInfo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t8W-zb-Fsh"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lG0-vB-JUp">
+                                <rect key="frame" x="20" y="505" width="280" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Operation Save"/>
+                                <connections>
+                                    <action selector="operationSaveInfo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8wk-q6-boP"/>
+                                </connections>
+                            </button>
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя и Фамилия" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cld-Yb-P6Y">
+                                <rect key="frame" x="20" y="252" width="280" height="34"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="name"/>
+                                <connections>
+                                    <action selector="done:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="waK-oJ-ZTN"/>
+                                </connections>
+                            </textField>
+                            <textView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eSK-0m-07F">
+                                <rect key="frame" x="20" y="298" width="280" height="134"/>
+                                <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                            </textView>
+                            <activityIndicatorView hidden="YES" opaque="NO" alpha="0.55000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ZxI-qb-3m4">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="73P-fb-D3D" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="3cr-zZ-3OO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qhz-Ov-Opy" secondAttribute="bottom" constant="20" id="6dg-ah-ibo"/>
+                            <constraint firstItem="QFO-iA-yrx" firstAttribute="trailing" secondItem="LBc-jd-vpF" secondAttribute="trailing" id="879-M5-38L"/>
+                            <constraint firstItem="9fa-v1-D3W" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="8aO-Yo-HLR"/>
+                            <constraint firstItem="Qhz-Ov-Opy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ATi-aC-8Jq"/>
+                            <constraint firstItem="9fa-v1-D3W" firstAttribute="top" secondItem="LBc-jd-vpF" secondAttribute="bottom" constant="8" id="Aoy-LY-4Uu"/>
+                            <constraint firstItem="eSK-0m-07F" firstAttribute="top" secondItem="cld-Yb-P6Y" secondAttribute="bottom" constant="12" id="DxT-Wk-4wa"/>
+                            <constraint firstItem="ZcC-cB-If2" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-20" id="Ew5-KZ-WiA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Qhz-Ov-Opy" secondAttribute="trailing" constant="20" id="IXS-0p-ckq"/>
+                            <constraint firstItem="ZcC-cB-If2" firstAttribute="top" secondItem="9fa-v1-D3W" secondAttribute="bottom" constant="8" id="JhH-g5-zVg"/>
+                            <constraint firstItem="lG0-vB-JUp" firstAttribute="top" secondItem="73P-fb-D3D" secondAttribute="bottom" constant="20" id="KFU-UB-qG6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LBc-jd-vpF" secondAttribute="trailing" constant="50" id="L6X-0d-j56"/>
+                            <constraint firstItem="eSK-0m-07F" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="LAZ-UZ-KhR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9fa-v1-D3W" secondAttribute="trailing" constant="20" id="LJz-hg-q7n"/>
+                            <constraint firstItem="LBc-jd-vpF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="MwK-Wq-VYW"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZxI-qb-3m4" secondAttribute="trailing" id="NJF-YR-v8R"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lG0-vB-JUp" secondAttribute="bottom" constant="30" id="Nbf-2l-Exx"/>
+                            <constraint firstItem="QFO-iA-yrx" firstAttribute="width" secondItem="LBc-jd-vpF" secondAttribute="width" multiplier="0.33" placeholder="YES" id="P4h-uw-TQ6"/>
+                            <constraint firstItem="LBc-jd-vpF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="RpK-EU-Pid"/>
+                            <constraint firstItem="QFO-iA-yrx" firstAttribute="bottom" secondItem="LBc-jd-vpF" secondAttribute="bottom" id="SNL-vQ-2D3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cld-Yb-P6Y" secondAttribute="trailing" constant="20" id="WlW-vI-PhP"/>
+                            <constraint firstItem="ZcC-cB-If2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="YKI-sc-whh"/>
+                            <constraint firstItem="ZxI-qb-3m4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="b3m-27-I9g"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eSK-0m-07F" secondAttribute="trailing" constant="20" id="fn1-9K-l23"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ZxI-qb-3m4" secondAttribute="bottom" id="g9z-rT-hdL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="73P-fb-D3D" secondAttribute="trailing" constant="20" id="gWc-A8-qsf"/>
+                            <constraint firstItem="73P-fb-D3D" firstAttribute="top" secondItem="eSK-0m-07F" secondAttribute="bottom" constant="20" id="ho0-Pi-44S"/>
+                            <constraint firstItem="cld-Yb-P6Y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="mI5-oi-jTG"/>
+                            <constraint firstItem="ZxI-qb-3m4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="psd-Fd-duj"/>
+                            <constraint firstItem="lG0-vB-JUp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="qG4-4n-7kV"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lG0-vB-JUp" secondAttribute="trailing" constant="20" id="v4e-5V-5j8"/>
+                            <constraint firstItem="Qhz-Ov-Opy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZcC-cB-If2" secondAttribute="bottom" constant="8" id="ys2-6r-hCa"/>
+                            <constraint firstItem="cld-Yb-P6Y" firstAttribute="top" secondItem="LBc-jd-vpF" secondAttribute="bottom" constant="12" id="zZr-8t-rJJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="ZxI-qb-3m4" id="ct1-hw-2i6"/>
+                        <outlet property="avatarImageView" destination="LBc-jd-vpF" id="Mta-ph-8vc"/>
+                        <outlet property="cameraButton" destination="QFO-iA-yrx" id="J9H-ml-P7u"/>
+                        <outlet property="descriptionProfileLabel" destination="ZcC-cB-If2" id="jtW-DD-5CD"/>
+                        <outlet property="descriptionProfileTextView" destination="eSK-0m-07F" id="9Fq-mR-NbS"/>
+                        <outlet property="editButton" destination="Qhz-Ov-Opy" id="jc2-HA-a50"/>
+                        <outlet property="nameProfileLabel" destination="9fa-v1-D3W" id="mgX-up-7OW"/>
+                        <outlet property="nameProfileTextField" destination="cld-Yb-P6Y" id="IZU-2x-q7J"/>
+                        <outlet property="saveGCDButton" destination="73P-fb-D3D" id="Wcp-xI-7ka"/>
+                        <outlet property="saveOperationButton" destination="lG0-vB-JUp" id="hL4-2k-ocY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="125.625" y="114.08450704225352"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="PlaceholderUser" width="300" height="300"/>
+        <image name="slr-Camera" width="64" height="64"/>
+    </resources>
+</document>

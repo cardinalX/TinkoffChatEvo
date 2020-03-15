@@ -69,7 +69,6 @@ class GCDDataManager {
   }
   
   private func readFile() -> String?{
-    sleep(2)
     if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
       let fileURL = directory.appendingPathComponent(fileName)
       if !FileManager().fileExists(atPath: fileURL.path) {

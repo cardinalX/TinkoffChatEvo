@@ -144,22 +144,14 @@ class ProfileViewController: UIViewController {
       data in
       self.nameProfileLabel.text = data
     }
-    /*nameProfileDataManager.writeData(from: nameProfileTextField.text ?? "")
-     nameProfileDataManager.readData { data in
-     self.nameProfileLabel.text = data
-     }*/
+    
     let descriptionProfileDataManager = GCDDataManager(fileName: "description.txt")
     descriptionProfileDataManager.saveData(from: descriptionProfileTextView.text ?? "") {
       data in
       self.descriptionProfileLabel.text = data
+      self.activityIndicator.stopAnimating()
+      self.updateUIUneditable()
     }
-    /*descriptionProfileDataManager.writeData(from: descriptionProfileTextView.text ?? "")
-     descriptionProfileDataManager.readData { data in
-     self.descriptionProfileLabel.text = data
-     self.activityIndicator.stopAnimating()
-     }*/
-    self.activityIndicator.stopAnimating()
-    updateUIUneditable()
     
   }
   

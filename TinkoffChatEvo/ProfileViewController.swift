@@ -184,31 +184,38 @@ class ProfileViewController: UIViewController {
   // MARK: saveButtons
   
   @IBAction func gcdSaveInfo(_ sender: Any) {
-    activityIndicator.startAnimating()
     let dataManager = GCDDataManager()
-    
+    var dataToSave: [String] = []
+    var fileNamesArr: [String]  = []
     if (nameProfileTextField.text != nameProfileLabel.text){
-      dataManager.saveAndLoadData(from: nameProfileTextField.text ?? "error",
-                                  fileName: "name",
-                                  successWriteCompletion: successAlert,
-                                  failWriteCompletion: retryAlert,
-                                  readCompletion: {
-                                    data in
-                                    self.nameProfileLabel.text = data
-      })
+      dataToSave.append(nameProfileTextField.text ?? "error")
+      fileNamesArr.append("name")
     }
-    
     if (descriptionProfileTextView.text != descriptionProfileLabel.text){
-      dataManager.saveAndLoadData(from: descriptionProfileTextView.text ?? "error",
-                                  fileName: "description",
+      dataToSave.append(descriptionProfileTextView.text ?? "error")
+      fileNamesArr.append("description")
+    }
+    if (!dataToSave.isEmpty) {
+      activityIndicator.startAnimating()
+      dataManager.saveAndLoadData(from: dataToSave,
+                                  fileNames: fileNamesArr,
                                   successWriteCompletion: successAlert,
                                   failWriteCompletion: retryAlert,
-                                  readCompletion: {
-                                    data in
-                                    self.descriptionProfileLabel.text = data
+                                  completion: {
+                                    data, fileNames in
+                                    for (index, fileName) in fileNames.enumerated(){
+                                      switch fileName {
+                                      case "name":
+                                        self.nameProfileLabel.text = data[index]
+                                      case "description":
+                                        self.descriptionProfileLabel.text = data[index]
+                                      default: break
+                                      }
+                                    }
                                     self.switchToDisplayMode()
       })
     }
+    
   }
   
   @IBAction func operationSaveInfo(_ sender: Any) {

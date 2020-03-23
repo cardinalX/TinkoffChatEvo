@@ -37,7 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5005653B23F722F20090B1E8 /* TinkoffChatEvo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChatEvo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5005653B23F722F20090B1E8 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5005653E23F722F20090B1E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5005654223F722F20090B1E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5005654823F722F20090B1E8 /* TinkoffChatEvo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TinkoffChatEvo.xcdatamodel; sourceTree = "<group>"; };
@@ -90,7 +90,7 @@
 		5005653C23F722F20090B1E8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5005653B23F722F20090B1E8 /* TinkoffChatEvo.app */,
+				5005653B23F722F20090B1E8 /* TinkoffChat.app */,
 				5005655423F722F50090B1E8 /* TinkoffChatEvoTests.xctest */,
 			);
 			name = Products;
@@ -178,7 +178,7 @@
 			);
 			name = TinkoffChatEvo;
 			productName = TinkoffChatEvo;
-			productReference = 5005653B23F722F20090B1E8 /* TinkoffChatEvo.app */;
+			productReference = 5005653B23F722F20090B1E8 /* TinkoffChat.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5005655323F722F50090B1E8 /* TinkoffChatEvoTests */ = {
@@ -442,8 +442,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tcs.TinkoffChatEvo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tcsbank.TinkoffChat;
+				PRODUCT_NAME = TinkoffChat;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -461,8 +461,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tcs.TinkoffChatEvo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = tcsbank.TinkoffChat;
+				PRODUCT_NAME = TinkoffChat;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -6,69 +6,71 @@
 //  Copyright © 2020 TinkoffLebedev. All rights reserved.
 //
 
-import UIKit
-
-enum dataType {
-  case fi
-}
+import Foundation
 
 class GCDDataManager {
-  let fileName: String
+
+  let qualityOfService: DispatchQoS
+  let label: String
+  let queue: DispatchQueue
+  var errors: [Error] = []
+  let writersGroup = DispatchGroup()
   
-  init (fileName: String) {
-    self.fileName = fileName
+  init (label: String = "common", qualityOfService: DispatchQoS = .userInitiated) {
+    self.label = label
+    self.qualityOfService = qualityOfService
+    queue = DispatchQueue(label: "com.TinkoffChatApp.\(label)", qos: qualityOfService, attributes: .concurrent)
   }
   
-  func saveData(from data: String, execute work: @escaping @convention(block) (String) -> Void){
-    writeData(from: data)
-    readData(execute: work)
+  func saveAndLoadData(from data: String,
+                       fileName: String,
+                       successWriteCompletion success: @escaping () -> Void,
+                       failWriteCompletion failure: @escaping (Error) -> Void,
+                       readCompletion completion: @escaping (String) -> Void){
+    addWriterTask(from: data, fileName: fileName, success: success, failure: failure)
+    addReaderTask(fileName: fileName, execute: completion)
   }
-  
-  func readData(execute work: @escaping @convention(block) (String) -> Void) {
-    let queue = DispatchQueue.global(qos: .utility)
-    queue.async{
-      guard let data = self.readFile() else { return }
+
+  func addReaderTask(fileName: String, execute completion: @escaping (String) -> Void) {
+    queue.async {
+      guard let data = self.readFile(fileName: fileName) else { return }
+      
       DispatchQueue.main.async {
-        work(data)
+        completion(data)
       }
     }
   }
   
-  func writeData(from data: String) {
-    let queue = DispatchQueue.global(qos: .utility)
-    queue.sync{
-      self.writeFile(data: data)
+  func addWriterTask(from data: String,
+                     fileName: String,
+                     success: @escaping () -> Void,
+                     failure: @escaping (Error) -> Void) {
+    queue.async(flags: .barrier) {
+      if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+        let fileURL = directory.appendingPathComponent(fileName)
+        
+        do {
+          try data.write(to: fileURL, atomically: false, encoding: .utf8)
+        }
+        catch let error {
+          self.errors.append(error)
+          print("Couldn't write to file \(fileName) because of error: \(error)")
+        }
+      }
+    }
+    
+    
+    writersGroup.notify(queue: DispatchQueue.main){
+      if self.errors.isEmpty {
+        success()
+      } else { failure(self.errors[0]) }
     }
   }
-  
-  /*
-  //: ### Загрузка изображения с помощью асинхронной обертки синхронной операции
-  func fetchImage3(fileName: String) {
-    asyncLoadText(fileName: fileName,
-                  runQueue: DispatchQueue.global(),
-                  completionQueue: DispatchQueue.main)
-    { result, error in
-      guard let image = result else {return}
-      eiffelImage.image = image
-    }
-  }*/
   
   // MARK: FileManagement
   
-  private func writeFile(data: String) {
-    if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-      let fileURL = directory.appendingPathComponent(fileName)
-      
-      do {
-        try data.write(to: fileURL, atomically: false, encoding: .utf8)
-      }
-      catch let error {
-        print("Couldn't write to file \(fileName) because of error: \(error)")
-      }
-    }
-  }
-  
-  private func readFile() -> String?{
+  private func readFile(fileName: String) -> String?{
+    
     if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
       let fileURL = directory.appendingPathComponent(fileName)
       if !FileManager().fileExists(atPath: fileURL.path) {
@@ -78,7 +80,7 @@ class GCDDataManager {
       
       do {
         let contentsOfFile = try String(contentsOf: fileURL, encoding: .utf8)
-        print("Content of the file \(fileName) is: \(contentsOfFile)")
+        print("Content of the file <<\(fileName)>> is: \(contentsOfFile)")
         return contentsOfFile
       }
       catch let error {

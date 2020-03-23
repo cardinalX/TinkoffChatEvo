@@ -32,6 +32,15 @@ class ProfileViewController: UIViewController {
     
     nameProfileTextField.delegate = self
     descriptionProfileTextView.delegate = self
+    
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(keyboardWillShow),
+                                           name: UIResponder.keyboardWillShowNotification,
+                                           object: self.view.window)
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(keyboardWillHide),
+                                           name: UIResponder.keyboardWillHideNotification,
+                                           object: self.view.window)
     addDoneButtonOnKeyboard()
     print(editButton.frame)
   }
@@ -46,6 +55,12 @@ class ProfileViewController: UIViewController {
     print(editButton.frame)
     // Геометрия (границы) в viewDidLoad еще не установлены, поэтому там нельзя (криво работает) обрабатывать значения геометрии
     // Application moved from <Appearing> to <Appeared>
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: self.view.window)
+    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: self.view.window)
   }
   
   override func viewDidLayoutSubviews() {
@@ -73,23 +88,57 @@ class ProfileViewController: UIViewController {
   }
   
   func addDoneButtonOnKeyboard() {
-      let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
-      doneToolbar.barStyle = .default
-
-      let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-      let done: UIBarButtonItem = UIBarButtonItem(title: "Done",
-                                                  style: .done,
-                                                  target: self,
-                                                  action: #selector(doneButtonAction))
-
-      let items = [flexSpace, done]
-      doneToolbar.items = items
-      doneToolbar.sizeToFit()
-
-      descriptionProfileTextView.inputAccessoryView = doneToolbar
+    let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+    doneToolbar.barStyle = .default
+    
+    let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    let done: UIBarButtonItem = UIBarButtonItem(title: "Done",
+                                                style: .done,
+                                                target: self,
+                                                action: #selector(keyboardWillHide))
+    
+    doneToolbar.items = [flexSpace, done]
+    doneToolbar.sizeToFit()
+    
+    descriptionProfileTextView.inputAccessoryView = doneToolbar
   }
   
-  private func updateUIUneditable(){
+  @objc func keyboardWillHide() {
+    if self.view.frame.origin.y != 0 {
+      self.view.frame.origin.y = 0
+    }
+    descriptionProfileTextView.resignFirstResponder()
+  }
+  
+  @objc func keyboardWillShow(notification: NSNotification) {
+    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+      if self.view.frame.origin.y == 0 {
+        self.view.frame.origin.y -= keyboardSize.height
+      }
+    }
+  }
+  
+  var retryAlert: (Error) -> Void { return{ error in
+    self.activityIndicator.stopAnimating()
+    let alert = UIAlertController(title: "Ошибка при сохранении данных: \(error)", message: "Выберите действие", preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "Ок", style: .default) { (action: UIAlertAction) -> Void in })
+    alert.addAction(UIAlertAction(title: "Повторить", style: .default) { (action: UIAlertAction) -> Void in self.gcdSaveInfo(self)})
+    self.present(alert, animated: true, completion: nil)
+    }
+  }
+  
+  var successAlert: () -> Void { return{
+    self.activityIndicator.stopAnimating()
+    let alert = UIAlertController(title: "Успех",
+                                  message: "Данные успешно сохранены",
+                                  preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Ок", style: .default) { (action: UIAlertAction) -> Void in })
+    self.present(alert, animated: true, completion: nil)
+    }
+  }
+  
+  func switchToDisplayMode(){
     nameProfileLabel.isHidden = false
     editButton.isHidden = false
     descriptionProfileLabel.isHidden = false
@@ -97,10 +146,6 @@ class ProfileViewController: UIViewController {
     saveOperationButton.isHidden = true
     nameProfileTextField.isHidden = true
     descriptionProfileTextView.isHidden = true
-  }
-
-  @objc func doneButtonAction() {
-      descriptionProfileTextView.resignFirstResponder()
   }
   
   // MARK: IBAction
@@ -112,10 +157,8 @@ class ProfileViewController: UIViewController {
     
     alert.addAction(UIAlertAction(title: "Установить из галлереи", style: UIAlertAction.Style.default) { (action: UIAlertAction) -> Void in
     })
-    
     alert.addAction(UIAlertAction(title: "Сделать фото", style: UIAlertAction.Style.default) { (action: UIAlertAction) -> Void in
     })
-    
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (sender: UIAlertAction) -> Void in
     })
     
@@ -123,13 +166,14 @@ class ProfileViewController: UIViewController {
   }
   
   @IBAction func editProfile(_ sender: Any) {
+    nameProfileTextField.text = nameProfileLabel.text
+    descriptionProfileTextView.text = descriptionProfileLabel.text
     editButton.isHidden = true
     descriptionProfileLabel.isHidden = true
     saveGCDButton.isHidden = false
     saveOperationButton.isHidden = false
     nameProfileTextField.isHidden = false
     descriptionProfileTextView.isHidden = false
-    
   }
   
   @IBAction func done(_ sender: UITextField) {
@@ -137,22 +181,34 @@ class ProfileViewController: UIViewController {
     self.view.endEditing(true);
   }
   
+  // MARK: saveButtons
+  
   @IBAction func gcdSaveInfo(_ sender: Any) {
-    let nameProfileDataManager = GCDDataManager(fileName: "name.txt")
     activityIndicator.startAnimating()
-    nameProfileDataManager.saveData(from: nameProfileTextField.text ?? "") {
-      data in
-      self.nameProfileLabel.text = data
+    let dataManager = GCDDataManager()
+    
+    if (nameProfileTextField.text != nameProfileLabel.text){
+      dataManager.saveAndLoadData(from: nameProfileTextField.text ?? "error",
+                                  fileName: "name",
+                                  successWriteCompletion: successAlert,
+                                  failWriteCompletion: retryAlert,
+                                  readCompletion: {
+                                    data in
+                                    self.nameProfileLabel.text = data
+      })
     }
     
-    let descriptionProfileDataManager = GCDDataManager(fileName: "description.txt")
-    descriptionProfileDataManager.saveData(from: descriptionProfileTextView.text ?? "") {
-      data in
-      self.descriptionProfileLabel.text = data
-      self.activityIndicator.stopAnimating()
-      self.updateUIUneditable()
+    if (descriptionProfileTextView.text != descriptionProfileLabel.text){
+      dataManager.saveAndLoadData(from: descriptionProfileTextView.text ?? "error",
+                                  fileName: "description",
+                                  successWriteCompletion: successAlert,
+                                  failWriteCompletion: retryAlert,
+                                  readCompletion: {
+                                    data in
+                                    self.descriptionProfileLabel.text = data
+                                    self.switchToDisplayMode()
+      })
     }
-    
   }
   
   @IBAction func operationSaveInfo(_ sender: Any) {
@@ -161,30 +217,58 @@ class ProfileViewController: UIViewController {
   
 }
 
-// MARK: extensions Text*Delegate
+// MARK: extension TextFieldDelegate
+
 extension ProfileViewController: UITextFieldDelegate {
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     guard
       let textFieldText = textField.text,
       let rangeOfTextToReplace = Range(range, in: textFieldText)
       else {
-            return false
+        return false
     }
     let substringToReplace = textFieldText[rangeOfTextToReplace]
     let count = textFieldText.count - substringToReplace.count + string.count
     return count <= 30
   }
   
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    if (textField == nameProfileTextField){
+      if (textField.text != nameProfileLabel.text) {
+        saveGCDButton.isEnabled = true
+        saveOperationButton.isEnabled = true
+      } else {
+        saveGCDButton.isEnabled = false
+        saveOperationButton.isEnabled = false
+      }
+    }
+  }
+  
+  
 }
+
+// MARK: extension TextViewDelegate
 
 extension ProfileViewController: UITextViewDelegate {
   func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
     
-      let currentText = textView.text ?? ""
-      guard let stringRange = Range(range, in: currentText) else { return false }
-
-      let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-
-      return updatedText.count <= 1000
+    let currentText = textView.text ?? ""
+    guard let stringRange = Range(range, in: currentText) else { return false }
+    
+    let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+    
+    return updatedText.count <= 1000
+  }
+  
+  func textViewDidChange(_ textView: UITextView) {
+    if (textView == descriptionProfileTextView) {
+      if (textView.text != descriptionProfileLabel.text) {
+        saveGCDButton.isEnabled = true
+        saveOperationButton.isEnabled = true
+      } else {
+        saveGCDButton.isEnabled = false
+        saveOperationButton.isEnabled = false
+      }
+    }
   }
 }

@@ -10,42 +10,59 @@ import Foundation
 
 class GCDDataManager {
 
-  let qualityOfService: DispatchQoS
-  let label: String
   let queue: DispatchQueue
   var errors: [Error] = []
   let writersGroup = DispatchGroup()
+  let readersGroup = DispatchGroup()
   
   init (label: String = "common", qualityOfService: DispatchQoS = .userInitiated) {
-    self.label = label
-    self.qualityOfService = qualityOfService
     queue = DispatchQueue(label: "com.TinkoffChatApp.\(label)", qos: qualityOfService, attributes: .concurrent)
   }
   
-  func saveAndLoadData(from data: [String],
-                            fileNames: [String],
-                            successWriteCompletion success: @escaping () -> Void,
-                            failWriteCompletion failure: @escaping (Error) -> Void,
-                            completion: @escaping ([String],[String]) -> Void){
+  //Для записи и обновления массивов данных
+  func saveAndLoadDataArr(from data: [String],
+                          fileNames: [String],
+                          successWriteCompletion success: @escaping () -> Void,
+                          failWriteCompletion failure: @escaping (Error) -> Void,
+                          updateUICompletion: @escaping ([String],[String]) -> Void) {
     for (index, data) in data.enumerated(){
       addWriterTask(from: data, fileName: fileNames[index], success: success, failure: failure)
     }
     writersGroup.notify(queue: DispatchQueue.main){
-      if self.errors.isEmpty {
+      if (self.errors.isEmpty) {
         success()
       } else { failure(self.errors[0]) }
     }
     for fileName in fileNames{
       addReaderTask(fileName: fileName, execute: {_ in})
     }
-    DispatchQueue.main.async {
-      completion(data, fileNames)
+    readersGroup.notify(queue: DispatchQueue.main){
+      if (self.errors.isEmpty) {
+          updateUICompletion(data, fileNames)
+      }
     }
-    
   }
-
+  
+  ///Для одиночных добавления задач записи и чтения
+  func saveAndLoadData(from data: String,
+                       fileName: String,
+                       completion: @escaping (String) -> Void) {
+    addWriterTask(from: data, fileName: fileName, success: {}, failure: {_ in })
+    addReaderTask(fileName: fileName, execute: completion)
+  }
+  
+  ///Синхронизирует процессы записи и по завершении выполняет соотвествующий успеху или неудачи closure
+  func writersGroupCompletion(successWriteCompletion success: @escaping () -> Void,
+                       failWriteCompletion failure: @escaping (Error) -> Void) {
+    writersGroup.notify(queue: DispatchQueue.main){
+      if self.errors.isEmpty {
+        success()
+      } else { failure(self.errors[0]) }
+    }
+  }
+  
   func addReaderTask(fileName: String, execute completion: @escaping (String) -> Void) {
-    queue.async {
+    queue.async(group: readersGroup) {
       guard let data = self.readFile(fileName: fileName) else { return }
       
       DispatchQueue.main.async {
@@ -58,71 +75,21 @@ class GCDDataManager {
                      fileName: String,
                      success: @escaping () -> Void,
                      failure: @escaping (Error) -> Void) {
-    /*queue.async(flags: .barrier) {
+    queue.async(group: writersGroup, flags: [.barrier, .enforceQoS]) {
       if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
         let fileURL = directory.appendingPathComponent(fileName)
-        
+
         do {
           try data.write(to: fileURL, atomically: false, encoding: .utf8)
+          print("Write to file <<\(fileName)>> complete")
         }
         catch let error {
           self.errors.append(error)
           print("Couldn't write to file \(fileName) because of error: \(error)")
         }
       }
-    }*/
-    
-    if (fileName == "description"){
-      queue.async(group: writersGroup, flags: .barrier) {
-        sleep(1)
-        //self.writeFile(data: data, fileName: fileName)
-        if FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first != nil {
-          do {
-            throw MyError.runtimeError("MYERRRPR message")
-          } catch let error {
-            print("Couldn't write to file <<\(fileName)>> because of error: \(error)")
-            self.errors.append(error)/*
-            DispatchQueue.main.async {
-              failure(error)
-            }*/
-          }
-        }
-      }
-    }
-    else {
-      queue.async(group: writersGroup, flags: .barrier) {
-        sleep(1)
-        //self.writeFile(data: data, fileName: fileName)
-        if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-          let fileURL = directory.appendingPathComponent(fileName)
-          
-          do {
-            try data.write(to: fileURL, atomically: false, encoding: .utf8)
-            print("Write to file <<\(fileName)>> complete")
-            /*DispatchQueue.main.async {
-              success()
-            }*/
-          }
-          catch let error {
-            print("Couldn't write to file <<\(fileName)>> because of error: \(error)")
-            self.errors.append(error)
-            /*DispatchQueue.main.async {
-              failure(error)
-            }*/
-          }
-        }
-      }
     }
     
-    /*writersGroup.notify(queue: DispatchQueue.main){
-      if self.errors.isEmpty {
-        success()
-      } else { failure(self.errors[0]) }
-    }*/
-  }
-  
-  enum MyError: Error {
-      case runtimeError(String)
   }
   
   // MARK: FileManagement

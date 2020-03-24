@@ -37,7 +37,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="addImageCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CvA-3T-6Tj"/>
+                                    <action selector="addImageCameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jt3-Vo-lew"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZcC-cB-If2">
@@ -60,7 +60,7 @@
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="editProfile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="53y-88-ucf"/>
+                                    <action selector="editProfileButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0t4-Me-EdI"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Максим Лебедев" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fa-v1-D3W">
@@ -74,7 +74,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="GCD Save"/>
                                 <connections>
-                                    <action selector="gcdSaveInfo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t8W-zb-Fsh"/>
+                                    <action selector="gcdSaveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VdM-Ub-g7j"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lG0-vB-JUp">
@@ -82,7 +82,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Operation Save"/>
                                 <connections>
-                                    <action selector="operationSaveInfo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8wk-q6-boP"/>
+                                    <action selector="operationSaveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="79Y-HJ-t3f"/>
                                 </connections>
                             </button>
                             <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя и Фамилия" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cld-Yb-P6Y">
@@ -91,7 +91,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="name"/>
                                 <connections>
-                                    <action selector="done:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="waK-oJ-ZTN"/>
+                                    <action selector="doneButtonOnKeyboardPressed:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="oPc-MQ-vfL"/>
                                 </connections>
                             </textField>
                             <textView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eSK-0m-07F">

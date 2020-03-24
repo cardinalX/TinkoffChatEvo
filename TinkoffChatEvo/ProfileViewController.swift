@@ -123,7 +123,7 @@ class ProfileViewController: UIViewController {
     let alert = UIAlertController(title: "Ошибка при сохранении данных: \(error)", message: "Выберите действие", preferredStyle: .alert)
     
     alert.addAction(UIAlertAction(title: "Ок", style: .default) { (action: UIAlertAction) -> Void in })
-    alert.addAction(UIAlertAction(title: "Повторить", style: .default) { (action: UIAlertAction) -> Void in self.gcdSaveInfo(self)})
+    alert.addAction(UIAlertAction(title: "Повторить", style: .default) { (action: UIAlertAction) -> Void in self.gcdSaveButtonPressed(self)})
     self.present(alert, animated: true, completion: nil)
     }
   }
@@ -138,7 +138,7 @@ class ProfileViewController: UIViewController {
     }
   }
   
-  func switchToDisplayMode(){
+  func switchUIToUneditableMode(){
     nameProfileLabel.isHidden = false
     editButton.isHidden = false
     descriptionProfileLabel.isHidden = false
@@ -150,7 +150,7 @@ class ProfileViewController: UIViewController {
   
   // MARK: IBAction
   
-  @IBAction func addImageCameraButton(_ sender: Any) {
+  @IBAction func addImageCameraButtonPressed(_ sender: Any) {
     print("Выбери изображение профиля")
     
     let alert = UIAlertController(title: "Добавление фото профиля", message: "Выберете способ добавления", preferredStyle: .actionSheet)
@@ -165,7 +165,7 @@ class ProfileViewController: UIViewController {
     self.present(alert, animated: true, completion: nil)
   }
   
-  @IBAction func editProfile(_ sender: Any) {
+  @IBAction func editProfileButtonPressed(_ sender: Any) {
     nameProfileTextField.text = nameProfileLabel.text
     descriptionProfileTextView.text = descriptionProfileLabel.text
     editButton.isHidden = true
@@ -176,14 +176,17 @@ class ProfileViewController: UIViewController {
     descriptionProfileTextView.isHidden = false
   }
   
-  @IBAction func done(_ sender: UITextField) {
+  @IBAction func doneButtonOnKeyboardPressed(_ sender: UITextField) {
     //sender.resignFirstResponder()
-    self.view.endEditing(true);
+    self.view.endEditing(true)
   }
   
   // MARK: saveButtons
   
-  @IBAction func gcdSaveInfo(_ sender: Any) {
+  @IBAction func gcdSaveButtonPressed(_ sender: Any) {
+    descriptionProfileTextView.resignFirstResponder()
+    nameProfileTextField.resignFirstResponder()
+    
     let dataManager = GCDDataManager()
     var dataToSave: [String] = []
     var fileNamesArr: [String]  = []
@@ -197,28 +200,28 @@ class ProfileViewController: UIViewController {
     }
     if (!dataToSave.isEmpty) {
       activityIndicator.startAnimating()
-      dataManager.saveAndLoadData(from: dataToSave,
-                                  fileNames: fileNamesArr,
-                                  successWriteCompletion: successAlert,
-                                  failWriteCompletion: retryAlert,
-                                  completion: {
-                                    data, fileNames in
-                                    for (index, fileName) in fileNames.enumerated(){
-                                      switch fileName {
-                                      case "name":
-                                        self.nameProfileLabel.text = data[index]
-                                      case "description":
-                                        self.descriptionProfileLabel.text = data[index]
-                                      default: break
+      dataManager.saveAndLoadDataArr(from: dataToSave,
+                                     fileNames: fileNamesArr,
+                                     successWriteCompletion: successAlert,
+                                     failWriteCompletion: retryAlert,
+                                     updateUICompletion: {
+                                      data, fileNames in
+                                      for (index, fileName) in fileNames.enumerated(){
+                                        switch fileName {
+                                        case "name":
+                                          self.nameProfileLabel.text = data[index]
+                                        case "description":
+                                          self.descriptionProfileLabel.text = data[index]
+                                        default: break
+                                        }
                                       }
-                                    }
-                                    self.switchToDisplayMode()
+                                      self.switchUIToUneditableMode()
       })
     }
     
   }
   
-  @IBAction func operationSaveInfo(_ sender: Any) {
+  @IBAction func operationSaveButtonPressed(_ sender: Any) {
     
   }
   

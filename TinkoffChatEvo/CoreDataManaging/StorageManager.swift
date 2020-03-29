@@ -40,40 +40,41 @@ class StorageManager{
       let model = NSManagedObjectModel(contentsOf: urlOfModel)
       return model ?? NSManagedObjectModel()
     }
-      return NSManagedObjectModel()
+    return NSManagedObjectModel()
   }()
   
   lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-      let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
+    let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
     let url = self.appDocumentsDirectory.appendingPathComponent("SingleViewCoreData.sqlite")
-      var failureReason = "There was an error creating or loading the application's saved data."
-      do {
-        try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
-      } catch {
-          var dict = [String: AnyObject]()
-        dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject
-        dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject
-          dict[NSUnderlyingErrorKey] = error as NSError
-          let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
-          NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
-          abort()
-      }
-      return coordinator
+    var failureReason = "There was an error creating or loading the application's saved data."
+    do {
+      try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: url, options: nil)
+    } catch {
+      var dict = [String: AnyObject]()
+      dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data" as AnyObject
+      dict[NSLocalizedFailureReasonErrorKey] = failureReason as AnyObject
+      dict[NSUnderlyingErrorKey] = error as NSError
+      let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+      NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
+      abort()
+    }
+    return coordinator
   }()
   
   lazy var mainManagedObjectContext: NSManagedObjectContext = {
-      let coordinator = self.persistentStoreCoordinator
+    let coordinator = self.persistentStoreCoordinator
     var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-      managedObjectContext.persistentStoreCoordinator = coordinator
-      return managedObjectContext
+    managedObjectContext.persistentStoreCoordinator = coordinator
+    return managedObjectContext
   }()
   
   lazy var privateManagedObjectContext: NSManagedObjectContext = {
-      let coordinator = self.persistentStoreCoordinator
+    let coordinator = self.persistentStoreCoordinator
     var managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-      managedObjectContext.persistentStoreCoordinator = coordinator
-      return managedObjectContext
+    managedObjectContext.persistentStoreCoordinator = coordinator
+    return managedObjectContext
   }()
+   
   
   // MARK: - Core Data Saving support
   func saveMainContext () {
@@ -131,7 +132,6 @@ class StorageManager{
       }
     }
   }*/
-
 }
 
 // MARK: protocol UserManaging
@@ -166,7 +166,9 @@ extension StorageManager: UserManaging {
       let allUsers = try? context.fetch(fetchRequest)
       if let user = allUsers?.first {
         print(user.name as Any)
-        execute(user.name ?? "nil", user.info ?? "")
+        self.mainManagedObjectContext.perform{
+          execute(user.name ?? "nil", user.info ?? "")
+        }
       } else {
         print("Error updating UserProfileUI, no users")
       }

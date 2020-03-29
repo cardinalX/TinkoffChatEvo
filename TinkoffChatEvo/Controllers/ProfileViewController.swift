@@ -205,11 +205,12 @@ class ProfileViewController: UIViewController {
         StorageManager.instance.editFirstUserManagedObject(name: nil, info: descriptionProfile)
       }
     }
-
-    StorageManager.instance.saveBackgroundContext(successCompletion: {
+    
+    let success = {
       DispatchQueue.main.async(execute: self.successAlert)
       self.loadProfileData()
-    }, failCompletion: retryAlert)
+    }
+    StorageManager.instance.savePrivateContext(successCompletion: success, failCompletion: retryAlert)
     self.switchUIToUneditableMode()
   }
 }

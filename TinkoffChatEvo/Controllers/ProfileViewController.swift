@@ -196,13 +196,13 @@ class ProfileViewController: UIViewController {
     if (nameProfileTextField.text != nameProfileLabel.text) {
       if let name = nameProfileTextField.text {
         print("\(name) = nameProfileTextField.text")
-        StorageManager.instance.editFirstUserManagedObject(name: name)
+        StorageManager.instance.editFirstUserManagedObject(name: name, info: nil)
       }
     }
     if (descriptionProfileTextView.text != descriptionProfileLabel.text) {
       if let descriptionProfile = descriptionProfileTextView.text {
         print("\(descriptionProfile) = descriptionProfile.text")
-        StorageManager.instance.editFirstUserManagedObject(info: descriptionProfile)
+        StorageManager.instance.editFirstUserManagedObject(name: nil, info: descriptionProfile)
       }
     }
 

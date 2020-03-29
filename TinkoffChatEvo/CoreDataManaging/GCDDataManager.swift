@@ -61,42 +61,6 @@ class GCDDataManager {
     }
   }
   
-  //Для записи и обновления массивов данных
-  func saveAndLoadDataDict(from data: [String],
-                           fileNames: [String],
-                           successWriteCompletion success: @escaping () -> Void,
-                           failWriteCompletion failure: @escaping (Error) -> Void,
-                           updateUICompletion: @escaping ([String],[String]) -> Void) {
-    for (index, data) in data.enumerated(){
-      addWriterTask(from: data, to: fileNames[index])
-    }
-    writersGroup.notify(queue: DispatchQueue.main){
-      if (self.errors.isEmpty) {
-        success()
-      } else { failure(self.errors[0]) }
-    }
-    for fileName in fileNames{
-      addReaderTask(fileName: fileName, execute: {_ in})
-    }
-    readersGroup.notify(queue: DispatchQueue.main){
-      if (self.errors.isEmpty) {
-          updateUICompletion(data, fileNames)
-      }
-    }
-  }
-  
-  func addEditTask(from data: String, to fileName: String) {
-    StorageManager.instance.editFirstUserManagedObject(name: "ИМЯЯЯ", info: "dataToSave[1]")
-  }
-  
-  func addSaveTask(){
-    queue.async(group: writersGroup, flags: [.barrier, .enforceQoS]) {
-        StorageManager.instance.saveBackgroundContext()
-      }
-  }
-  
-  
-  
   /*///Для завершения загрузки массива данных из файла и обновления UI
   func loadDataSyncronize(updateUICompletion: @escaping ([String],[String]) -> Void) {
     readersGroup.notify(queue: DispatchQueue.main){

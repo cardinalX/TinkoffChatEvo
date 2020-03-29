@@ -41,10 +41,17 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZcC-cB-If2">
-                                <rect key="frame" x="20" y="294.5" width="280" height="81.5"/>
-                                <string key="text">👨‍💻 Хочу научится прогать под iOS
-🧠 Работать с новым технологиями
-👩‍🚀 Wubba Lubba Dub Dub!</string>
+                                <rect key="frame" x="20" y="294.5" width="280" height="195.5"/>
+                                <string key="text">👨‍💻 Hi! My name is (what?)
+🧠My name is (who?)
+My name is
+Slim Shady
+Hi! My name is (huh?)
+My name is (what?)
+My name is
+Slim Shady
+ Работать с новым технологиями
+</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -70,19 +77,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="73P-fb-D3D">
-                                <rect key="frame" x="20" y="452" width="280" height="33"/>
+                                <rect key="frame" x="20" y="506" width="280" height="33"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="GCD Save"/>
+                                <state key="normal" title="Save"/>
                                 <connections>
-                                    <action selector="gcdSaveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VdM-Ub-g7j"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lG0-vB-JUp">
-                                <rect key="frame" x="20" y="505" width="280" height="33"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Operation Save"/>
-                                <connections>
-                                    <action selector="operationSaveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="79Y-HJ-t3f"/>
+                                    <action selector="saveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6iL-pY-Ea7"/>
                                 </connections>
                             </button>
                             <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Имя и Фамилия" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cld-Yb-P6Y">
@@ -95,7 +94,7 @@
                                 </connections>
                             </textField>
                             <textView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eSK-0m-07F">
-                                <rect key="frame" x="20" y="298" width="280" height="134"/>
+                                <rect key="frame" x="20" y="298" width="280" height="188"/>
                                 <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -119,13 +118,11 @@
                             <constraint firstItem="ZcC-cB-If2" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-20" id="Ew5-KZ-WiA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Qhz-Ov-Opy" secondAttribute="trailing" constant="20" id="IXS-0p-ckq"/>
                             <constraint firstItem="ZcC-cB-If2" firstAttribute="top" secondItem="9fa-v1-D3W" secondAttribute="bottom" constant="8" id="JhH-g5-zVg"/>
-                            <constraint firstItem="lG0-vB-JUp" firstAttribute="top" secondItem="73P-fb-D3D" secondAttribute="bottom" constant="20" id="KFU-UB-qG6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LBc-jd-vpF" secondAttribute="trailing" constant="50" id="L6X-0d-j56"/>
                             <constraint firstItem="eSK-0m-07F" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="LAZ-UZ-KhR"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9fa-v1-D3W" secondAttribute="trailing" constant="20" id="LJz-hg-q7n"/>
                             <constraint firstItem="LBc-jd-vpF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="MwK-Wq-VYW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZxI-qb-3m4" secondAttribute="trailing" id="NJF-YR-v8R"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lG0-vB-JUp" secondAttribute="bottom" constant="30" id="Nbf-2l-Exx"/>
                             <constraint firstItem="QFO-iA-yrx" firstAttribute="width" secondItem="LBc-jd-vpF" secondAttribute="width" multiplier="0.33" placeholder="YES" id="P4h-uw-TQ6"/>
                             <constraint firstItem="LBc-jd-vpF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="RpK-EU-Pid"/>
                             <constraint firstItem="QFO-iA-yrx" firstAttribute="bottom" secondItem="LBc-jd-vpF" secondAttribute="bottom" id="SNL-vQ-2D3"/>
@@ -137,9 +134,8 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="73P-fb-D3D" secondAttribute="trailing" constant="20" id="gWc-A8-qsf"/>
                             <constraint firstItem="73P-fb-D3D" firstAttribute="top" secondItem="eSK-0m-07F" secondAttribute="bottom" constant="20" id="ho0-Pi-44S"/>
                             <constraint firstItem="cld-Yb-P6Y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="mI5-oi-jTG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="73P-fb-D3D" secondAttribute="bottom" constant="29" id="mdd-iv-PxD"/>
                             <constraint firstItem="ZxI-qb-3m4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="psd-Fd-duj"/>
-                            <constraint firstItem="lG0-vB-JUp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="qG4-4n-7kV"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lG0-vB-JUp" secondAttribute="trailing" constant="20" id="v4e-5V-5j8"/>
                             <constraint firstItem="Qhz-Ov-Opy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZcC-cB-If2" secondAttribute="bottom" constant="8" id="ys2-6r-hCa"/>
                             <constraint firstItem="cld-Yb-P6Y" firstAttribute="top" secondItem="LBc-jd-vpF" secondAttribute="bottom" constant="12" id="zZr-8t-rJJ"/>
                         </constraints>
@@ -154,8 +150,7 @@
                         <outlet property="editButton" destination="Qhz-Ov-Opy" id="jc2-HA-a50"/>
                         <outlet property="nameProfileLabel" destination="9fa-v1-D3W" id="mgX-up-7OW"/>
                         <outlet property="nameProfileTextField" destination="cld-Yb-P6Y" id="IZU-2x-q7J"/>
-                        <outlet property="saveGCDButton" destination="73P-fb-D3D" id="Wcp-xI-7ka"/>
-                        <outlet property="saveOperationButton" destination="lG0-vB-JUp" id="hL4-2k-ocY"/>
+                        <outlet property="saveButton" destination="73P-fb-D3D" id="TGb-d9-uEc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

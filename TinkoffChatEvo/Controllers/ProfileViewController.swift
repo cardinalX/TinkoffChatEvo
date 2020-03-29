@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ProfileViewController: UIViewController {
   
@@ -16,8 +17,7 @@ class ProfileViewController: UIViewController {
   @IBOutlet weak var nameProfileLabel: UILabel!
   @IBOutlet weak var descriptionProfileLabel: UILabel!
   @IBOutlet weak var editButton: UIButton!
-  @IBOutlet weak var saveGCDButton: UIButton!
-  @IBOutlet weak var saveOperationButton: UIButton!
+  @IBOutlet weak var saveButton: UIButton!
   @IBOutlet weak var nameProfileTextField: UITextField!
   @IBOutlet weak var descriptionProfileTextView: UITextView!
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -30,6 +30,7 @@ class ProfileViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    loadProfileData()
     nameProfileTextField.delegate = self
     descriptionProfileTextView.delegate = self
     
@@ -44,6 +45,7 @@ class ProfileViewController: UIViewController {
     addDoneButtonOnKeyboard()
     print(editButton.frame)
   }
+
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -76,13 +78,10 @@ class ProfileViewController: UIViewController {
     descriptionProfileTextView.layer.cornerRadius = 8
     descriptionProfileTextView.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
     
-    saveGCDButton.layer.borderWidth = 2.0
-    saveGCDButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-    saveGCDButton.layer.cornerRadius = 10
+    saveButton.layer.borderWidth = 2.0
+    saveButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+    saveButton.layer.cornerRadius = 10
     
-    saveOperationButton.layer.borderWidth = 2.0
-    saveOperationButton.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-    saveOperationButton.layer.cornerRadius = 10
     // попробовать заменить на IBDesignable/IBInspectable
     // Application moved from <Autolayouting> to <Autolayouted>
   }
@@ -123,7 +122,7 @@ class ProfileViewController: UIViewController {
     let alert = UIAlertController(title: "Ошибка при сохранении данных: \(error)", message: "Выберите действие", preferredStyle: .alert)
     
     alert.addAction(UIAlertAction(title: "Ок", style: .default) { (action: UIAlertAction) -> Void in })
-    alert.addAction(UIAlertAction(title: "Повторить", style: .default) { (action: UIAlertAction) -> Void in self.gcdSaveButtonPressed(self)})
+    alert.addAction(UIAlertAction(title: "Повторить", style: .default) { (action: UIAlertAction) -> Void in self.saveButtonPressed(self)})
     self.present(alert, animated: true, completion: nil)
     }
   }
@@ -138,12 +137,20 @@ class ProfileViewController: UIViewController {
     }
   }
   
+  func loadProfileData(){
+    StorageManager.instance.updateUserProfileUI { name, info in
+      DispatchQueue.main.async {
+        self.nameProfileLabel.text = name
+        self.descriptionProfileLabel.text = info
+      }
+    }
+  }
+  
   func switchUIToUneditableMode(){
     nameProfileLabel.isHidden = false
     editButton.isHidden = false
     descriptionProfileLabel.isHidden = false
-    saveGCDButton.isHidden = true
-    saveOperationButton.isHidden = true
+    saveButton.isHidden = true
     nameProfileTextField.isHidden = true
     descriptionProfileTextView.isHidden = true
   }
@@ -170,8 +177,7 @@ class ProfileViewController: UIViewController {
     descriptionProfileTextView.text = descriptionProfileLabel.text
     editButton.isHidden = true
     descriptionProfileLabel.isHidden = true
-    saveGCDButton.isHidden = false
-    saveOperationButton.isHidden = false
+    saveButton.isHidden = false
     nameProfileTextField.isHidden = false
     descriptionProfileTextView.isHidden = false
   }
@@ -183,48 +189,29 @@ class ProfileViewController: UIViewController {
   
   // MARK: saveButtons
   
-  @IBAction func gcdSaveButtonPressed(_ sender: Any) {
+  @IBAction func saveButtonPressed(_ sender: Any) {
     descriptionProfileTextView.resignFirstResponder()
     nameProfileTextField.resignFirstResponder()
-    
-    let dataManager = GCDDataManager()
-    var dataToSave: [String] = []
-    var fileNamesArr: [String]  = []
-    if (nameProfileTextField.text != nameProfileLabel.text){
-      dataToSave.append(nameProfileTextField.text ?? "error")
-      fileNamesArr.append("name")
+
+    if (nameProfileTextField.text != nameProfileLabel.text) {
+      if let name = nameProfileTextField.text {
+        print("\(name) = nameProfileTextField.text")
+        StorageManager.instance.editFirstUserManagedObject(name: name)
+      }
     }
-    if (descriptionProfileTextView.text != descriptionProfileLabel.text){
-      dataToSave.append(descriptionProfileTextView.text ?? "error")
-      fileNamesArr.append("description")
+    if (descriptionProfileTextView.text != descriptionProfileLabel.text) {
+      if let descriptionProfile = descriptionProfileTextView.text {
+        print("\(descriptionProfile) = descriptionProfile.text")
+        StorageManager.instance.editFirstUserManagedObject(info: descriptionProfile)
+      }
     }
-    if (!dataToSave.isEmpty) {
-      activityIndicator.startAnimating()
-      dataManager.saveAndLoadDataArr(from: dataToSave,
-                                     fileNames: fileNamesArr,
-                                     successWriteCompletion: successAlert,
-                                     failWriteCompletion: retryAlert,
-                                     updateUICompletion: {
-                                      data, fileNames in
-                                      for (index, fileName) in fileNames.enumerated(){
-                                        switch fileName {
-                                        case "name":
-                                          self.nameProfileLabel.text = data[index]
-                                        case "description":
-                                          self.descriptionProfileLabel.text = data[index]
-                                        default: break
-                                        }
-                                      }
-                                      self.switchUIToUneditableMode()
-      })
-    }
-    
+
+    StorageManager.instance.saveBackgroundContext(successCompletion: {
+      DispatchQueue.main.async(execute: self.successAlert)
+      self.loadProfileData()
+    }, failCompletion: retryAlert)
+    self.switchUIToUneditableMode()
   }
-  
-  @IBAction func operationSaveButtonPressed(_ sender: Any) {
-    
-  }
-  
 }
 
 // MARK: extension TextFieldDelegate
@@ -245,11 +232,9 @@ extension ProfileViewController: UITextFieldDelegate {
   func textFieldDidEndEditing(_ textField: UITextField) {
     if (textField == nameProfileTextField){
       if (textField.text != nameProfileLabel.text) {
-        saveGCDButton.isEnabled = true
-        saveOperationButton.isEnabled = true
+        saveButton.isEnabled = true
       } else {
-        saveGCDButton.isEnabled = false
-        saveOperationButton.isEnabled = false
+        saveButton.isEnabled = false
       }
     }
   }
@@ -273,11 +258,9 @@ extension ProfileViewController: UITextViewDelegate {
   func textViewDidChange(_ textView: UITextView) {
     if (textView == descriptionProfileTextView) {
       if (textView.text != descriptionProfileLabel.text) {
-        saveGCDButton.isEnabled = true
-        saveOperationButton.isEnabled = true
+        saveButton.isEnabled = true
       } else {
-        saveGCDButton.isEnabled = false
-        saveOperationButton.isEnabled = false
+        saveButton.isEnabled = false
       }
     }
   }

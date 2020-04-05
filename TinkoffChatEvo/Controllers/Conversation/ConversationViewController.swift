@@ -14,7 +14,9 @@ class ConversationViewController: UITableViewController {
     super.viewDidLoad()
     
     self.navigationController?.navigationBar.prefersLargeTitles = true
+    view.backgroundColor = UIColor(named: "TinkoffColor")
     navigationController?.navigationBar.barTintColor = UIColor(named: "TinkoffColor")
+    navigationController?.navigationBar.backgroundColor = UIColor(named: "TinkoffColor")
     
     tableView.register(UINib(nibName: String(describing: MessageViewCell.self), bundle: Bundle.main), forCellReuseIdentifier: String(describing: MessageViewCell.self))
     tableView.dataSource = self

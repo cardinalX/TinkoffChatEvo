@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,8 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.rootViewController = navigationViewController
     window?.makeKeyAndVisible()
     
+    FirebaseApp.configure()
+    
     return true
   }
-  
+
 }
 

@@ -20,6 +20,28 @@ class ConversationCell: UITableViewCell {
     let date: Date
     let isOnline: Bool
     let hasUnreadMessages: Bool
+    
+    init(name: String, message: String?, date: Date, isOnline: Bool, hasUnreadMessages: Bool) {
+      self.name = name
+      self.message = message
+      self.date = date
+      self.isOnline = isOnline
+      self.hasUnreadMessages = hasUnreadMessages
+    }
+    
+    init?(channel: Channel) {
+      
+      self.name = channel.name
+      self.message = channel.lastMessage
+      self.date = channel.lastActivity
+      if (channel.lastActivity.timeIntervalSinceNow > 600) {
+        self.isOnline = true
+      }
+      else {
+        self.isOnline = false
+      }
+      self.hasUnreadMessages = self.isOnline
+    }
   }
   
   override func awakeFromNib() {

@@ -7,162 +7,92 @@
 //
 
 import UIKit
+import Firebase
 
 class ConversationsListViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   
-  @IBAction func userProfileButton(_ sender: Any) {
-    let storyBoard = UIStoryboard(name: "ProfileViewController", bundle: nil)
-    guard let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController
-      else { print("Error when unwrapping VC withIdentifier ProfileViewController"); return}
-    
-    self.present(profileViewController, animated: true, completion: nil)
-    //self.navigationController?.pushViewController(profileViewController, animated: true)
-  }
+  private var channels: [Channel] = []
+  private var documents: [QueryDocumentSnapshot] = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     title = "Tinkoff Chat"
-    view.backgroundColor = UIColor(named: "TinkoffColor")
     self.navigationController?.navigationBar.prefersLargeTitles = true
+    view.backgroundColor = UIColor(named: "TinkoffColor")
     navigationController?.navigationBar.barTintColor = UIColor(named: "TinkoffColor")
+    navigationController?.navigationBar.backgroundColor = UIColor(named: "TinkoffColor")
+    
+    if #available(iOS 13.0, *) {
+      self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(userProfileTapped(sender:)))
+      self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.bubble.fill"), style: .plain, target: self, action: #selector(addChannelTapped(sender:)))
+    } else {
+      self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(userProfileTapped(sender:)))
+      self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addChannelTapped(sender:)))
+    }
     
     tableView.register(UINib(nibName: String(describing: ConversationCell.self), bundle: Bundle.main), forCellReuseIdentifier: String(describing: ConversationCell.self))
     tableView.dataSource = self
     tableView.delegate = self
     
-    sortedData = sortData(filter: data)
+    let firebaseManager = FirebaseManager()
+    firebaseManager.updateChannels(){ models, documents in
+      self.channels = models
+      self.documents = documents
+      
+      let conversationCellModels = self.channelsToConversationCellModels(channels: models)
+      
+      for i in conversationCellModels{
+        print(i)
+      }
+      self.splitedData = self.splitToTableSections(filter: conversationCellModels)
+
+      self.tableView.reloadData()
+    }
+    print(channels)
+  }
+  
+  @objc func userProfileTapped(sender: AnyObject) {
+    print("userProfileTapped")
+    
+    let storyBoard = UIStoryboard(name: "ProfileViewController", bundle: nil)
+    guard let profileViewController = storyBoard.instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController
+      else { print("Error when unwrapping VC withIdentifier ProfileViewController"); return}
+    
+    self.present(profileViewController, animated: true, completion: nil)
+  }
+  
+  @objc func addChannelTapped(sender: AnyObject) {
+    print("addChannelTapped")
+    //addChannelTapped(sender)
   }
   
   // MARK: - DATA
   
-  // Data variable to track our sorted data
+  // Data variable to track our Splited data
   enum TableSection: Int {
     case online = 0, history, total
   }
-  var sortedData = [TableSection: [ConversationCell.ConversationCellModel]]()
+  var splitedData = [TableSection: [ConversationCell.ConversationCellModel]]()
   
-  func sortData(filter arrayData: [ConversationCell.ConversationCellModel]) -> [TableSection: [ConversationCell.ConversationCellModel]]{
-    sortedData[.history] = arrayData.filter({$0.isOnline == false})
-    sortedData[.online] = arrayData.filter({$0.isOnline == true})
-    return sortedData
+  func splitToTableSections(filter conversationCellModels: [ConversationCell.ConversationCellModel]) -> [TableSection: [ConversationCell.ConversationCellModel]]{
+    splitedData[.history] = conversationCellModels.filter({$0.isOnline == false})
+    splitedData[.online] = conversationCellModels.filter({$0.isOnline == true})
+    return splitedData
   }
   
-  var data =
-    [ConversationCell.ConversationCellModel(name: "Олег Тиньков",
-                                            message: "Привет, вот какой-нибудь набросоук текст последнего сообщения в диалоге",
-                                            date: Date(),
-                                            isOnline: true,
-                                            hasUnreadMessages: true),
-     ConversationCell.ConversationCellModel(name: "Vladimir Nabokov с очень длинным именем и фамилией",
-                                            message: nil,
-                                            date: Date().addingTimeInterval(3600*70),
-                                            isOnline: true,
-                                            hasUnreadMessages: true),
-     ConversationCell.ConversationCellModel(name: "Kurilka Gutenberga777",
-                                            message: nil,
-                                            date: Date().addingTimeInterval(3600*12),
-                                            isOnline: true,
-                                            hasUnreadMessages: false),
-     ConversationCell.ConversationCellModel(name: "Илон Маск",
-                                            message: "ПУстой месседж - не нил",
-                                            date: Date().addingTimeInterval(-3600*100),
-                                            isOnline: true,
-                                            hasUnreadMessages: false),
-     ConversationCell.ConversationCellModel(name: "Keegan-Michael Key",
-                                            message: nil,
-                                            date: Date().addingTimeInterval(-3600*2),
-                                            isOnline: true,
-                                            hasUnreadMessages: true),
-     ConversationCell.ConversationCellModel(name: "Mary Elizabeth Winstead",
-                                            message: nil,
-                                            date: Date().addingTimeInterval(-3600*5),
-                                            isOnline: true,
-                                            hasUnreadMessages: false),
-     ConversationCell.ConversationCellModel(name: "Инфузория туфелька",
-                                            message: "Chris Pine, Zachary Quinto, Zoe Saldaßna",
-                                            date: Date().addingTimeInterval(-3600*100),
-                                            isOnline: true,
-                                            hasUnreadMessages: false),
-     ConversationCell.ConversationCellModel(name: "Армия клонов",
-                                            message: nil,
-                                            date: Date().addingTimeInterval(-3600*2),
-                                            isOnline: true,
-                                            hasUnreadMessages: true),
-     ConversationCell.ConversationCellModel(name: "Бот Олег",
-                                            message: nil,
-                                            date: Date().addingTimeInterval(-3600*5),
-                                            isOnline: true,
-                                            hasUnreadMessages: false),
-     ConversationCell.ConversationCellModel(name: "Дмитрий Клюшкин",
-                                            message: "Привет, последнего вот сообщения диалоге какой-нибудь набросоук текст последнего",
-                                            date: Date(),
-                                            isOnline: true,
-                                            hasUnreadMessages: true),
-     ConversationCell.ConversationCellModel(name: "Армен Джигарханян",
-                                            message: "",
-                                            date: Date().addingTimeInterval(3600*70),
-                                            isOnline: true,
-                                            hasUnreadMessages: true),
-     ConversationCell.ConversationCellModel(name: "Дарья Фамилия",
-                                            message: "Miracles from Heaven",
-                                            date: Date().addingTimeInterval(3600*12),
-                                            isOnline: true,
-                                            hasUnreadMessages: true),
-     // section history
-      ConversationCell.ConversationCellModel(name: "Кирилл Животворящий",
-                                             message: "Zachary Quinto, Zoe Saldana",
-                                             date: Date().addingTimeInterval(-3600*24),
-                                             isOnline: false,
-                                             hasUnreadMessages: false),
-      ConversationCell.ConversationCellModel(name: "Анастасия Бу",
-                                             message: "",
-                                             date: Date().addingTimeInterval(-3600*10),
-                                             isOnline: false,
-                                             hasUnreadMessages: false),
-      ConversationCell.ConversationCellModel(name: "Бот Дмитрий Валерьева",
-                                             message: "Привет, последнего вот сообщения диалоге какой-нибудь набросоук текст последнего",
-                                             date: Date().addingTimeInterval(-3600*80),
-                                             isOnline: false,
-                                             hasUnreadMessages: true),
-      ConversationCell.ConversationCellModel(name: "Виктор Гюго",
-                                             message: nil,
-                                             date: Date().addingTimeInterval(-3600*30),
-                                             isOnline: false,
-                                             hasUnreadMessages: false),
-      ConversationCell.ConversationCellModel(name: "Дмитрий ТеракотовВиновLongNamedUserЛалала",
-                                             message: "Zachary Quinto, Zoe Saldana",
-                                             date: Date().addingTimeInterval(-3600*24),
-                                             isOnline: false,
-                                             hasUnreadMessages: false),
-      ConversationCell.ConversationCellModel(name: "Chris Pine",
-                                             message: nil,
-                                             date: Date().addingTimeInterval(-3600*10),
-                                             isOnline: false,
-                                             hasUnreadMessages: false),
-      ConversationCell.ConversationCellModel(name: "8-999-246-xx-xx",
-                                             message: "Если есть непрочитанные сообщения — текст последнего сообщения отображается жирным.",
-                                             date: Date().addingTimeInterval(-3600),
-                                             isOnline: false,
-                                             hasUnreadMessages: true),
-      ConversationCell.ConversationCellModel(name: "Анастасия Валерьева",
-                                             message: nil,
-                                             date: Date().addingTimeInterval(-3600*80),
-                                             isOnline: false,
-                                             hasUnreadMessages: true),
-      ConversationCell.ConversationCellModel(name: "Виктор Гюго",
-                                             message: nil,
-                                             date: Date().addingTimeInterval(-3600*30),
-                                             isOnline: false,
-                                             hasUnreadMessages: false),
-      ConversationCell.ConversationCellModel(name: "Jennifer Garner",
-                                             message: "Если есть непрочитанные сообщения — текст последнего сообщения отображается жирным.",
-                                             date: Date().addingTimeInterval(-3600),
-                                             isOnline: false,
-                                             hasUnreadMessages: true),
-  ]
-  
+  func channelsToConversationCellModels(channels: [Channel]) -> [ConversationCell.ConversationCellModel]{
+    let conversationCellModels = channels.map { (channel) -> ConversationCell.ConversationCellModel in
+      if let model = ConversationCell.ConversationCellModel(channel: channel) {
+        print("🎃Succesful \(model) with object channel \(channel)")
+        return model
+      } else {
+        fatalError("Unable to initialize type \(ConversationCell.ConversationCellModel.self) with object \(channel)")
+      }
+    }
+    return conversationCellModels
+  }
 }
 
 // MARK: - protocol ConfigurableView
@@ -183,7 +113,7 @@ extension ConversationsListViewController: UITableViewDataSource{
       else { return UITableViewCell() }
     
     if  let tableSection = TableSection(rawValue: indexPath.section),
-      let dialog = sortedData[tableSection]?[indexPath.row] {
+      let dialog = splitedData[tableSection]?[indexPath.row] {
       cell.configure(with: dialog)
     }
     return cell
@@ -206,25 +136,10 @@ extension ConversationsListViewController: UITableViewDataSource{
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if let tableSection = TableSection(rawValue: section),
-      let dataBySection = sortedData[tableSection] {
+      let dataBySection = splitedData[tableSection] {
       return dataBySection.count
     }
     return 0
-  }
-  
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let conversationViewController = ConversationViewController()
-    
-    if  let tableSection = TableSection(rawValue: indexPath.section){
-      conversationViewController.title = sortedData[tableSection]?[indexPath.row].name ?? "Название диалога"
-    }
-    
-    navigationController?.pushViewController(conversationViewController, animated: true)
-  }
-  
-  
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 74
   }
 }
 
@@ -232,4 +147,17 @@ extension ConversationsListViewController: UITableViewDataSource{
 
 extension ConversationsListViewController: UITableViewDelegate{
   
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let conversationViewController = ConversationViewController()
+    
+    if  let tableSection = TableSection(rawValue: indexPath.section){
+      conversationViewController.title = splitedData[tableSection]?[indexPath.row].name ?? "Название диалога"
+    }
+    
+    navigationController?.pushViewController(conversationViewController, animated: true)
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 74
+  }
 }

@@ -11,7 +11,7 @@ import Firebase
 
 class FirebaseManager {
   private lazy var db = Firestore.firestore()
-  private lazy var reference = db.collection("channels")
+  private lazy var reference = db.collection("channels").order(by: "lastActivity", descending: true)
   
   func updateChannels(completion: @escaping ([Channel], [QueryDocumentSnapshot]) -> Void){
     reference.addSnapshotListener { [weak self] snapshot, error in
@@ -35,27 +35,6 @@ class FirebaseManager {
       }
       
       completion(models, snapshot.documents)
-      /*
-      self.restaurants = models
-      self.documents = snapshot.documents
-
-      if self.documents.count > 0 {
-        self.tableView.backgroundView = nil
-      } else {
-        self.tableView.backgroundView = self.backgroundView
-      }
-
-      self.tableView.reloadData()
-       */
-      
-      /*let results = snapshot?.documents.map { (document) -> Channel in
-        if let channel = Channel(identifier: document.documentID, name: document.data(), lastMessage: "") {
-          return channel
-        } else {
-          fatalError("Unable to initialize type \(Channel.self) with dictionary \(document.data())")
-        }
-      }*/
-      
     }
   }
 }

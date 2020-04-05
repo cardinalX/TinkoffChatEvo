@@ -34,7 +34,7 @@ class ConversationCell: UITableViewCell {
       self.name = channel.name
       self.message = channel.lastMessage
       self.date = channel.lastActivity
-      if (channel.lastActivity.timeIntervalSinceNow > 600) {
+      if (channel.lastActivity.timeIntervalSinceNow > -600) {
         self.isOnline = true
       }
       else {

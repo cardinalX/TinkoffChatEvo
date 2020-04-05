@@ -33,15 +33,6 @@ extension Channel {
     let identifier = dictionary["identifier"] as? String ?? "NoID"
     let lastActivity = dictionary["lastActivity"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0))
     
-    //guard let lastActivity = dictionary["lastActivity"] as? Timestamp
-    //  else { _ = Timestamp(date: Date(timeIntervalSince1970: 0)) }
-    
-    
-    /*guard let lastMessage = dictionary["lastMessage"] as? String,
-        let name = dictionary["name"] as? String,
-        let identifier = dictionary["identifier"] as? String,
-        let lastActivity = dictionary["lastActivity"] as? Timestamp else { return nil }*/
-    
     self.init(lastActivity: lastActivity.dateValue(), lastMessage: lastMessage, identifier: identifier, name: name)
   }
 

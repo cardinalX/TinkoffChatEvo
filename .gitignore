@@ -8,5 +8,4 @@ TinkoffChatEvo/Controllers/Conversation/ConversationViewController2.swift
 TinkoffChatEvo/Controllers/Conversation/MessageReceivedViewCell.swift
 TinkoffChatEvo/Controllers/Conversation/MessageReceivedViewCell.xib
 TinkoffChatEvo/Controllers/Conversation/MessageSendedViewCell.swift
-TinkoffChatEvo/Controllers/Conversation/MessageSendedViewCell.swift
-TinkoffChatEvo/Controllers/Conversation/MessageSendedViewCell.swift
+TinkoffChatEvo/Controllers/Conversation/MessageSendedViewCell.xib

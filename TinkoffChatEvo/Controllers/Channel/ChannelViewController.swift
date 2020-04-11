@@ -77,11 +77,11 @@ class ChannelViewController: UIViewController {
     
     let newMessage = Message(content: content,
                              created: Date(),
-                             senderId: UIDevice.current.identifierForVendor!.uuidString + "1df2s",
+                             senderID: UIDevice.current.identifierForVendor!.uuidString + "1df2s",
                              senderName: "Чужой")
     let firebaseManager = FirebaseManager()
     firebaseManager.addMessage(documentID: docIdentifier, message: newMessage)
-    NSLog("Message '\(content)' created by StorageManager.instance.getFirstUserManagedObject()?.name")
+    NSLog("Message '\(content)' created by \(UIDevice.current.identifierForVendor!.uuidString)1df2s")
   }
   
   @IBAction func submitMessageButtonTapped(_ sender: Any) {
@@ -90,11 +90,11 @@ class ChannelViewController: UIViewController {
     
     let newMessage = Message(content: content,
                              created: Date(),
-                             senderId: UIDevice.current.identifierForVendor!.uuidString,
+                             senderID: UIDevice.current.identifierForVendor!.uuidString,
                              senderName: StorageManager().userName)
     let firebaseManager = FirebaseManager()
     firebaseManager.addMessage(documentID: docIdentifier, message: newMessage)
-    NSLog("Message '\(content)' created by StorageManager.instance.getFirstUserManagedObject()?.name")
+    NSLog("Message '\(content)' created by \(StorageManager().userName)")
   }
 }
 

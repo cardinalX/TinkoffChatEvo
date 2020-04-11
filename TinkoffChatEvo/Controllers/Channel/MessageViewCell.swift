@@ -31,7 +31,7 @@ class MessageViewCell: UITableViewCell {
     init?(message: Message) {
       self.content = message.content
       self.created = message.created
-      self.isSender = message.senderId == UIDevice.current.identifierForVendor!.uuidString
+      self.isSender = message.senderID == UIDevice.current.identifierForVendor!.uuidString
     }
   }
   

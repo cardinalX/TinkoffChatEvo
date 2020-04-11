@@ -40,14 +40,14 @@ extension Channel {
 struct Message {
   let content: String
   let created: Date
-  let senderId: String
+  let senderID: String
   let senderName: String
   
   var toDict: [String: Any] {
     return [
       "content": content,
       "created": Timestamp(date: created),
-      "senderID": senderId,
+      "senderID": senderID,
       "senderName": senderName,
     ]
   }
@@ -57,17 +57,17 @@ extension Message {
 
   init?(dictionary: [String : Any]) {
     let content = dictionary["content"] as? String ?? "No messages yet"
-    var senderId = dictionary["senderID"] as? String ?? "mudakID"
+    var senderID = dictionary["senderID"] as? String ?? "mudakID"
     let senderName = dictionary["senderName"] as? String ?? "Noname^$"
     let created = dictionary["created"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0))
     //guard let created = dictionary["created"] as? Timestamp else { return nil }
     
     // чтобы не падало, на случай когда кто-нибудь криво записал новый словарь
     if (dictionary.keys.contains("senderId")) {
-      senderId = dictionary["senderId"] as? String ?? "mudakID"
+      senderID = dictionary["senderId"] as? String ?? "mudakID"
     }
     
-    self.init(content: content, created: created.dateValue(), senderId: senderId, senderName: senderName)
+    self.init(content: content, created: created.dateValue(), senderID: senderID, senderName: senderName)
   }
 
 }

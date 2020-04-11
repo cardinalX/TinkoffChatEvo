@@ -19,11 +19,6 @@ protocol UserManaging {
 }
 
 class StorageManager{
-  /// Singleton
-  static let instance = StorageManager()
-
-  private init() {}
-  
   // MARK: - Core Data stack
   
   lazy var appDocumentsDirectory: URL = {
@@ -170,8 +165,12 @@ extension StorageManager: UserManaging {
   private func fetchUserManagedObject() -> User? {
     let context = privateManagedObjectContext
     let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
-    let users = try? context.fetch(fetchRequest)
-    return users?.first
+    do {
+      let users = try context.fetch(fetchRequest)
+      return users.first
+    } catch {
+        fatalError("Failed to fetch Users: \(error)")
+    }
   }
   
   func updateUserProfileUI(execute: @escaping (String, String) -> Void){

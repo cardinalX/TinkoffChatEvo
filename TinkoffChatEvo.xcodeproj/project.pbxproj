@@ -168,13 +168,13 @@
 			path = ListConversation;
 			sourceTree = "<group>";
 		};
-		8961306F240C0C4900FF25B7 /* Conversation */ = {
+		8961306F240C0C4900FF25B7 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
 				89613070240C0E7B00FF25B7 /* MessageViewCell.swift */,
 				894F1F63243FB1AA00E77101 /* ChannelViewController.swift */,
 			);
-			path = Conversation;
+			path = Channel;
 			sourceTree = "<group>";
 		};
 		896B13C8241D5FAF00C4D88C /* CoreDataManaging */ = {
@@ -209,7 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				8961306E240C0C3100FF25B7 /* ListConversation */,
-				8961306F240C0C4900FF25B7 /* Conversation */,
+				8961306F240C0C4900FF25B7 /* Channel */,
 				898A05B92438FB4E00CE5F9D /* Profile */,
 			);
 			path = Controllers;

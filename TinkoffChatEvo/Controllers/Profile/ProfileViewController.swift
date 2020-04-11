@@ -43,9 +43,7 @@ class ProfileViewController: UIViewController {
                                            name: UIResponder.keyboardWillHideNotification,
                                            object: self.view.window)
     addDoneButtonOnKeyboard()
-    print(editButton.frame)
   }
-
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -142,7 +140,7 @@ class ProfileViewController: UIViewController {
   }
   
   func loadProfileData(){
-    StorageManager.instance.updateUserProfileUI { name, info in
+    StorageManager().updateUserProfileUI { name, info in
       DispatchQueue.main.async {
         self.nameProfileLabel.text = name
         self.descriptionProfileLabel.text = info
@@ -197,16 +195,17 @@ class ProfileViewController: UIViewController {
     descriptionProfileTextView.resignFirstResponder()
     nameProfileTextField.resignFirstResponder()
 
+    let userStorageManager = StorageManager()
     if (nameProfileTextField.text != nameProfileLabel.text) {
       if let name = nameProfileTextField.text {
         print("\(name) = nameProfileTextField.text")
-        StorageManager.instance.saveUserProfile(name: name, info: nil, successCompletion: successAlert, failCompletion: retryAlert)
+        userStorageManager.saveUserProfile(name: name, info: nil, successCompletion: successAlert, failCompletion: retryAlert)
       }
     }
     if (descriptionProfileTextView.text != descriptionProfileLabel.text) {
       if let descriptionProfile = descriptionProfileTextView.text {
         print("\(descriptionProfile) = descriptionProfile.text")
-        StorageManager.instance.saveUserProfile(name: nil, info: descriptionProfile, successCompletion: successAlert, failCompletion: retryAlert)
+        userStorageManager.saveUserProfile(name: nil, info: descriptionProfile, successCompletion: successAlert, failCompletion: retryAlert)
       }
     }
     self.switchUIToUneditableMode()

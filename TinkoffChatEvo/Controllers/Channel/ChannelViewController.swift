@@ -90,7 +90,7 @@ class ChannelViewController: UIViewController {
     let newMessage = Message(content: content,
                              created: Date(),
                              senderId: UIDevice.current.identifierForVendor!.uuidString,
-                             senderName: StorageManager.instance.userName)
+                             senderName: StorageManager().userName)
     let firebaseManager = FirebaseManager()
     firebaseManager.addMessage(channelRef: channelReference, documentID: docIdentifier, message: newMessage)
     NSLog("Message '\(content)' created by StorageManager.instance.getFirstUserManagedObject()?.name")

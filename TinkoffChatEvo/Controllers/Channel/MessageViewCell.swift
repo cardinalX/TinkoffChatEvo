@@ -38,14 +38,6 @@ class MessageViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
   }
-  
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-    if leftBubbleView.isHidden {
-      UIPasteboard.general.string = sendedMessageLabel.text
-    } else { UIPasteboard.general.string = receivedMessageLabel.text}
-  }
-  
 }
 
 // MARK: - extension ConfigurableView

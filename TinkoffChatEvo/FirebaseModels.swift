@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct Channel {
+struct ChannelFB {
   let lastActivity: Date
   let lastMessage: String
   let identifier: String
@@ -25,7 +25,7 @@ struct Channel {
   }
 }
 
-extension Channel {
+extension ChannelFB {
   init?(dictionary: [String : Any]) {
     let lastMessage = dictionary["lastMessage"] as? String ?? "No messages yet"
     let name = dictionary["name"] as? String ?? "Noname^$"
@@ -37,7 +37,7 @@ extension Channel {
 
 }
 
-struct Message {
+struct MessageFB {
   let content: String
   let created: Date
   let senderID: String
@@ -53,18 +53,17 @@ struct Message {
   }
 }
 
-extension Message {
+extension MessageFB {
 
   init?(dictionary: [String : Any]) {
     let content = dictionary["content"] as? String ?? "No messages yet"
-    var senderID = dictionary["senderID"] as? String ?? "mudakID"
+    var senderID = dictionary["senderID"] as? String ?? "noID"
     let senderName = dictionary["senderName"] as? String ?? "Noname^$"
     let created = dictionary["created"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0))
-    //guard let created = dictionary["created"] as? Timestamp else { return nil }
     
     // чтобы не падало, на случай когда кто-нибудь криво записал новый словарь
     if (dictionary.keys.contains("senderId")) {
-      senderID = dictionary["senderId"] as? String ?? "mudakID"
+      senderID = dictionary["senderId"] as? String ?? "noID"
     }
     
     self.init(content: content, created: created.dateValue(), senderID: senderID, senderName: senderName)

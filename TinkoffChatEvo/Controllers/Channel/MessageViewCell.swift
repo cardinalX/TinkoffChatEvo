@@ -28,7 +28,7 @@ class MessageViewCell: UITableViewCell {
       self.isSender = isSender
     }
     
-    init?(message: Message) {
+    init?(message: MessageFB) {
       self.content = message.content
       self.created = message.created
       self.isSender = message.senderID == UIDevice.current.identifierForVendor!.uuidString

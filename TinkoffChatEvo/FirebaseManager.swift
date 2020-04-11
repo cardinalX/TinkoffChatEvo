@@ -18,27 +18,29 @@ class FirebaseManager {
     return db.collection("channels").document(channelIdentifier).collection("messages")
   }()*/
   
-  func addChannel(channel: Channel) {
+  func addChannel(channel: ChannelFB) {
     channelsCollection.addDocument(data: channel.toDict)
   }
   
-  func addMessage(documentID: String, message: Message){
+  func addMessage(documentID: String, message: MessageFB){
     let localMessagesCollection = channelsCollection.document(documentID).collection("messages")
     localMessagesCollection.addDocument(data: message.toDict)
   }
   
-  func updateChannels(completion: @escaping ([Channel], [QueryDocumentSnapshot]) -> Void) {
+  func updateChannels(completion: @escaping ([ChannelFB], [QueryDocumentSnapshot]) -> Void) {
     channelsCollection.order(by: "lastActivity", descending: true).addSnapshotListener { [weak self] snapshot, error in
       guard let snapshot = snapshot else {
         print("Error fetching snapshot results: \(error!)")
         return
       }
       
-      let models = snapshot.documents.map { (document) -> Channel in
-        if let model = Channel(dictionary: document.data()) {
+      let models = snapshot.documents.map { (document) -> ChannelFB in
+        var documentData = document.data()
+        documentData["identifier"] = document.documentID
+        if let model = ChannelFB(dictionary: documentData) {
           return model
         } else {
-          fatalError("Unable to initialize type \(Channel.self) with dictionary \(document.data())")
+          fatalError("Unable to initialize type \(ChannelFB.self) with dictionary \(document.data())")
         }
       }
       
@@ -46,7 +48,7 @@ class FirebaseManager {
     }
   }
   
-  func updateMessages(documentID: String, completion: @escaping ([Message]) -> Void){
+  func updateMessages(documentID: String, completion: @escaping ([MessageFB]) -> Void){
     let localMessagesCollection = channelsCollection.document(documentID).collection("messages").order(by: "created", descending: true)
     localMessagesCollection.addSnapshotListener { [weak self] snapshot, error in
       guard let snapshot = snapshot else {
@@ -55,11 +57,11 @@ class FirebaseManager {
       }
       
       print(snapshot.documents)
-      let models = snapshot.documents.map { (document) -> Message in
-        if let model = Message(dictionary: document.data()) {
+      let models = snapshot.documents.map { (document) -> MessageFB in
+        if let model = MessageFB(dictionary: document.data()) {
           return model
         } else {
-          fatalError("Unable to initialize type \(Message.self) with dictionary \(document.data())")
+          fatalError("Unable to initialize type \(MessageFB.self) with dictionary \(document.data())")
         }
       }
       

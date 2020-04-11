@@ -20,7 +20,7 @@ protocol UserManaging {
 
 class StorageManager{
   // MARK: - Core Data stack
-  
+  /*
   lazy var appDocumentsDirectory: URL = {
     let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     return urls[urls.count-1]
@@ -79,9 +79,9 @@ class StorageManager{
           }
       }
   }
-  
+  */
   // MARK: - PersistentContainer realisation
-  /*
+  
   lazy var backgroundContext = persistentContainer.newBackgroundContext()
   
   lazy var persistentContainer: NSPersistentContainer = {
@@ -96,20 +96,8 @@ class StorageManager{
   }()
   
   // MARK - Core Data Saving support
-   
-  func saveBackgroundContext() {
-    if backgroundContext.hasChanges{
-      backgroundContext.perform {
-        do {
-          try self.backgroundContext.save()
-        } catch {
-          let error = error as Error
-        }
-      }
-    }
-  }
-  */
-  /*func saveBackgroundContext(successCompletion success: @escaping () -> Void,
+  
+  func saveBackgroundContext(successCompletion success: @escaping () -> Void,
                              failCompletion failure: @escaping (Error) -> Void) {
     if backgroundContext.hasChanges{
       backgroundContext.perform {
@@ -122,8 +110,8 @@ class StorageManager{
         }
       }
     }
-  }*/
-  
+  }
+  /*
   private func saveAtPrivateContext(successCompletion success: @escaping () -> Void,
                           failCompletion failure: @escaping (Error) -> Void) {
     if privateManagedObjectContext.hasChanges{
@@ -138,6 +126,7 @@ class StorageManager{
       }
     }
   }
+ */
 }
 
 // MARK: protocol UserManaging
@@ -153,7 +142,7 @@ extension StorageManager: UserManaging {
   }
   
   private func fetchUserManagedObject() -> User? {
-    let context = privateManagedObjectContext
+    let context = backgroundContext
     let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
     do {
       let users = try context.fetch(fetchRequest)
@@ -164,7 +153,7 @@ extension StorageManager: UserManaging {
   }
   
   func updateUserProfileUI(execute: @escaping (String, String) -> Void){
-    let context = mainManagedObjectContext
+    let context = persistentContainer.viewContext
     context.perform {
       let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
       let allUsers = try? context.fetch(fetchRequest)
@@ -182,12 +171,43 @@ extension StorageManager: UserManaging {
       if let userName = name { user.name = userName }
       if let userInfo = info { user.info = userInfo }
     } else {
-      let user = User(context: privateManagedObjectContext)
+      let user = User(context: backgroundContext)
       user.name = name ?? "Noname"
       user.info = info
     }
     
-    saveAtPrivateContext(successCompletion: success, failCompletion: failure)
+    saveBackgroundContext(successCompletion: success, failCompletion: failure)
   }
 }
 
+extension StorageManager {
+  
+  func saveChannel(channelFB: ChannelFB, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void) {
+    if let channelCached = fetchChannelByIdentifier(identifier: channelFB.identifier) {
+      if channelCached.name != channelFB.name { channelCached.name = channelFB.name}
+      if channelCached.lastActivity != channelFB.lastActivity { channelCached.lastActivity = channelFB.lastActivity}
+      if channelCached.lastMessage != channelFB.lastMessage { channelCached.lastMessage = channelFB.lastMessage}
+    } else {
+      let channelNew = Channel(context: backgroundContext)
+      channelNew.identifier = channelFB.identifier
+      channelNew.name = channelFB.name
+      channelNew.lastActivity = channelFB.lastActivity
+      channelNew.lastMessage = channelFB.lastMessage
+    }
+
+    saveBackgroundContext(successCompletion: success, failCompletion: failure)
+  }
+  
+  func fetchChannelByIdentifier(identifier: String) -> Channel?{
+    let context = backgroundContext
+    let fetchRequest = NSFetchRequest<Channel>(entityName: String(describing: Channel.self))
+    fetchRequest.predicate = NSPredicate(format: "identifier == %@", identifier)
+    do {
+      let channel = try context.fetch(fetchRequest)
+      return channel.first
+    } catch {
+      fatalError("Failed to fetch Channel by id:\(identifier). Error: \(error)")
+    }
+  }
+
+}

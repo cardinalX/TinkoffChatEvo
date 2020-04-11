@@ -16,7 +16,7 @@ class ChannelViewController: UIViewController {
   
   var channelReference: DocumentReference?
   var docIdentifier: String = ""
-  private var messages: [Message] = []
+  private var messages: [MessageFB] = []
   private var messagesCellModels: [MessageViewCell.MessageCellModel] = []
   
   override func viewDidLoad() {
@@ -54,7 +54,7 @@ class ChannelViewController: UIViewController {
     self.view.addSubview(submitByOtherButton)
   }
   
-  func messagesToMessagesCellModels(messages: [Message]) -> [MessageViewCell.MessageCellModel]{
+  func messagesToMessagesCellModels(messages: [MessageFB]) -> [MessageViewCell.MessageCellModel]{
     let messageCellModels = messages.map { (message) -> MessageViewCell.MessageCellModel in
       if let model = MessageViewCell.MessageCellModel(message: message) {
         return model
@@ -75,10 +75,10 @@ class ChannelViewController: UIViewController {
     guard let content = contentTextView.text else { return }
     if (content == "") { return }
     
-    let newMessage = Message(content: content,
-                             created: Date(),
-                             senderID: UIDevice.current.identifierForVendor!.uuidString + "1df2s",
-                             senderName: "Чужой")
+    let newMessage = MessageFB(content: content,
+                               created: Date(),
+                               senderID: UIDevice.current.identifierForVendor!.uuidString + "1df2s",
+                               senderName: "Чужой")
     let firebaseManager = FirebaseManager()
     firebaseManager.addMessage(documentID: docIdentifier, message: newMessage)
     NSLog("Message '\(content)' created by \(UIDevice.current.identifierForVendor!.uuidString)1df2s")
@@ -88,10 +88,10 @@ class ChannelViewController: UIViewController {
     guard let content = contentTextView.text else { return }
     if (content == "") { return }
     
-    let newMessage = Message(content: content,
-                             created: Date(),
-                             senderID: UIDevice.current.identifierForVendor!.uuidString,
-                             senderName: StorageManager().userName)
+    let newMessage = MessageFB(content: content,
+                               created: Date(),
+                               senderID: UIDevice.current.identifierForVendor!.uuidString,
+                               senderName: StorageManager().userName)
     let firebaseManager = FirebaseManager()
     firebaseManager.addMessage(documentID: docIdentifier, message: newMessage)
     NSLog("Message '\(content)' created by \(StorageManager().userName)")

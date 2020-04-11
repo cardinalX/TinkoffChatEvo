@@ -29,7 +29,7 @@ class ConversationCell: UITableViewCell {
       self.hasUnreadMessages = hasUnreadMessages
     }
     
-    init?(channel: Channel) {
+    init?(channel: ChannelFB) {
       
       self.name = channel.name
       self.message = channel.lastMessage

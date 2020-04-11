@@ -20,7 +20,7 @@
     </entity>
     <elements>
         <element name="Channel" positionX="-45" positionY="18" width="128" height="118"/>
-        <element name="Message" positionX="-27" positionY="27" width="128" height="118"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="73"/>
+        <element name="Message" positionX="222.47265625" positionY="0.4375" width="128" height="118"/>
+        <element name="User" positionX="-246.15234375" positionY="67.02734375" width="128" height="73"/>
     </elements>
 </model>

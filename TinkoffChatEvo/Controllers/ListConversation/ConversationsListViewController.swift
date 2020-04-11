@@ -12,7 +12,7 @@ import Firebase
 class ConversationsListViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   
-  private var channels: [Channel] = []
+  private var channelsFB: [ChannelFB] = []
   private var documents: [QueryDocumentSnapshot] = []
   
   override func viewDidLoad() {
@@ -38,7 +38,7 @@ class ConversationsListViewController: UIViewController {
     
     let firebaseManager = FirebaseManager()
     firebaseManager.updateChannels(){ models, documents in
-      self.channels = models
+      self.channelsFB = models
       self.documents = documents
       
       let conversationCellModels = self.channelsToConversationCellModels(channels: models)
@@ -54,6 +54,11 @@ class ConversationsListViewController: UIViewController {
       }
       print(documents)
       self.tableView.reloadData()
+      
+      let storageManager = StorageManager()
+      for channelFB in models {
+        storageManager.saveChannel(channelFB: channelFB, successCompletion: {print("\(channelFB) cached successful")}, failCompletion: { error in print("ERROR caching channel. Reason: \(error)")})
+      }
     }
   }
   
@@ -77,7 +82,7 @@ class ConversationsListViewController: UIViewController {
       guard let answer = alertCtrl?.textFields?[0].text else { return }
       if (answer == "") { return }
       
-      let newChannel = Channel(lastActivity: Date(), lastMessage: "Channel created", identifier: UUID().uuidString, name: answer)
+      let newChannel = ChannelFB(lastActivity: Date(), lastMessage: "Channel created", identifier: UUID().uuidString, name: answer)
       let firebaseManager = FirebaseManager()
       firebaseManager.addChannel(channel: newChannel)
       NSLog("Channel '\(answer)' created")
@@ -107,7 +112,7 @@ class ConversationsListViewController: UIViewController {
     return splitedData
   }
   
-  func channelsToConversationCellModels(channels: [Channel]) -> [ConversationCell.ConversationCellModel]{
+  func channelsToConversationCellModels(channels: [ChannelFB]) -> [ConversationCell.ConversationCellModel]{
     let conversationCellModels = channels.map { (channel) -> ConversationCell.ConversationCellModel in
       if let model = ConversationCell.ConversationCellModel(channel: channel) {
         return model
@@ -174,7 +179,6 @@ extension ConversationsListViewController: UITableViewDelegate{
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    //let conversationController = ConversationViewController()
     let conversationController = ChannelViewController()
 
     if let tableSection = TableSection(rawValue: indexPath.section){

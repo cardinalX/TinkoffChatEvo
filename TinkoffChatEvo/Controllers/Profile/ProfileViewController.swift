@@ -127,13 +127,17 @@ class ProfileViewController: UIViewController {
     }
   }
   
-  var successAlert: () -> Void { return{
-    self.activityIndicator.stopAnimating()
-    let alert = UIAlertController(title: "Успех",
-                                  message: "Данные успешно сохранены",
-                                  preferredStyle: .alert)
-    alert.addAction(UIAlertAction(title: "Ок", style: .default) { (action: UIAlertAction) -> Void in })
-    self.present(alert, animated: true, completion: nil)
+  var successAlert: () -> Void {
+    return {
+      DispatchQueue.main.async{
+        self.activityIndicator.stopAnimating()
+        let alert = UIAlertController(title: "Успех",
+                                      message: "Данные успешно сохранены",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ок", style: .default) { (action: UIAlertAction) -> Void in })
+        self.present(alert, animated: true, completion: nil)
+      }
+      self.loadProfileData()
     }
   }
   
@@ -196,21 +200,15 @@ class ProfileViewController: UIViewController {
     if (nameProfileTextField.text != nameProfileLabel.text) {
       if let name = nameProfileTextField.text {
         print("\(name) = nameProfileTextField.text")
-        StorageManager.instance.editFirstUserManagedObject(name: name, info: nil)
+        StorageManager.instance.saveUserProfile(name: name, info: nil, successCompletion: successAlert, failCompletion: retryAlert)
       }
     }
     if (descriptionProfileTextView.text != descriptionProfileLabel.text) {
       if let descriptionProfile = descriptionProfileTextView.text {
         print("\(descriptionProfile) = descriptionProfile.text")
-        StorageManager.instance.editFirstUserManagedObject(name: nil, info: descriptionProfile)
+        StorageManager.instance.saveUserProfile(name: nil, info: descriptionProfile, successCompletion: successAlert, failCompletion: retryAlert)
       }
     }
-    
-    let success = {
-      DispatchQueue.main.async(execute: self.successAlert)
-      self.loadProfileData()
-    }
-    StorageManager.instance.savePrivateContext(successCompletion: success, failCompletion: retryAlert)
     self.switchUIToUneditableMode()
   }
 }

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseFirestore
 
 struct Channel {
   let lastActivity: Date
@@ -15,7 +15,7 @@ struct Channel {
   let identifier: String
   let name: String
   
-  var dictionary: [String: Any] {
+  var toDict: [String: Any] {
     return [
       "lastActivity": Timestamp(date: lastActivity),
       "lastMessage": lastMessage,
@@ -26,7 +26,6 @@ struct Channel {
 }
 
 extension Channel {
-
   init?(dictionary: [String : Any]) {
     let lastMessage = dictionary["lastMessage"] as? String ?? "No messages yet"
     let name = dictionary["name"] as? String ?? "Noname^$"
@@ -44,11 +43,11 @@ struct Message {
   let senderId: String
   let senderName: String
   
-  var dictionary: [String: Any] {
+  var toDict: [String: Any] {
     return [
       "content": content,
       "created": Timestamp(date: created),
-      "senderId": senderId,
+      "senderID": senderId,
       "senderName": senderName,
     ]
   }
@@ -57,10 +56,16 @@ struct Message {
 extension Message {
 
   init?(dictionary: [String : Any]) {
-    guard let content = dictionary["userId"] as? String,
-        let senderId = dictionary["senderId"] as? String,
-        let senderName = dictionary["senderName"] as? String,
-        let created = dictionary["created"] as? Timestamp else { return nil }
+    let content = dictionary["content"] as? String ?? "No messages yet"
+    var senderId = dictionary["senderID"] as? String ?? "mudakID"
+    let senderName = dictionary["senderName"] as? String ?? "Noname^$"
+    let created = dictionary["created"] as? Timestamp ?? Timestamp(date: Date(timeIntervalSince1970: 0))
+    //guard let created = dictionary["created"] as? Timestamp else { return nil }
+    
+    // чтобы не падало, на случай когда кто-нибудь криво записал новый словарь
+    if (dictionary.keys.contains("senderId")) {
+      senderId = dictionary["senderId"] as? String ?? "mudakID"
+    }
     
     self.init(content: content, created: created.dateValue(), senderId: senderId, senderName: senderName)
   }

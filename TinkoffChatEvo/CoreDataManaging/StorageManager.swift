@@ -10,16 +10,12 @@ import Foundation
 import CoreData
 
 protocol UserManaging {
-  func getFirstUserManagedObject() -> User?
-  func createUserManagedObject(context: NSManagedObjectContext, name: String, info: String?) -> User
   func updateUserProfileUI(execute: @escaping (String, String) -> Void)
-  func getUserManagedObject(by name: String) -> User?
-  func editFirstUserManagedObject(name: String?, info: String?)
-  func getAllUsersManagedObjects() -> [User?]
-  //func saveBackgroundContext(successCompletion success: @escaping () -> Void,
-  //                           failCompletion failure: @escaping (Error) -> Void)
-  func savePrivateContext(successCompletion success: @escaping () -> Void,
-                          failCompletion failure: @escaping (Error) -> Void)
+  func saveUserProfile(name: String?,
+                       info: String?,
+                       successCompletion success: @escaping () -> Void,
+                       failCompletion failure: @escaping (Error) -> Void)
+  var userName: String { get }
 }
 
 class StorageManager{
@@ -77,7 +73,7 @@ class StorageManager{
    
   
   // MARK: - Core Data Saving support
-  func saveMainContext () {
+  private func saveMainContext () {
       if mainManagedObjectContext.hasChanges {
           do {
               try mainManagedObjectContext.save()
@@ -132,12 +128,8 @@ class StorageManager{
       }
     }
   }*/
-}
-
-// MARK: protocol UserManaging
   
-extension StorageManager: UserManaging {
-  func savePrivateContext(successCompletion success: @escaping () -> Void,
+  private func savePrivateContext(successCompletion success: @escaping () -> Void,
                           failCompletion failure: @escaping (Error) -> Void) {
     if privateManagedObjectContext.hasChanges{
       privateManagedObjectContext.perform {
@@ -151,8 +143,31 @@ extension StorageManager: UserManaging {
       }
     }
   }
+}
+
+// MARK: protocol UserManaging
   
-  func getFirstUserManagedObject() -> User? {
+extension StorageManager: UserManaging {
+  var userName: String {
+    get {
+      guard let user = fetchUserManagedObject() else{
+        return "Noname"
+      }
+      return user.name ?? "Noname"
+    }
+  }
+  
+  private func createUserManagedObject(context: NSManagedObjectContext, name: String, info: String?) -> User{
+    if let user = fetchUserManagedObject() {
+      return user
+    }
+    let user = User(context: context)
+    user.name = name
+    user.info = info
+    return user
+  }
+  
+  private func fetchUserManagedObject() -> User? {
     let context = privateManagedObjectContext
     let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
     let users = try? context.fetch(fetchRequest)
@@ -175,43 +190,12 @@ extension StorageManager: UserManaging {
     }
   }
   
-  func getUserManagedObject(by name: String) -> User? {
-    let context = privateManagedObjectContext
-    let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
-    fetchRequest.predicate = NSPredicate(format: "name == %@", name)
-    let users = try? context.fetch(fetchRequest)
-    return users?.first
-  }
-  
-  func createUserManagedObject(context: NSManagedObjectContext, name: String, info: String?) -> User{
-    if let user = getFirstUserManagedObject() {
-      return user
-    }
-    let user = User(context: context)
-    user.name = name
-    user.info = info
-    return user
-  }
-  
-  func editFirstUserManagedObject(name: String?, info: String?) {
-    if let user = getFirstUserManagedObject() {
+  func saveUserProfile(name: String?, info: String?, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void) {
+    if let user = fetchUserManagedObject() {
       if let userName = name { user.name = userName }
       if let userInfo = info { user.info = userInfo }
     } else { _ = createUserManagedObject(context: privateManagedObjectContext, name: name ?? "Noname", info: info) }
-  }
-
-  func getAllUsersManagedObjects() -> [User?] {
-    let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
-    do {
-      let allUsers = try privateManagedObjectContext.fetch(fetchRequest)
-      for user in allUsers {
-        print("name - \(user.name ?? "nil"); info = \(user.info ?? "nil")")
-        }
-      print(allUsers.count)
-      return allUsers
-    } catch {
-      print(error)
-    }
-    return [nil]
+    
+    savePrivateContext(successCompletion: success, failCompletion: failure)
   }
 }

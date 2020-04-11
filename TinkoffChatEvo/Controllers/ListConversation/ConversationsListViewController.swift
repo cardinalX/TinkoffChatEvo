@@ -43,14 +43,18 @@ class ConversationsListViewController: UIViewController {
       
       let conversationCellModels = self.channelsToConversationCellModels(channels: models)
       
-      for i in conversationCellModels{
-        print(i)
-      }
       self.splitedData = self.splitToTableSections(filter: conversationCellModels)
 
+      for channel in models {
+        print(channel)
+      }
+      for i in documents {
+        print(i.data())
+        print(i.documentID)
+      }
+      print(documents)
       self.tableView.reloadData()
     }
-    print(channels)
   }
   
   @objc func userProfileTapped(sender: AnyObject) {
@@ -65,7 +69,28 @@ class ConversationsListViewController: UIViewController {
   
   @objc func addChannelTapped(sender: AnyObject) {
     print("addChannelTapped")
-    //addChannelTapped(sender)
+    
+    let alertCtrl = UIAlertController(title: "Введите название канала", message: nil, preferredStyle: .alert)
+    alertCtrl.addTextField()
+
+    let submitAction = UIAlertAction(title: "Добавить", style: .default) { [weak alertCtrl] _ in
+      guard let answer = alertCtrl?.textFields?[0].text else { return }
+      if (answer == "") { return }
+      
+      let newChannel = Channel(lastActivity: Date(), lastMessage: "Channel created", identifier: UUID().uuidString, name: answer)
+      let firebaseManager = FirebaseManager()
+      firebaseManager.addChannel(channel: newChannel)
+      NSLog("Channel '\(answer)' created")
+    }
+    let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) {
+        UIAlertAction in
+        NSLog("Cancel Pressed")
+    }
+
+    alertCtrl.addAction(submitAction)
+    alertCtrl.addAction(cancelAction)
+    present(alertCtrl, animated: true)
+    
   }
   
   // MARK: - DATA
@@ -85,7 +110,6 @@ class ConversationsListViewController: UIViewController {
   func channelsToConversationCellModels(channels: [Channel]) -> [ConversationCell.ConversationCellModel]{
     let conversationCellModels = channels.map { (channel) -> ConversationCell.ConversationCellModel in
       if let model = ConversationCell.ConversationCellModel(channel: channel) {
-        print("🎃Succesful \(model) with object channel \(channel)")
         return model
       } else {
         fatalError("Unable to initialize type \(ConversationCell.ConversationCellModel.self) with object \(channel)")
@@ -148,13 +172,23 @@ extension ConversationsListViewController: UITableViewDataSource{
 extension ConversationsListViewController: UITableViewDelegate{
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let conversationViewController = ConversationViewController()
+    tableView.deselectRow(at: indexPath, animated: true)
     
-    if  let tableSection = TableSection(rawValue: indexPath.section){
-      conversationViewController.title = splitedData[tableSection]?[indexPath.row].name ?? "Название диалога"
+    //let conversationController = ConversationViewController()
+    let conversationController = ChannelViewController()
+
+    if let tableSection = TableSection(rawValue: indexPath.section){
+      conversationController.title = splitedData[tableSection]?[indexPath.row].name ?? "Название диалога"
+      if(tableSection == .online) {
+        conversationController.channelReference = documents[indexPath.row].reference
+        conversationController.docIdentifier = documents[indexPath.row].documentID
+      } else {
+        conversationController.channelReference = documents[indexPath.row + (splitedData[.online]?.count ?? 0)].reference
+        conversationController.docIdentifier = documents[indexPath.row + (splitedData[.online]?.count ?? 0)].documentID
+      }
     }
     
-    navigationController?.pushViewController(conversationViewController, animated: true)
+    navigationController?.pushViewController(conversationController, animated: true)
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -174,15 +174,13 @@ extension StorageManager: UserManaging {
   }
   
   func updateUserProfileUI(execute: @escaping (String, String) -> Void){
-    let context = privateManagedObjectContext
+    let context = mainManagedObjectContext
     context.perform {
       let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
       let allUsers = try? context.fetch(fetchRequest)
       if let user = allUsers?.first {
-        print(user.name as Any)
-        self.mainManagedObjectContext.perform{
-          execute(user.name ?? "nil", user.info ?? "")
-        }
+        print("\(user.name as Any) FROM updateUserProfileUI")
+        execute(user.name ?? "nil", user.info ?? "")
       } else {
         print("Error updating UserProfileUI, no users")
       }

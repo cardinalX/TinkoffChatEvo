@@ -124,7 +124,7 @@ class StorageManager{
     }
   }*/
   
-  private func savePrivateContext(successCompletion success: @escaping () -> Void,
+  private func saveAtPrivateContext(successCompletion success: @escaping () -> Void,
                           failCompletion failure: @escaping (Error) -> Void) {
     if privateManagedObjectContext.hasChanges{
       privateManagedObjectContext.perform {
@@ -150,16 +150,6 @@ extension StorageManager: UserManaging {
       }
       return user.name ?? "Noname"
     }
-  }
-  
-  private func createUserManagedObject(context: NSManagedObjectContext, name: String, info: String?) -> User{
-    if let user = fetchUserManagedObject() {
-      return user
-    }
-    let user = User(context: context)
-    user.name = name
-    user.info = info
-    return user
   }
   
   private func fetchUserManagedObject() -> User? {
@@ -191,8 +181,13 @@ extension StorageManager: UserManaging {
     if let user = fetchUserManagedObject() {
       if let userName = name { user.name = userName }
       if let userInfo = info { user.info = userInfo }
-    } else { _ = createUserManagedObject(context: privateManagedObjectContext, name: name ?? "Noname", info: info) }
+    } else {
+      let user = User(context: privateManagedObjectContext)
+      user.name = name ?? "Noname"
+      user.info = info
+    }
     
-    savePrivateContext(successCompletion: success, failCompletion: failure)
+    saveAtPrivateContext(successCompletion: success, failCompletion: failure)
   }
 }
+

@@ -12,8 +12,9 @@ import Firebase
 class FirebaseManager {
   private lazy var db = Firestore.firestore()
   private lazy var channelsCollection = db.collection("channels")
-  /*private lazy var messagesCollection: CollectionReference = {
-    guard let channelIdentifier = channel?.identifier else { fatalError() }
+  /*var channelDocumentId: String?
+  private lazy var messagesCollection: CollectionReference = {
+    guard let channelIdentifier = channelDocumentId else { fatalError("no channelDocumentId") }
     return db.collection("channels").document(channelIdentifier).collection("messages")
   }()*/
   
@@ -21,10 +22,9 @@ class FirebaseManager {
     channelsCollection.addDocument(data: channel.toDict)
   }
   
-  func addMessage(channelRef: DocumentReference?, documentID: String, message: Message){
-    //let localMessagesCollection = channelsCollection.document(documentID).collection("messages")
-    let localMessagesCollection = channelRef?.collection("messages")
-    localMessagesCollection?.addDocument(data: message.toDict)
+  func addMessage(documentID: String, message: Message){
+    let localMessagesCollection = channelsCollection.document(documentID).collection("messages")
+    localMessagesCollection.addDocument(data: message.toDict)
   }
   
   func updateChannels(completion: @escaping ([Channel], [QueryDocumentSnapshot]) -> Void) {
@@ -46,10 +46,9 @@ class FirebaseManager {
     }
   }
   
-  func updateMessages(channelRef: DocumentReference?, documentID: String, completion: @escaping ([Message]) -> Void){
-    //let localMessagesCollection = channelsCollection.document(documentID).collection("messages").order(by: "created", descending: true)
-    let localMessagesCollection = channelRef?.collection("messages").order(by: "created", descending: true)
-    localMessagesCollection?.addSnapshotListener { [weak self] snapshot, error in
+  func updateMessages(documentID: String, completion: @escaping ([Message]) -> Void){
+    let localMessagesCollection = channelsCollection.document(documentID).collection("messages").order(by: "created", descending: true)
+    localMessagesCollection.addSnapshotListener { [weak self] snapshot, error in
       guard let snapshot = snapshot else {
         print("Error fetching snapshot results: \(error!)")
         return

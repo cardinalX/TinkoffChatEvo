@@ -38,7 +38,7 @@ class ChannelViewController: UIViewController {
     tableView.setContentOffset(.zero, animated: true)
     
     let firebaseManager = FirebaseManager()
-    firebaseManager.updateMessages(channelRef: channelReference, documentID: docIdentifier){ models in
+    firebaseManager.updateMessages(documentID: docIdentifier){ models in
       self.messages = models
       
       self.messagesCellModels = self.messagesToMessagesCellModels(messages: models)
@@ -69,6 +69,7 @@ class ChannelViewController: UIViewController {
     navigationController?.popViewController(animated: true)
   }
   
+  ///method and button only for testing
   @objc func submitByOtherButtonAction(sender: UIButton!) {
     print("submitByOtherButtonAction")
     guard let content = contentTextView.text else { return }
@@ -79,7 +80,7 @@ class ChannelViewController: UIViewController {
                              senderId: UIDevice.current.identifierForVendor!.uuidString + "1df2s",
                              senderName: "Чужой")
     let firebaseManager = FirebaseManager()
-    firebaseManager.addMessage(channelRef: channelReference, documentID: docIdentifier, message: newMessage)
+    firebaseManager.addMessage(documentID: docIdentifier, message: newMessage)
     NSLog("Message '\(content)' created by StorageManager.instance.getFirstUserManagedObject()?.name")
   }
   
@@ -92,7 +93,7 @@ class ChannelViewController: UIViewController {
                              senderId: UIDevice.current.identifierForVendor!.uuidString,
                              senderName: StorageManager().userName)
     let firebaseManager = FirebaseManager()
-    firebaseManager.addMessage(channelRef: channelReference, documentID: docIdentifier, message: newMessage)
+    firebaseManager.addMessage(documentID: docIdentifier, message: newMessage)
     NSLog("Message '\(content)' created by StorageManager.instance.getFirstUserManagedObject()?.name")
   }
 }
@@ -128,6 +129,7 @@ extension ChannelViewController: UITableViewDataSource{
 extension ChannelViewController: UITableViewDelegate{
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
     tableView.deselectRow(at: indexPath, animated: true)
   }
 }

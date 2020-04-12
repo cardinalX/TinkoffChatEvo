@@ -29,12 +29,12 @@ class ConversationCell: UITableViewCell {
       self.hasUnreadMessages = hasUnreadMessages
     }
     
-    init?(channel: ChannelFB) {
+    init(channel: ChannelFB) {
       
       self.name = channel.name
       self.message = channel.lastMessage
       self.date = channel.lastActivity
-      if (channel.lastActivity.timeIntervalSinceNow > -6000) {
+      if (channel.lastActivity.timeIntervalSinceNow > -600) {
         self.isOnline = true
       }
       else {

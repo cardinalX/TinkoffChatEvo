@@ -13,9 +13,8 @@ class ChannelViewController: UIViewController {
   
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var contentTextView: UITextView!
-  
-  var channelReference: DocumentReference?
-  var docIdentifier: String = ""
+
+  var documentIdentifier: String = ""
   private var messages: [MessageFB] = []
   private var messagesCellModels: [MessageViewCell.MessageCellModel] = []
   
@@ -38,7 +37,7 @@ class ChannelViewController: UIViewController {
     tableView.setContentOffset(.zero, animated: true)
     
     let firebaseManager = FirebaseManager()
-    firebaseManager.updateMessages(documentID: docIdentifier){ models in
+    firebaseManager.updateMessages(documentID: documentIdentifier){ models in
       self.messages = models
       
       self.messagesCellModels = self.messagesToMessagesCellModels(messages: models)
@@ -80,7 +79,7 @@ class ChannelViewController: UIViewController {
                                senderID: UIDevice.current.identifierForVendor!.uuidString + "1df2s",
                                senderName: "Чужой")
     let firebaseManager = FirebaseManager()
-    firebaseManager.addMessage(documentID: docIdentifier, message: newMessage)
+    firebaseManager.addMessage(documentID: documentIdentifier, message: newMessage)
     NSLog("Message '\(content)' created by \(UIDevice.current.identifierForVendor!.uuidString)1df2s")
   }
   
@@ -93,7 +92,7 @@ class ChannelViewController: UIViewController {
                                senderID: UIDevice.current.identifierForVendor!.uuidString,
                                senderName: StorageManager().userName)
     let firebaseManager = FirebaseManager()
-    firebaseManager.addMessage(documentID: docIdentifier, message: newMessage)
+    firebaseManager.addMessage(documentID: documentIdentifier, message: newMessage)
     NSLog("Message '\(content)' created by \(StorageManager().userName)")
   }
 }

@@ -226,7 +226,7 @@ extension ConversationsListViewController: UITableViewDelegate{
     if let tableSection = TableSection(rawValue: indexPath.section){
       
       channelViewController.title = splitedChannelsFB[tableSection]?[indexPath.row].name ?? "Название диалога"
-      channelViewController.documentIdentifier = splitedChannelsFB[tableSection]?[indexPath.row].identifier ?? "noID"
+      channelViewController.channelIdentifier = splitedChannelsFB[tableSection]?[indexPath.row].identifier ?? "noID"
     }
     
     navigationController?.pushViewController(channelViewController, animated: true)

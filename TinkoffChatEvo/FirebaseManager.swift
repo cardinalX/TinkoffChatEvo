@@ -48,6 +48,28 @@ class FirebaseManager {
     }
   }
   
+  func updateMessages(documentID: String, completion: @escaping ([QueryDocumentSnapshot]) -> Void){
+    let localMessagesCollection = channelsCollection.document(documentID).collection("messages").order(by: "created", descending: true)
+    localMessagesCollection.addSnapshotListener { [weak self] snapshot, error in
+      guard let snapshot = snapshot else {
+        print("Error fetching snapshot results: \(error!)")
+        return
+      }
+      
+      print(snapshot.documents)
+      /*let models = snapshot.documents.map { (document) -> MessageFB in
+        if let model = MessageFB(dictionary: document.data()) {
+          return model
+        } else {
+          fatalError("Unable to initialize type \(MessageFB.self) with dictionary \(document.data())")
+        }
+      }
+      */
+      //completion(models, snapshot.documents)
+      completion(snapshot.documents)
+    }
+  }
+  /*
   func updateMessages(documentID: String, completion: @escaping ([MessageFB]) -> Void){
     let localMessagesCollection = channelsCollection.document(documentID).collection("messages").order(by: "created", descending: true)
     localMessagesCollection.addSnapshotListener { [weak self] snapshot, error in
@@ -66,6 +88,8 @@ class FirebaseManager {
       }
       
       completion(models)
+      //completion(snapshot.documents)
     }
   }
+ */
 }

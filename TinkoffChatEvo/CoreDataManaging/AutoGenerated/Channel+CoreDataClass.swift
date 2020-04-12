@@ -11,7 +11,5 @@ import CoreData
 
 @objc(Channel)
 public class Channel: NSManagedObject {
-  public var isOnline: Bool {
-    return self.lastActivity.timeIntervalSince(Date()) > -600
-  }
+  
 }

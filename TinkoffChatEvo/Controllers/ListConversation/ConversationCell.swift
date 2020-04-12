@@ -42,6 +42,18 @@ class ConversationCell: UITableViewCell {
       }
       self.hasUnreadMessages = self.isOnline
     }
+    
+    init(channel: Channel) {
+      self.name = channel.name
+      self.message = channel.lastMessage
+      self.date = channel.lastActivity
+      if channel.isOnline == "Online" {
+        self.isOnline = true
+      } else {
+        self.isOnline = false
+      }
+      self.hasUnreadMessages = self.isOnline
+    }
   }
   
   override func awakeFromNib() {

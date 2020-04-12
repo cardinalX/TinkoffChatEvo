@@ -21,5 +21,6 @@ extension Message {
     @NSManaged public var senderID: String?
     @NSManaged public var senderName: String?
     @NSManaged public var channel: Channel?
+    @NSManaged public var identifier: String?
 
 }

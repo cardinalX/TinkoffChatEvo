@@ -2,7 +2,7 @@
 //  Channel+CoreDataProperties.swift
 //  
 //
-//  Created by Макс Лебедев on 12/04/2020.
+//  Created by Макс Лебедев on 12.04.2020.
 //
 //
 
@@ -20,7 +20,13 @@ extension Channel {
     @NSManaged public var lastActivity: Date
     @NSManaged public var lastMessage: String
     @NSManaged public var name: String
-    @NSManaged public var messages: NSSet
+    var isOnline: String? {
+      return self.lastActivity.timeIntervalSince(Date()) > -600 ? "Online" : "History"
+      //return self.lastActivity.timeIntervalSince(Date()) > -600
+    }
+    //@NSManaged public var isOnline: Bool
+    @NSManaged public var messages: NSSet?
+
 }
 
 // MARK: Generated accessors for messages

@@ -54,11 +54,11 @@ class ChannelViewController: UIViewController {
   }
   
   func messagesToMessagesCellModels(messages: [MessageFB]) -> [MessageViewCell.MessageCellModel]{
-    let messageCellModels = messages.map { (message) -> MessageViewCell.MessageCellModel in
-      if let model = MessageViewCell.MessageCellModel(message: message) {
+    let messageCellModels = messages.map { (messageFB) -> MessageViewCell.MessageCellModel in
+      if let model = MessageViewCell.MessageCellModel(messageFB: messageFB) {
         return model
       } else {
-        fatalError("Unable to initialize type \(MessageViewCell.MessageCellModel.self) with object \(message)")
+        fatalError("Unable to initialize type \(MessageViewCell.MessageCellModel.self) with object \(messageFB)")
       }
     }
     return messageCellModels

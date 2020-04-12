@@ -28,9 +28,15 @@ class MessageViewCell: UITableViewCell {
       self.isSender = isSender
     }
     
-    init?(message: MessageFB) {
-      self.content = message.content
-      self.created = message.created
+    init?(messageFB: MessageFB) {
+      self.content = messageFB.content
+      self.created = messageFB.created
+      self.isSender = messageFB.senderID == UIDevice.current.identifierForVendor!.uuidString
+    }
+    
+    init(message: Message) {
+      self.content = message.content ?? " "
+      self.created = message.created ?? Date(timeIntervalSince1970: 0)
       self.isSender = message.senderID == UIDevice.current.identifierForVendor!.uuidString
     }
   }

@@ -18,6 +18,16 @@ protocol UserManaging {
   var userName: String { get }
 }
 
+protocol ChannelCaching {
+  func saveChannel(channelFB: ChannelFB, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void)
+  func fetchChannelByIdentifier(identifier: String) -> Channel?
+}
+
+protocol MessageCaching {
+  func saveMessage(channelFB: MessageFB, documentId: String, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void)
+  func fetchMessageByIdentifier(identifier: String) -> Message?
+}
+
 class StorageManager{
   // MARK: - Core Data stack
   /*
@@ -180,7 +190,7 @@ extension StorageManager: UserManaging {
   }
 }
 
-extension StorageManager {
+extension StorageManager: ChannelCaching {
   
   func saveChannel(channelFB: ChannelFB, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void) {
     if let channelCached = fetchChannelByIdentifier(identifier: channelFB.identifier) {
@@ -201,6 +211,46 @@ extension StorageManager {
   func fetchChannelByIdentifier(identifier: String) -> Channel?{
     let context = backgroundContext
     let fetchRequest = NSFetchRequest<Channel>(entityName: String(describing: Channel.self))
+    fetchRequest.predicate = NSPredicate(format: "identifier == %@", identifier)
+    do {
+      let channel = try context.fetch(fetchRequest)
+      return channel.first
+    } catch {
+      fatalError("Failed to fetch Channel by id:\(identifier). Error: \(error)")
+    }
+  }
+
+}
+
+extension StorageManager {
+  
+  func saveMessage(messageFB: MessageFB, messageId: String, parentChannelIdentifier: String, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void) {
+    if let messageCached = fetchMessageByIdentifier(identifier: messageId) {
+      if messageCached.content != messageFB.content { messageCached.content = messageFB.content}
+      if messageCached.created != messageFB.created { messageCached.created = messageFB.created}
+      if messageCached.senderID != messageFB.senderID { messageCached.senderID = messageFB.senderID}
+      if messageCached.senderName != messageFB.senderName { messageCached.senderName = messageFB.senderName }
+    } else {
+      if let parentChannel = fetchChannelByIdentifier(identifier: parentChannelIdentifier){
+        let messageNew = Message(context: backgroundContext)
+        messageNew.channel = parentChannel
+        messageNew.content = messageFB.content
+        messageNew.created = messageFB.created
+        messageNew.senderID = messageFB.senderID
+        messageNew.senderName = messageFB.senderName
+        messageNew.identifier = messageId
+      } else {
+        print("ERROR fetching Channel by Identifier. New message not cached")
+        return
+      }
+    }
+
+    saveBackgroundContext(successCompletion: success, failCompletion: failure)
+  }
+  
+  func fetchMessageByIdentifier(identifier: String) -> Message?{
+    let context = backgroundContext
+    let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
     fetchRequest.predicate = NSPredicate(format: "identifier == %@", identifier)
     do {
       let channel = try context.fetch(fetchRequest)

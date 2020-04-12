@@ -21,16 +21,15 @@ class ConversationsListViewController: UIViewController {
   fileprivate lazy var fetchedResultsController: NSFetchedResultsController<Channel> = {
     // Initialize Fetch Request
     let fetchRequest: NSFetchRequest<Channel> = Channel.fetchRequest()
-    //let fetchRequest = NSFetchRequest<Channel>(entityName: String(describing: Channel.self))
     
     // Add Sort Descriptors
-    //let sortDescriptor = NSSortDescriptor(key: "lastActivity", ascending: false)
     let sortDescriptors = [NSSortDescriptor(key: "lastActivity", ascending: false), NSSortDescriptor(key: "name", ascending: true)]
+    //let sortDescriptors = [NSSortDescriptor(key: "isOnline", ascending: true)]
     fetchRequest.sortDescriptors = sortDescriptors
     
     // Initialize Fetched Results Controller
-    let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.storageManager.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-    //let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.storageManager.persistentContainer.viewContext, sectionNameKeyPath: "isOnline", cacheName: nil)
+    let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.storageManager.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: "conversationsList")
+    //let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.storageManager.persistentContainer.viewContext, sectionNameKeyPath: "isOnline", cacheName: "conversationsList")
     
     return fetchedResultsController
   }()
@@ -55,6 +54,7 @@ class ConversationsListViewController: UIViewController {
     tableView.register(UINib(nibName: String(describing: ConversationCell.self), bundle: Bundle.main), forCellReuseIdentifier: String(describing: ConversationCell.self))
     tableView.dataSource = self
     tableView.delegate = self
+    //fetchedResultsController.delegate = self
     
     do {
         try fetchedResultsController.performFetch()
@@ -63,7 +63,7 @@ class ConversationsListViewController: UIViewController {
         print("Unable to perform Fetch Channels")
         print("\(fetchError), \(fetchError.localizedDescription)")
     }
-    
+
     print("========CACHE=======")
     if let fetchedObjects = fetchedResultsController.fetchedObjects {
       for cached in fetchedObjects {
@@ -160,7 +160,7 @@ protocol ConfigurableView {
   func configure(with model: ConfigurationModel)
 }
 
-// MARK: - Extension UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension ConversationsListViewController: UITableViewDataSource{
   
@@ -174,9 +174,12 @@ extension ConversationsListViewController: UITableViewDataSource{
       let channelFB = splitedChannelsFB[tableSection]?[indexPath.row] {
       cell.configure(with: ConversationCell.ConfigurationModel(channel: channelFB))
     }
-    // Fetch Note
     /*
+    // Fetch Note
+    print("*****************OBJECT AT**************")
+    //print(fetchedResultsController.fetchedObjects)
     let channel = fetchedResultsController.object(at: indexPath)
+    print(channel)
     let cellModel = ConversationCell.ConversationCellModel(channel: channel)
     cell.configure(with: cellModel)
  */
@@ -199,33 +202,78 @@ extension ConversationsListViewController: UITableViewDataSource{
   
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if let tableSection = TableSection(rawValue: section),
+     if let tableSection = TableSection(rawValue: section),
       let dataBySection = splitedChannelsFB[tableSection] {
       return dataBySection.count
     }
     return 0
+    /*
+    guard let sections = fetchedResultsController.sections else { return 0 }
+    return sections[section].numberOfObjects
+     */
   }
 }
 
-// MARK: - Extension UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension ConversationsListViewController: UITableViewDelegate{
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     
-    let conversationController = ChannelViewController()
+    let channelViewController = ChannelViewController()
 
     if let tableSection = TableSection(rawValue: indexPath.section){
       
-      conversationController.title = splitedChannelsFB[tableSection]?[indexPath.row].name ?? "Название диалога"
-      conversationController.documentIdentifier = splitedChannelsFB[tableSection]?[indexPath.row].identifier ?? "errorId"
+      channelViewController.title = splitedChannelsFB[tableSection]?[indexPath.row].name ?? "Название диалога"
+      channelViewController.documentIdentifier = splitedChannelsFB[tableSection]?[indexPath.row].identifier ?? "noID"
     }
     
-    navigationController?.pushViewController(conversationController, animated: true)
+    navigationController?.pushViewController(channelViewController, animated: true)
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 74
   }
 }
+
+// MARK: - Fetched Results Controller Delegate
+
+extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+  
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                  didChange anObject: Any,
+                  at indexPath: IndexPath?,
+                  for type: NSFetchedResultsChangeType,
+                  newIndexPath: IndexPath?) {
+    switch type {
+    case .insert:
+      if let indexPath = newIndexPath {
+        tableView.insertRows(at: [(indexPath as IndexPath)], with: .automatic)
+      }
+    case .update:
+      if let indexPath = indexPath {
+        let channel = fetchedResultsController.object(at: indexPath as IndexPath)
+        let cellModel = ConversationCell.ConversationCellModel(channel: channel)
+        guard let cell = tableView.cellForRow(at: indexPath as IndexPath) as? ConversationCell
+          else { return }
+        cell.configure(with: cellModel)
+        
+      }
+    case .move:
+      if let indexPath = indexPath {
+        tableView.deleteRows(at: [(indexPath as IndexPath)], with: .automatic)
+      }
+      if let newIndexPath = newIndexPath {
+        tableView.insertRows(at: [(newIndexPath as IndexPath)], with: .automatic)
+      }
+    case .delete:
+      if let indexPath = indexPath {
+        tableView.deleteRows(at: [(indexPath as IndexPath)], with: .automatic)
+      }
+    @unknown default:
+      print("@unknown default")
+    }
+  }
+}
+

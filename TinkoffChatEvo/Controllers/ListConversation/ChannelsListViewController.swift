@@ -10,7 +10,7 @@ import UIKit
 import FirebaseFirestore
 import CoreData
 
-class ConversationsListViewController: UIViewController {
+class ChannelsListViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   
   private var channelsFB: [ChannelFB] = []
@@ -162,7 +162,7 @@ protocol ConfigurableView {
 
 // MARK: - UITableViewDataSource
 
-extension ConversationsListViewController: UITableViewDataSource{
+extension ChannelsListViewController: UITableViewDataSource{
   
   // MARK: Configurate Cell
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -216,7 +216,7 @@ extension ConversationsListViewController: UITableViewDataSource{
 
 // MARK: - UITableViewDelegate
 
-extension ConversationsListViewController: UITableViewDelegate{
+extension ChannelsListViewController: UITableViewDelegate{
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
@@ -239,7 +239,7 @@ extension ConversationsListViewController: UITableViewDelegate{
 
 // MARK: - Fetched Results Controller Delegate
 
-extension ConversationsListViewController: NSFetchedResultsControllerDelegate {
+extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
   
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                   didChange anObject: Any,

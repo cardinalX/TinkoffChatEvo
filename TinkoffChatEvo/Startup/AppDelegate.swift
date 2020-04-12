@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    let mainViewController = ConversationsListViewController(nibName: "ConversationsListViewController", bundle: nil)
+    let mainViewController = ChannelsListViewController(nibName: String(describing: ChannelsListViewController.self), bundle: nil)
     let navigationViewController = UINavigationController(rootViewController: mainViewController)
     
     window = UIWindow(frame: UIScreen.main.bounds)

@@ -10,7 +10,7 @@ import UIKit
 import FirebaseFirestore
 import CoreData
 
-class ChannelsListViewController: UIViewController {
+class ChannelListViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
   
   private var channelsFB: [ChannelFB] = []
@@ -51,7 +51,7 @@ class ChannelsListViewController: UIViewController {
       self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addChannelTapped(sender:)))
     }
     
-    tableView.register(UINib(nibName: String(describing: ConversationCell.self), bundle: Bundle.main), forCellReuseIdentifier: String(describing: ConversationCell.self))
+    tableView.register(UINib(nibName: String(describing: ChannelCell.self), bundle: Bundle.main), forCellReuseIdentifier: String(describing: ChannelCell.self))
     tableView.dataSource = self
     tableView.delegate = self
     //fetchedResultsController.delegate = self
@@ -162,17 +162,17 @@ protocol ConfigurableView {
 
 // MARK: - UITableViewDataSource
 
-extension ChannelsListViewController: UITableViewDataSource{
+extension ChannelListViewController: UITableViewDataSource{
   
   // MARK: Configurate Cell
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let identifier = String(describing: ConversationCell.self)
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ConversationCell
+    let identifier = String(describing: ChannelCell.self)
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ChannelCell
       else { return UITableViewCell() }
     
     if  let tableSection = TableSection(rawValue: indexPath.section),
       let channelFB = splitedChannelsFB[tableSection]?[indexPath.row] {
-      cell.configure(with: ConversationCell.ConfigurationModel(channel: channelFB))
+      cell.configure(with: ChannelCell.ConfigurationModel(channel: channelFB))
     }
     /*
     // Fetch Note
@@ -216,7 +216,7 @@ extension ChannelsListViewController: UITableViewDataSource{
 
 // MARK: - UITableViewDelegate
 
-extension ChannelsListViewController: UITableViewDelegate{
+extension ChannelListViewController: UITableViewDelegate{
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
@@ -239,7 +239,7 @@ extension ChannelsListViewController: UITableViewDelegate{
 
 // MARK: - Fetched Results Controller Delegate
 
-extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
+extension ChannelListViewController: NSFetchedResultsControllerDelegate {
   
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                   didChange anObject: Any,
@@ -254,8 +254,8 @@ extension ChannelsListViewController: NSFetchedResultsControllerDelegate {
     case .update:
       if let indexPath = indexPath {
         let channel = fetchedResultsController.object(at: indexPath as IndexPath)
-        let cellModel = ConversationCell.ConversationCellModel(channel: channel)
-        guard let cell = tableView.cellForRow(at: indexPath as IndexPath) as? ConversationCell
+        let cellModel = ChannelCell.ConversationCellModel(channel: channel)
+        guard let cell = tableView.cellForRow(at: indexPath as IndexPath) as? ChannelCell
           else { return }
         cell.configure(with: cellModel)
         

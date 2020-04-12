@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversationCell: UITableViewCell {
+class ChannelCell: UITableViewCell {
   
   @IBOutlet weak var dialogNameLabel: UILabel!
   @IBOutlet weak var textLastMessage: UILabel!
@@ -62,7 +62,7 @@ class ConversationCell: UITableViewCell {
   }
 }
 // MARK: - extension ConfigurableView
-extension ConversationCell: ConfigurableView{
+extension ChannelCell: ConfigurableView{
   
   typealias ConfigurationModel = ConversationCellModel
   

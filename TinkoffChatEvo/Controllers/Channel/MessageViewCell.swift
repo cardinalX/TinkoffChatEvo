@@ -59,7 +59,7 @@ extension MessageViewCell: ConfigurableView{
       rightBubbleView.isHidden = false
       sendedMessageLabel.text = model.content
       sendedLabelTime.text = dateFormatter.string(from: model.created)
-      rightBubbleView.backgroundColor =  #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1) // #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+      rightBubbleView.backgroundColor =  #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
       rightBubbleView.layer.cornerRadius = 20
     } else {
       leftBubbleView.isHidden = false

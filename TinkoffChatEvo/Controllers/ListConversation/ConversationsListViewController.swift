@@ -63,21 +63,9 @@ class ConversationsListViewController: UIViewController {
         print("Unable to perform Fetch Channels")
         print("\(fetchError), \(fetchError.localizedDescription)")
     }
+    
     print("========CACHE=======")
     if let fetchedObjects = fetchedResultsController.fetchedObjects {
-      /*
-      var conversationCellModels: [ConversationCell.ConversationCellModel] = []
-      for cached in fetchedObjects {
-        print(cached)
-        let cellModel = ConversationCell.ConversationCellModel(name: cached.name,
-                                                               message: cached.lastMessage,
-                                                               date: cached.lastActivity,
-                                                               isOnline: cached.isOnline,
-                                                               hasUnreadMessages: cached.isOnline)
-        conversationCellModels.append(cellModel)
-      }
-      splitedData = splitToTableSections(from: conversationCellModels)
-      */
       for cached in fetchedObjects {
         print(cached)
         channelsFB.append(ChannelFB(lastActivity: cached.lastActivity,
@@ -88,15 +76,12 @@ class ConversationsListViewController: UIViewController {
       splitedChannelsFB = splitToTableSections(from: channelsFB)
     }
     print("========CACHE=======")
-    /*
+    
     let firebaseManager = FirebaseManager()
     firebaseManager.updateChannels(){ models, documents in
       self.channelsFB = models
       self.documents = documents
       
-      let conversationCellModels = self.channelsFBToConversationCellModels(channelsFB: models)
-      
-      //self.splitedData = self.splitToTableSections(from: conversationCellModels)
       self.splitedChannelsFB = self.splitToTableSections(from: self.channelsFB)
       
       for channel in models {
@@ -113,7 +98,7 @@ class ConversationsListViewController: UIViewController {
       for channelFB in models {
         self.storageManager.saveChannel(channelFB: channelFB, successCompletion: {print("\(channelFB) cached successful")}, failCompletion: { error in print("ERROR caching channel. Reason: \(error)")})
       }
-    }*/
+    }
  
   }
   
@@ -159,32 +144,12 @@ class ConversationsListViewController: UIViewController {
   enum TableSection: Int {
     case online = 0, history, total
   }
-  var splitedData = [TableSection: [ConversationCell.ConversationCellModel]]()
   var splitedChannelsFB = [TableSection: [ChannelFB]]()
-  
-  func splitToTableSections(from conversationCellModels: [ConversationCell.ConversationCellModel]) -> [TableSection: [ConversationCell.ConversationCellModel]]{
-    splitedData[.history] = conversationCellModels.filter({$0.isOnline == false})
-    splitedData[.online] = conversationCellModels.filter({$0.isOnline == true})
-    return splitedData
-  }
   
   func splitToTableSections(from channels: [ChannelFB]) -> [TableSection: [ChannelFB]]{
     splitedChannelsFB[.online] = channels.filter({$0.lastActivity.timeIntervalSince(Date()) > -600})
     splitedChannelsFB[.history] = channels.filter({$0.lastActivity.timeIntervalSince(Date()) <= -600})
     return splitedChannelsFB
-  }
-  
-  func channelsFBToConversationCellModels(channelsFB: [ChannelFB]) -> [ConversationCell.ConversationCellModel]{
-    let conversationCellModels = channelsFB.map { (channel) -> ConversationCell.ConversationCellModel in
-      return ConversationCell.ConversationCellModel(channel: channel)
-      /* когда был init?(ChannelFB)
-      if let model = ConversationCell.ConversationCellModel(channel: channel) {
-        return model
-      } else {
-        fatalError("Unable to initialize type \(ConversationCell.ConversationCellModel.self) with object \(channel)")
-      }*/
-    }
-    return conversationCellModels
   }
 }
 
@@ -208,8 +173,6 @@ extension ConversationsListViewController: UITableViewDataSource{
     if  let tableSection = TableSection(rawValue: indexPath.section),
       let channelFB = splitedChannelsFB[tableSection]?[indexPath.row] {
       cell.configure(with: ConversationCell.ConfigurationModel(channel: channelFB))
-      //let dialog = splitedData[tableSection]?[indexPath.row] {
-      //cell.configure(with: dialog)
     }
     // Fetch Note
     /*
@@ -238,7 +201,6 @@ extension ConversationsListViewController: UITableViewDataSource{
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if let tableSection = TableSection(rawValue: section),
       let dataBySection = splitedChannelsFB[tableSection] {
-      //let dataBySection = splitedData[tableSection] {
       return dataBySection.count
     }
     return 0
@@ -258,15 +220,6 @@ extension ConversationsListViewController: UITableViewDelegate{
       
       conversationController.title = splitedChannelsFB[tableSection]?[indexPath.row].name ?? "Название диалога"
       conversationController.documentIdentifier = splitedChannelsFB[tableSection]?[indexPath.row].identifier ?? "errorId"
-      
-      /*
-      conversationController.title = splitedData[tableSection]?[indexPath.row].name ?? "Название диалога"
-      if(tableSection == .online) {
-        conversationController.docIdentifier = documents[indexPath.row].documentID
-      } else {
-        conversationController.docIdentifier = documents[indexPath.row + (splitedData[.online]?.count ?? 0)].documentID
-      }
- */
     }
     
     navigationController?.pushViewController(conversationController, animated: true)

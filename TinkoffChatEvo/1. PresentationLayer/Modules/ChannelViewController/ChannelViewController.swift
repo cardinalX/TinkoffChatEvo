@@ -1,4 +1,4 @@
-//
+	//
 //  ChannelViewController.swift
 //  TinkoffChatEvo
 //
@@ -14,7 +14,11 @@ class ChannelViewController: UIViewController {
   
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var contentTextView: UITextView!
-
+  @IBOutlet weak var submitButton: UIButton!
+  
+  let longPressGestureRecognizer = UILongPressGestureRecognizer()
+  var longPressGestureAnchorPoint: CGPoint?
+  
   var channelIdentifier: String = "noID"
   private var messagesFB: [MessageFB] = []
   private var messagesCellModels: [MessageViewCell.MessageCellModel] = []
@@ -44,6 +48,10 @@ class ChannelViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    contentTextView.delegate = self
+    submitButton.layer.cornerRadius = 15
+    submitButton.backgroundColor = #colorLiteral(red: 0.2470588235, green: 0.2855573893, blue: 0.9409456253, alpha: 1)
     
     self.navigationController?.navigationBar.prefersLargeTitles = false
     view.backgroundColor = UIColor(named: "TinkoffColor")
@@ -98,7 +106,12 @@ class ChannelViewController: UIViewController {
     submitByOtherButton.setTitle("X", for: .normal)
     submitByOtherButton.addTarget(self, action: #selector(submitByOtherButtonAction), for: .touchUpInside)
     
-    self.view.addSubview(submitByOtherButton)
+    //self.view.addSubview(submitByOtherButton)
+    
+    longPressGestureRecognizer.addTarget(self, action: #selector(handleTapGesture(_:)))
+    longPressGestureRecognizer.numberOfTouchesRequired = 1
+    
+    tableView.addGestureRecognizer(longPressGestureRecognizer)
   }
   
   func messagesToMessagesCellModels(messages: [MessageFB]) -> [MessageViewCell.MessageCellModel]{
@@ -142,6 +155,58 @@ class ChannelViewController: UIViewController {
     let firebaseManager = FirebaseManager()
     firebaseManager.addMessage(documentID: channelIdentifier, message: newMessage)
     NSLog("Message '\(content)' created by \(StorageManager().userName)")
+  }
+
+  @objc func handleTapGesture(_ gestureRecognizer: UILongPressGestureRecognizer) {
+    guard longPressGestureRecognizer === gestureRecognizer else { assert(false); return }
+    
+    longPressGestureAnchorPoint = gestureRecognizer.location(in: view.superview)
+    print("longPressGestureAnchorPoint = \(longPressGestureAnchorPoint)")
+    
+    /*
+     let imageView = UIImageView(image: #imageLiteral(resourceName: "emblem"))
+    imageView.frame = CGRect(origin: tapGestureAnchorPoint!, size: CGSize(width: 35, height: 35))
+    tableView.superview!.addSubview(imageView)
+    */
+    	/*
+    let imageView = UIImageView(image: #imageLiteral(resourceName: "emblem"))
+    let dimension = 25 + drand48() * 10
+    imageView.frame = CGRect(origin: self.longPressGestureAnchorPoint!, size: CGSize(width: dimension, height: dimension))
+    UIView.animate(withDuration: 0.3) {
+      self.tableView.superview!.addSubview(imageView)
+*/
+    
+    switch gestureRecognizer.state {
+    case .began:
+      let imageView = UIImageView(image: #imageLiteral(resourceName: "emblem"))
+      let dimension = 25 + drand48() * 10
+      imageView.frame = CGRect(origin: self.longPressGestureAnchorPoint!, size: CGSize(width: dimension, height: dimension))
+      /*UIView.animate(withDuration: 0.3){
+        self.tableView.superview!.addSubview(imageView)
+      }*/
+      UIView.animate(withDuration: 0.3,
+                     delay: 0.2,
+                     options: [.repeat, .autoreverse],
+                     animations: {
+                      self.tableView.superview!.addSubview(imageView)
+      }, completion: nil)
+    
+    case .changed:
+      longPressGestureAnchorPoint = gestureRecognizer.location(in: view.superview)
+      guard let tapGestureAnchorPoint = longPressGestureAnchorPoint else { assert(false); return }
+      
+      let gesturePoint = gestureRecognizer.location(in: view)
+      self.longPressGestureAnchorPoint = gesturePoint
+      
+    case .cancelled, .ended:
+      longPressGestureAnchorPoint = nil
+      
+    case .failed, .possible:
+      assert(longPressGestureAnchorPoint == nil)
+      break
+    @unknown default:
+      fatalError("unknown gesture")
+    }
   }
 }
 
@@ -232,4 +297,36 @@ extension ChannelViewController: NSFetchedResultsControllerDelegate {
     tableView.endUpdates()
   }*/
   
+}
+
+// MARK: extension TextViewDelegate
+
+extension ChannelViewController: UITextViewDelegate {
+  
+  func textViewDidChange(_ textView: UITextView) {
+    guard let text = textView.text else {
+      return
+    }
+    if (text.isEmpty) {
+      UIView.animate(withDuration: 0.5) {
+        self.submitButton.isEnabled = false
+        self.submitButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+      }
+    } else if(text.count >= 1 && !submitButton.isEnabled){
+      UIView.animate(withDuration: 0.5) {
+        self.submitButton.isEnabled = true
+        self.submitButton.backgroundColor = #colorLiteral(red: 0.2454464734, green: 0.2855573893, blue: 0.9409456253, alpha: 1)
+        self.submitButton.frame.size.height *= 0.85
+        self.submitButton.frame.size.width *= 0.85
+        //self.submitButton.layer.
+        
+        //self.submitButton.heightAnchor.constraint(equalTo: self.submitButton.heightAnchor, multiplier: 0.85).isActive = true
+        //self.submitButton.widthAnchor.constraint(equalTo: self.submitButton.widthAnchor, multiplier: 0.85).isActive = true
+        
+        //self.submitButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        //self.submitButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+      }
+    }
+  }
 }

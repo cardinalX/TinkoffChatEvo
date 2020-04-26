@@ -8,43 +8,48 @@
 
 import Foundation
 import UIKit
-protocol IPresentationAssembly {/*
-    /// Создает экран со списком диалогов
-    func conversationsListViewController() -> ChannelsListViewController
-    
-    /// Создает экран где бегают пингвинчики
-    func pinguinViewController() -> PinguinViewController
+protocol IPresentationAssembly {
+  /// Создает экран со списком диалогов
+  func channelListViewController() -> ChannelListViewController
+  
+  /// Создает экран канала с сообщениями
+  func channelViewController() -> ChannelViewController
+  
+  /// Создает экран канала с сообщениями
+  func profileViewController() -> ProfileViewController
 }
-
+/*
 class PresentationAssembly: IPresentationAssembly {
-    
-    private let serviceAssembly: IServicesAssembly
-    
-    init(serviceAssembly: IServicesAssembly) {
-        self.serviceAssembly = serviceAssembly
-    }
-    
-    // MARK: - DemoViewController
-    
-    func demoViewCotnroller() -> DemoViewController {
-        let model = demoModel()
-        let demoVC = DemoViewController(model: model, presentationAssembly: self)
-        model.delegate = demoVC
-        return demoVC
-    }
-    
-    private func demoModel() -> IDemoModel {
-        return DemoModel(cardsService: serviceAssembly.cardsService,
-                         tracksService: serviceAssembly.tracksService)
-    }
-    
-    // MARK: - PinguinViewController
-    
-    func pinguinViewController() -> PinguinViewController {
-        return PinguinViewController()
-    }
-    
-    // MARK: - AnotherViewController
-    //.....*/
+  
+  private let serviceAssembly: IServicesAssembly
+  
+  init(serviceAssembly: IServicesAssembly) {
+    self.serviceAssembly = serviceAssembly
+  }
+  
+  // MARK: - DemoViewController
+  /*
+  func profileViewController() -> ProfileViewController {
+    let model = profileModel()
+    let demoVC = DemoViewController(model: model, presentationAssembly: self)
+    model.delegate = demoVC
+    return demoVC
+  }
+  
+  private func profileModel() -> IProfileModel {
+    return ProfileModel(cardsService: serviceAssembly.cardsService,
+                        tracksService: serviceAssembly.tracksService)
+  }
+  
+  // MARK: - PinguinViewController
+  
+  func pinguinViewController() -> PinguinViewController {
+    return PinguinViewController()
+  }
+  
+  // MARK: - AnotherViewController
+  //.....
+ */
 }
 
+*/

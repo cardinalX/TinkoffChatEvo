@@ -16,6 +16,11 @@
 		893E49132442ED1000BCDCE1 /* Channel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E49122442ED1000BCDCE1 /* Channel+CoreDataProperties.swift */; };
 		893E4921244389F800BCDCE1 /* RootAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E4920244389F800BCDCE1 /* RootAssembly.swift */; };
 		893E492624438CD500BCDCE1 /* PresentationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E492524438CD500BCDCE1 /* PresentationAssembly.swift */; };
+		893E492E244398AE00BCDCE1 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E492D244398AE00BCDCE1 /* ServicesAssembly.swift */; };
+		893E493324439A6200BCDCE1 /* CoreAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E493224439A6200BCDCE1 /* CoreAssembly.swift */; };
+		893E49362443A51C00BCDCE1 /* ICoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E49352443A51C00BCDCE1 /* ICoreDataStorage.swift */; };
+		893FDFCF244C7E2C007CF5F1 /* ProfileCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FDFCD244C7E2C007CF5F1 /* ProfileCollectionViewController.swift */; };
+		893FDFD0244C7E2C007CF5F1 /* ProfileCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 893FDFCE244C7E2C007CF5F1 /* ProfileCollectionViewController.xib */; };
 		894F1F65243FB1AA00E77101 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F1F63243FB1AA00E77101 /* ChannelViewController.swift */; };
 		894F1F66243FB1AA00E77101 /* ChannelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 894F1F64243FB1AA00E77101 /* ChannelViewController.xib */; };
 		89613072240C0E7B00FF25B7 /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89613070240C0E7B00FF25B7 /* MessageViewCell.swift */; };
@@ -67,6 +72,11 @@
 		893E49122442ED1000BCDCE1 /* Channel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Channel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		893E4920244389F800BCDCE1 /* RootAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootAssembly.swift; sourceTree = "<group>"; };
 		893E492524438CD500BCDCE1 /* PresentationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationAssembly.swift; sourceTree = "<group>"; };
+		893E492D244398AE00BCDCE1 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
+		893E493224439A6200BCDCE1 /* CoreAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAssembly.swift; sourceTree = "<group>"; };
+		893E49352443A51C00BCDCE1 /* ICoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICoreDataStorage.swift; sourceTree = "<group>"; };
+		893FDFCD244C7E2C007CF5F1 /* ProfileCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewController.swift; sourceTree = "<group>"; };
+		893FDFCE244C7E2C007CF5F1 /* ProfileCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileCollectionViewController.xib; sourceTree = "<group>"; };
 		894F1F63243FB1AA00E77101 /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
 		894F1F64243FB1AA00E77101 /* ChannelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChannelViewController.xib; sourceTree = "<group>"; };
 		89613070240C0E7B00FF25B7 /* MessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewCell.swift; sourceTree = "<group>"; };
@@ -135,10 +145,12 @@
 			children = (
 				89F1BDB424310ECF00D4D430 /* Startup */,
 				893E492224438A1600BCDCE1 /* 1. PresentationLayer */,
+				893E492A2443984B00BCDCE1 /* 2. ServiceLayer */,
+				893E492F244399DC00BCDCE1 /* 3. CoreLayer */,
 				89AB447D2438A59B00F6B285 /* FirebaseManager.swift */,
 				898A05B72438B24000CE5F9D /* FirebaseModels.swift */,
 				896B13C8241D5FAF00C4D88C /* CoreDataManaging */,
-				89F1BDBE2431129900D4D430 /* SupportFiles */,
+				89F1BDBE2431129900D4D430 /* SupportingFiles */,
 				5005654F23F722F40090B1E8 /* Info.plist */,
 			);
 			path = TinkoffChatEvo;
@@ -220,8 +232,67 @@
 			children = (
 				89AF7614240EB19400DF7FE8 /* ProfileViewController.storyboard */,
 				5005654223F722F20090B1E8 /* ProfileViewController.swift */,
+				893FDFCD244C7E2C007CF5F1 /* ProfileCollectionViewController.swift */,
+				893FDFCE244C7E2C007CF5F1 /* ProfileCollectionViewController.xib */,
 			);
 			path = ProfileViewController;
+			sourceTree = "<group>";
+		};
+		893E492A2443984B00BCDCE1 /* 2. ServiceLayer */ = {
+			isa = PBXGroup;
+			children = (
+				893E492B2443986900BCDCE1 /* Assembly */,
+				893E492C2443987600BCDCE1 /* Services */,
+			);
+			path = "2. ServiceLayer";
+			sourceTree = "<group>";
+		};
+		893E492B2443986900BCDCE1 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				893E492D244398AE00BCDCE1 /* ServicesAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		893E492C2443987600BCDCE1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		893E492F244399DC00BCDCE1 /* 3. CoreLayer */ = {
+			isa = PBXGroup;
+			children = (
+				893E4930244399F500BCDCE1 /* Assembly */,
+				893E4931244399F900BCDCE1 /* CoreDataStorage */,
+				893E493424439B3700BCDCE1 /* MessagesStorage */,
+			);
+			path = "3. CoreLayer";
+			sourceTree = "<group>";
+		};
+		893E4930244399F500BCDCE1 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				893E493224439A6200BCDCE1 /* CoreAssembly.swift */,
+			);
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		893E4931244399F900BCDCE1 /* CoreDataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				893E49352443A51C00BCDCE1 /* ICoreDataStorage.swift */,
+			);
+			path = CoreDataStorage;
+			sourceTree = "<group>";
+		};
+		893E493424439B3700BCDCE1 /* MessagesStorage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MessagesStorage;
 			sourceTree = "<group>";
 		};
 		896B13C8241D5FAF00C4D88C /* CoreDataManaging */ = {
@@ -243,7 +314,7 @@
 			path = Startup;
 			sourceTree = "<group>";
 		};
-		89F1BDBE2431129900D4D430 /* SupportFiles */ = {
+		89F1BDBE2431129900D4D430 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
 				89AB447B2438A01B00F6B285 /* GoogleService-Info.plist */,
@@ -251,7 +322,7 @@
 				5005654C23F722F40090B1E8 /* LaunchScreen.storyboard */,
 				5005654A23F722F40090B1E8 /* Assets.xcassets */,
 			);
-			path = SupportFiles;
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		D046F9C6BF1839BE551E5C56 /* Pods */ = {
@@ -361,6 +432,7 @@
 				89AF7616240EB19500DF7FE8 /* ProfileViewController.storyboard in Resources */,
 				89AB447C2438A01B00F6B285 /* GoogleService-Info.plist in Resources */,
 				89613073240C0E7B00FF25B7 /* MessageViewCell.xib in Resources */,
+				893FDFD0244C7E2C007CF5F1 /* ProfileCollectionViewController.xib in Resources */,
 				5005654E23F722F40090B1E8 /* LaunchScreen.storyboard in Resources */,
 				8962F00424098D91008A4879 /* ChannelListViewController.xib in Resources */,
 				894F1F66243FB1AA00E77101 /* ChannelViewController.xib in Resources */,
@@ -448,6 +520,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				89F1BDB624310EF600D4D430 /* AppDelegate.swift in Sources */,
+				893E492E244398AE00BCDCE1 /* ServicesAssembly.swift in Sources */,
+				893E49362443A51C00BCDCE1 /* ICoreDataStorage.swift in Sources */,
 				89613072240C0E7B00FF25B7 /* MessageViewCell.swift in Sources */,
 				89F1BDBD2431104D00D4D430 /* User+CoreDataProperties.swift in Sources */,
 				F00A3D942442AFC400779DA5 /* Channel+CoreDataClass.swift in Sources */,
@@ -458,9 +532,11 @@
 				893E4921244389F800BCDCE1 /* RootAssembly.swift in Sources */,
 				F00A3D962442AFC400779DA5 /* Message+CoreDataClass.swift in Sources */,
 				893E49132442ED1000BCDCE1 /* Channel+CoreDataProperties.swift in Sources */,
+				893E493324439A6200BCDCE1 /* CoreAssembly.swift in Sources */,
 				F00A3D932442AFC400779DA5 /* Message+CoreDataProperties.swift in Sources */,
 				893E492624438CD500BCDCE1 /* PresentationAssembly.swift in Sources */,
 				89F1BDB824310FB200D4D430 /* StorageManager.swift in Sources */,
+				893FDFCF244C7E2C007CF5F1 /* ProfileCollectionViewController.swift in Sources */,
 				89F1BDBC2431104D00D4D430 /* User+CoreDataClass.swift in Sources */,
 				896B13CC241D61C200C4D88C /* GCDDataManager.swift in Sources */,
 				5005654923F722F20090B1E8 /* TinkoffChatEvo.xcdatamodeld in Sources */,

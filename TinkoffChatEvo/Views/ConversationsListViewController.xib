@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConversationsListViewController" customModule="TinkoffChatEvo" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConversationsListViewController" customModule="TinkoffChat" customModuleProvider="target">
             <connections>
                 <outlet property="tableView" destination="0wA-g7-BY0" id="TVn-2x-iJB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -20,34 +20,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0wA-g7-BY0">
-                    <rect key="frame" x="0.0" y="57" width="320" height="511"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uXB-JN-MKh">
-                    <rect key="frame" x="131.5" y="0.0" width="57" height="57"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="uXB-JN-MKh" secondAttribute="height" multiplier="1:1" id="6XH-7i-Brs"/>
-                    </constraints>
-                    <state key="normal" title="Button" image="PlaceholderUser"/>
-                    <connections>
-                        <action selector="userProfileButton:" destination="-1" eventType="touchUpInside" id="8dl-Gs-Uyt"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="uXB-JN-MKh" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.1" id="2Tz-CL-sxn"/>
+                <constraint firstItem="0wA-g7-BY0" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="1Ws-Ru-jKf"/>
                 <constraint firstItem="0wA-g7-BY0" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="M3F-2V-bCw"/>
-                <constraint firstItem="uXB-JN-MKh" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Ue0-fo-a8v"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="uXB-JN-MKh" secondAttribute="top" id="Wb2-D3-olr"/>
                 <constraint firstItem="0wA-g7-BY0" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="cwC-ya-V7e"/>
                 <constraint firstItem="0wA-g7-BY0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kyx-D8-fp9"/>
-                <constraint firstItem="0wA-g7-BY0" firstAttribute="top" secondItem="uXB-JN-MKh" secondAttribute="bottom" id="zKY-0j-Ga9"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
         </view>
     </objects>
-    <resources>
-        <image name="PlaceholderUser" width="300" height="300"/>
-    </resources>
 </document>

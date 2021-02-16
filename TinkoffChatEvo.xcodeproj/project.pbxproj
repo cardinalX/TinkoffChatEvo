@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,8 +12,10 @@
 		5005654B23F722F40090B1E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5005654A23F722F40090B1E8 /* Assets.xcassets */; };
 		5005654E23F722F40090B1E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5005654C23F722F40090B1E8 /* LaunchScreen.storyboard */; };
 		5005655923F722F50090B1E8 /* TinkoffChatEvoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005655823F722F50090B1E8 /* TinkoffChatEvoTests.swift */; };
-		8961306C240BFCE300FF25B7 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8961306A240BFCE300FF25B7 /* ConversationViewController.swift */; };
-		8961306D240BFCE300FF25B7 /* ConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8961306B240BFCE300FF25B7 /* ConversationViewController.xib */; };
+		81CC24E5FBA9E237DB22970C /* Pods_TinkoffChatEvoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A26882BBE0DEDFD0BAD82C /* Pods_TinkoffChatEvoTests.framework */; };
+		893E49132442ED1000BCDCE1 /* Channel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E49122442ED1000BCDCE1 /* Channel+CoreDataProperties.swift */; };
+		894F1F65243FB1AA00E77101 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894F1F63243FB1AA00E77101 /* ChannelViewController.swift */; };
+		894F1F66243FB1AA00E77101 /* ChannelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 894F1F64243FB1AA00E77101 /* ChannelViewController.xib */; };
 		89613072240C0E7B00FF25B7 /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89613070240C0E7B00FF25B7 /* MessageViewCell.swift */; };
 		89613073240C0E7B00FF25B7 /* MessageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89613071240C0E7B00FF25B7 /* MessageViewCell.xib */; };
 		89626F1F2409BD6F00CEFF9F /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89626F1D2409BD6F00CEFF9F /* ConversationCell.swift */; };
@@ -21,11 +23,18 @@
 		8962F00324098D91008A4879 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962F00124098D91008A4879 /* ConversationsListViewController.swift */; };
 		8962F00424098D91008A4879 /* ConversationsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8962F00224098D91008A4879 /* ConversationsListViewController.xib */; };
 		896B13CC241D61C200C4D88C /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896B13CB241D61C200C4D88C /* GCDDataManager.swift */; };
+		898A05B82438B24000CE5F9D /* FirebaseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898A05B72438B24000CE5F9D /* FirebaseModels.swift */; };
+		89AB447C2438A01B00F6B285 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89AB447B2438A01B00F6B285 /* GoogleService-Info.plist */; };
+		89AB447E2438A59B00F6B285 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AB447D2438A59B00F6B285 /* FirebaseManager.swift */; };
 		89AF7616240EB19500DF7FE8 /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89AF7614240EB19400DF7FE8 /* ProfileViewController.storyboard */; };
 		89F1BDB624310EF600D4D430 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1BDB524310EF600D4D430 /* AppDelegate.swift */; };
 		89F1BDB824310FB200D4D430 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1BDB724310FB200D4D430 /* StorageManager.swift */; };
 		89F1BDBC2431104D00D4D430 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1BDBA2431104D00D4D430 /* User+CoreDataClass.swift */; };
 		89F1BDBD2431104D00D4D430 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1BDBB2431104D00D4D430 /* User+CoreDataProperties.swift */; };
+		97A3D4AEA0B8BDE12C4E6267 /* Pods_TinkoffChatEvo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9779E71F2CABAC019BF4BE6 /* Pods_TinkoffChatEvo.framework */; };
+		F00A3D932442AFC400779DA5 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A3D8F2442AFC400779DA5 /* Message+CoreDataProperties.swift */; };
+		F00A3D942442AFC400779DA5 /* Channel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A3D902442AFC400779DA5 /* Channel+CoreDataClass.swift */; };
+		F00A3D962442AFC400779DA5 /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A3D922442AFC400779DA5 /* Message+CoreDataClass.swift */; };
 		F0386E252403163F00F8814C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0386E232403163F00F8814C /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0095305BDC027AA6F40D9DE7 /* Pods-TinkoffChatEvo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatEvo.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChatEvo/Pods-TinkoffChatEvo.debug.xcconfig"; sourceTree = "<group>"; };
+		2433054EDC8668C1613F5E31 /* Pods-TinkoffChatEvo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatEvo.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChatEvo/Pods-TinkoffChatEvo.release.xcconfig"; sourceTree = "<group>"; };
 		5005653B23F722F20090B1E8 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5005654223F722F20090B1E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5005654823F722F20090B1E8 /* TinkoffChatEvo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TinkoffChatEvo.xcdatamodel; sourceTree = "<group>"; };
@@ -49,8 +60,12 @@
 		5005655423F722F50090B1E8 /* TinkoffChatEvoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinkoffChatEvoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5005655823F722F50090B1E8 /* TinkoffChatEvoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinkoffChatEvoTests.swift; sourceTree = "<group>"; };
 		5005655A23F722F50090B1E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8961306A240BFCE300FF25B7 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
-		8961306B240BFCE300FF25B7 /* ConversationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationViewController.xib; sourceTree = "<group>"; };
+		59A26882BBE0DEDFD0BAD82C /* Pods_TinkoffChatEvoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffChatEvoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AA4D8C3CA8CE09165170608 /* Pods-TinkoffChatEvoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatEvoTests.release.xcconfig"; path = "Target Support Files/Pods-TinkoffChatEvoTests/Pods-TinkoffChatEvoTests.release.xcconfig"; sourceTree = "<group>"; };
+		63A644F5ADE2C82F80719CA7 /* Pods-TinkoffChatEvoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinkoffChatEvoTests.debug.xcconfig"; path = "Target Support Files/Pods-TinkoffChatEvoTests/Pods-TinkoffChatEvoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		893E49122442ED1000BCDCE1 /* Channel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Channel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		894F1F63243FB1AA00E77101 /* ChannelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelViewController.swift; sourceTree = "<group>"; };
+		894F1F64243FB1AA00E77101 /* ChannelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChannelViewController.xib; sourceTree = "<group>"; };
 		89613070240C0E7B00FF25B7 /* MessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewCell.swift; sourceTree = "<group>"; };
 		89613071240C0E7B00FF25B7 /* MessageViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageViewCell.xib; sourceTree = "<group>"; };
 		89626F1D2409BD6F00CEFF9F /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
@@ -58,11 +73,18 @@
 		8962F00124098D91008A4879 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		8962F00224098D91008A4879 /* ConversationsListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsListViewController.xib; sourceTree = "<group>"; };
 		896B13CB241D61C200C4D88C /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
+		898A05B72438B24000CE5F9D /* FirebaseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseModels.swift; sourceTree = "<group>"; };
+		89AB447B2438A01B00F6B285 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		89AB447D2438A59B00F6B285 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		89AF7615240EB19400DF7FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProfileViewController.storyboard; sourceTree = "<group>"; };
 		89F1BDB524310EF600D4D430 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		89F1BDB724310FB200D4D430 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		89F1BDBA2431104D00D4D430 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		89F1BDBB2431104D00D4D430 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C9779E71F2CABAC019BF4BE6 /* Pods_TinkoffChatEvo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinkoffChatEvo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F00A3D8F2442AFC400779DA5 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F00A3D902442AFC400779DA5 /* Channel+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Channel+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F00A3D922442AFC400779DA5 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F0386E232403163F00F8814C /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97A3D4AEA0B8BDE12C4E6267 /* Pods_TinkoffChatEvo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81CC24E5FBA9E237DB22970C /* Pods_TinkoffChatEvoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +114,8 @@
 				5005653D23F722F20090B1E8 /* TinkoffChatEvo */,
 				5005655723F722F50090B1E8 /* TinkoffChatEvoTests */,
 				5005653C23F722F20090B1E8 /* Products */,
+				D046F9C6BF1839BE551E5C56 /* Pods */,
+				E6C4F95F54CADFB49FA7CEFA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,6 +134,8 @@
 				89F1BDB424310ECF00D4D430 /* Startup */,
 				89613069240BF46F00FF25B7 /* Views */,
 				89F1BDB924310FE900D4D430 /* Controllers */,
+				89AB447D2438A59B00F6B285 /* FirebaseManager.swift */,
+				898A05B72438B24000CE5F9D /* FirebaseModels.swift */,
 				896B13C8241D5FAF00C4D88C /* CoreDataManaging */,
 				89F1BDBE2431129900D4D430 /* SupportFiles */,
 				5005654F23F722F40090B1E8 /* Info.plist */,
@@ -124,12 +152,25 @@
 			path = TinkoffChatEvoTests;
 			sourceTree = "<group>";
 		};
+		893E49112442A02A00BCDCE1 /* AutoGenerated */ = {
+			isa = PBXGroup;
+			children = (
+				893E49122442ED1000BCDCE1 /* Channel+CoreDataProperties.swift */,
+				F00A3D902442AFC400779DA5 /* Channel+CoreDataClass.swift */,
+				F00A3D8F2442AFC400779DA5 /* Message+CoreDataProperties.swift */,
+				F00A3D922442AFC400779DA5 /* Message+CoreDataClass.swift */,
+				89F1BDBB2431104D00D4D430 /* User+CoreDataProperties.swift */,
+				89F1BDBA2431104D00D4D430 /* User+CoreDataClass.swift */,
+			);
+			path = AutoGenerated;
+			sourceTree = "<group>";
+		};
 		89613069240BF46F00FF25B7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				8962F00224098D91008A4879 /* ConversationsListViewController.xib */,
 				89626F1E2409BD6F00CEFF9F /* ConversationCell.xib */,
-				8961306B240BFCE300FF25B7 /* ConversationViewController.xib */,
+				894F1F64243FB1AA00E77101 /* ChannelViewController.xib */,
 				89613071240C0E7B00FF25B7 /* MessageViewCell.xib */,
 				89AF7614240EB19400DF7FE8 /* ProfileViewController.storyboard */,
 			);
@@ -145,24 +186,32 @@
 			path = ListConversation;
 			sourceTree = "<group>";
 		};
-		8961306F240C0C4900FF25B7 /* Conversation */ = {
+		8961306F240C0C4900FF25B7 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
-				8961306A240BFCE300FF25B7 /* ConversationViewController.swift */,
+				894F1F63243FB1AA00E77101 /* ChannelViewController.swift */,
 				89613070240C0E7B00FF25B7 /* MessageViewCell.swift */,
 			);
-			path = Conversation;
+			path = Channel;
 			sourceTree = "<group>";
 		};
 		896B13C8241D5FAF00C4D88C /* CoreDataManaging */ = {
 			isa = PBXGroup;
 			children = (
-				89F1BDBA2431104D00D4D430 /* User+CoreDataClass.swift */,
-				89F1BDBB2431104D00D4D430 /* User+CoreDataProperties.swift */,
 				89F1BDB724310FB200D4D430 /* StorageManager.swift */,
 				896B13CB241D61C200C4D88C /* GCDDataManager.swift */,
+				893E49112442A02A00BCDCE1 /* AutoGenerated */,
 			);
 			path = CoreDataManaging;
+			sourceTree = "<group>";
+		};
+		898A05B92438FB4E00CE5F9D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				5005654223F722F20090B1E8 /* ProfileViewController.swift */,
+				F0386E232403163F00F8814C /* CameraViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		89F1BDB424310ECF00D4D430 /* Startup */ = {
@@ -177,9 +226,8 @@
 			isa = PBXGroup;
 			children = (
 				8961306E240C0C3100FF25B7 /* ListConversation */,
-				8961306F240C0C4900FF25B7 /* Conversation */,
-				5005654223F722F20090B1E8 /* ProfileViewController.swift */,
-				F0386E232403163F00F8814C /* CameraViewController.swift */,
+				8961306F240C0C4900FF25B7 /* Channel */,
+				898A05B92438FB4E00CE5F9D /* Profile */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -187,11 +235,32 @@
 		89F1BDBE2431129900D4D430 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				89AB447B2438A01B00F6B285 /* GoogleService-Info.plist */,
 				5005654723F722F20090B1E8 /* TinkoffChatEvo.xcdatamodeld */,
 				5005654C23F722F40090B1E8 /* LaunchScreen.storyboard */,
 				5005654A23F722F40090B1E8 /* Assets.xcassets */,
 			);
 			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		D046F9C6BF1839BE551E5C56 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0095305BDC027AA6F40D9DE7 /* Pods-TinkoffChatEvo.debug.xcconfig */,
+				2433054EDC8668C1613F5E31 /* Pods-TinkoffChatEvo.release.xcconfig */,
+				63A644F5ADE2C82F80719CA7 /* Pods-TinkoffChatEvoTests.debug.xcconfig */,
+				5AA4D8C3CA8CE09165170608 /* Pods-TinkoffChatEvoTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		E6C4F95F54CADFB49FA7CEFA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C9779E71F2CABAC019BF4BE6 /* Pods_TinkoffChatEvo.framework */,
+				59A26882BBE0DEDFD0BAD82C /* Pods_TinkoffChatEvoTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,9 +270,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5005655D23F722F50090B1E8 /* Build configuration list for PBXNativeTarget "TinkoffChatEvo" */;
 			buildPhases = (
+				9ADD5B0FF102E5D6182341EF /* [CP] Check Pods Manifest.lock */,
 				5005653723F722F20090B1E8 /* Sources */,
 				5005653823F722F20090B1E8 /* Frameworks */,
 				5005653923F722F20090B1E8 /* Resources */,
+				782FDB9F87A2FA4E3EA2818F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -218,6 +289,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5005656023F722F50090B1E8 /* Build configuration list for PBXNativeTarget "TinkoffChatEvoTests" */;
 			buildPhases = (
+				B08212ABD40716B08AA33433 /* [CP] Check Pods Manifest.lock */,
 				5005655023F722F50090B1E8 /* Sources */,
 				5005655123F722F50090B1E8 /* Frameworks */,
 				5005655223F722F50090B1E8 /* Resources */,
@@ -276,11 +348,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				89AF7616240EB19500DF7FE8 /* ProfileViewController.storyboard in Resources */,
+				89AB447C2438A01B00F6B285 /* GoogleService-Info.plist in Resources */,
 				89613073240C0E7B00FF25B7 /* MessageViewCell.xib in Resources */,
 				5005654E23F722F40090B1E8 /* LaunchScreen.storyboard in Resources */,
 				8962F00424098D91008A4879 /* ConversationsListViewController.xib in Resources */,
+				894F1F66243FB1AA00E77101 /* ChannelViewController.xib in Resources */,
 				5005654B23F722F40090B1E8 /* Assets.xcassets in Resources */,
-				8961306D240BFCE300FF25B7 /* ConversationViewController.xib in Resources */,
 				89626F202409BD6F00CEFF9F /* ConversationCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,6 +367,70 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		782FDB9F87A2FA4E3EA2818F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatEvo/Pods-TinkoffChatEvo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatEvo/Pods-TinkoffChatEvo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TinkoffChatEvo/Pods-TinkoffChatEvo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9ADD5B0FF102E5D6182341EF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TinkoffChatEvo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B08212ABD40716B08AA33433 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TinkoffChatEvoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5005653723F722F20090B1E8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -302,15 +439,21 @@
 				89F1BDB624310EF600D4D430 /* AppDelegate.swift in Sources */,
 				89613072240C0E7B00FF25B7 /* MessageViewCell.swift in Sources */,
 				89F1BDBD2431104D00D4D430 /* User+CoreDataProperties.swift in Sources */,
-				8961306C240BFCE300FF25B7 /* ConversationViewController.swift in Sources */,
+				F00A3D942442AFC400779DA5 /* Channel+CoreDataClass.swift in Sources */,
+				898A05B82438B24000CE5F9D /* FirebaseModels.swift in Sources */,
 				5005654323F722F20090B1E8 /* ProfileViewController.swift in Sources */,
 				8962F00324098D91008A4879 /* ConversationsListViewController.swift in Sources */,
 				89626F1F2409BD6F00CEFF9F /* ConversationCell.swift in Sources */,
+				F00A3D962442AFC400779DA5 /* Message+CoreDataClass.swift in Sources */,
+				893E49132442ED1000BCDCE1 /* Channel+CoreDataProperties.swift in Sources */,
 				F0386E252403163F00F8814C /* CameraViewController.swift in Sources */,
+				F00A3D932442AFC400779DA5 /* Message+CoreDataProperties.swift in Sources */,
 				89F1BDB824310FB200D4D430 /* StorageManager.swift in Sources */,
 				89F1BDBC2431104D00D4D430 /* User+CoreDataClass.swift in Sources */,
 				896B13CC241D61C200C4D88C /* GCDDataManager.swift in Sources */,
 				5005654923F722F20090B1E8 /* TinkoffChatEvo.xcdatamodeld in Sources */,
+				894F1F65243FB1AA00E77101 /* ChannelViewController.swift in Sources */,
+				89AB447E2438A59B00F6B285 /* FirebaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +611,7 @@
 		};
 		5005655E23F722F50090B1E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0095305BDC027AA6F40D9DE7 /* Pods-TinkoffChatEvo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -478,7 +622,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tcsbank.TinkoffChat;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.messenger;
 				PRODUCT_NAME = TinkoffChat;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -487,6 +631,7 @@
 		};
 		5005655F23F722F50090B1E8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2433054EDC8668C1613F5E31 /* Pods-TinkoffChatEvo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -497,7 +642,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tcsbank.TinkoffChat;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.tinkoff.messenger;
 				PRODUCT_NAME = TinkoffChat;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -506,6 +651,7 @@
 		};
 		5005656123F722F50090B1E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63A644F5ADE2C82F80719CA7 /* Pods-TinkoffChatEvoTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -527,6 +673,7 @@
 		};
 		5005656223F722F50090B1E8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5AA4D8C3CA8CE09165170608 /* Pods-TinkoffChatEvoTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

@@ -20,17 +20,45 @@ class ConversationCell: UITableViewCell {
     let date: Date
     let isOnline: Bool
     let hasUnreadMessages: Bool
+    
+    init(name: String, message: String?, date: Date, isOnline: Bool, hasUnreadMessages: Bool) {
+      self.name = name
+      self.message = message
+      self.date = date
+      self.isOnline = isOnline
+      self.hasUnreadMessages = hasUnreadMessages
+    }
+    
+    init(channel: ChannelFB) {
+      
+      self.name = channel.name
+      self.message = channel.lastMessage
+      self.date = channel.lastActivity
+      if (channel.lastActivity.timeIntervalSinceNow > -600) {
+        self.isOnline = true
+      }
+      else {
+        self.isOnline = false
+      }
+      self.hasUnreadMessages = self.isOnline
+    }
+    
+    init(channel: Channel) {
+      self.name = channel.name
+      self.message = channel.lastMessage
+      self.date = channel.lastActivity
+      if channel.isOnline == "Online" {
+        self.isOnline = true
+      } else {
+        self.isOnline = false
+      }
+      self.hasUnreadMessages = self.isOnline
+    }
   }
   
   override func awakeFromNib() {
     super.awakeFromNib()
     // Initialization code
-  }
-  
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-    
-    // Configure the view for the selected state
   }
 }
 // MARK: - extension ConfigurableView

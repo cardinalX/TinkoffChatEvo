@@ -10,26 +10,27 @@ import Foundation
 import CoreData
 
 protocol UserManaging {
-  func getFirstUserManagedObject() -> User?
-  func createUserManagedObject(context: NSManagedObjectContext, name: String, info: String?) -> User
   func updateUserProfileUI(execute: @escaping (String, String) -> Void)
-  func getUserManagedObject(by name: String) -> User?
-  func editFirstUserManagedObject(name: String?, info: String?)
-  func getAllUsersManagedObjects() -> [User?]
-  //func saveBackgroundContext(successCompletion success: @escaping () -> Void,
-  //                           failCompletion failure: @escaping (Error) -> Void)
-  func savePrivateContext(successCompletion success: @escaping () -> Void,
-                          failCompletion failure: @escaping (Error) -> Void)
+  func saveUserProfile(name: String?,
+                       info: String?,
+                       successCompletion success: @escaping () -> Void,
+                       failCompletion failure: @escaping (Error) -> Void)
+  var userName: String { get }
+}
+
+protocol ChannelCaching {
+  func saveChannel(channelFB: ChannelFB, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void)
+  func fetchChannelByIdentifier(identifier: String) -> Channel?
+}
+
+protocol MessageCaching {
+  func saveMessage(channelFB: MessageFB, documentId: String, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void)
+  func fetchMessageByIdentifier(identifier: String) -> Message?
 }
 
 class StorageManager{
-  /// Singleton
-  static let instance = StorageManager()
-
-  private init() {}
-  
   // MARK: - Core Data stack
-  
+  /*
   lazy var appDocumentsDirectory: URL = {
     let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     return urls[urls.count-1]
@@ -77,7 +78,7 @@ class StorageManager{
    
   
   // MARK: - Core Data Saving support
-  func saveMainContext () {
+  private func saveMainContext () {
       if mainManagedObjectContext.hasChanges {
           do {
               try mainManagedObjectContext.save()
@@ -88,9 +89,9 @@ class StorageManager{
           }
       }
   }
-  
+  */
   // MARK: - PersistentContainer realisation
-  /*
+  
   lazy var backgroundContext = persistentContainer.newBackgroundContext()
   
   lazy var persistentContainer: NSPersistentContainer = {
@@ -105,20 +106,8 @@ class StorageManager{
   }()
   
   // MARK - Core Data Saving support
-   
-  func saveBackgroundContext() {
-    if backgroundContext.hasChanges{
-      backgroundContext.perform {
-        do {
-          try self.backgroundContext.save()
-        } catch {
-          let error = error as Error
-        }
-      }
-    }
-  }
-  */
-  /*func saveBackgroundContext(successCompletion success: @escaping () -> Void,
+  
+  func saveBackgroundContext(successCompletion success: @escaping () -> Void,
                              failCompletion failure: @escaping (Error) -> Void) {
     if backgroundContext.hasChanges{
       backgroundContext.perform {
@@ -131,13 +120,9 @@ class StorageManager{
         }
       }
     }
-  }*/
-}
-
-// MARK: protocol UserManaging
-  
-extension StorageManager: UserManaging {
-  func savePrivateContext(successCompletion success: @escaping () -> Void,
+  }
+  /*
+  private func saveAtPrivateContext(successCompletion success: @escaping () -> Void,
                           failCompletion failure: @escaping (Error) -> Void) {
     if privateManagedObjectContext.hasChanges{
       privateManagedObjectContext.perform {
@@ -151,67 +136,128 @@ extension StorageManager: UserManaging {
       }
     }
   }
+ */
+}
+
+// MARK: protocol UserManaging
   
-  func getFirstUserManagedObject() -> User? {
-    let context = privateManagedObjectContext
+extension StorageManager: UserManaging {
+  var userName: String {
+    get {
+      guard let user = fetchUserManagedObject() else{
+        return "Noname"
+      }
+      return user.name ?? "Noname"
+    }
+  }
+  
+  private func fetchUserManagedObject() -> User? {
+    let context = backgroundContext
     let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
-    let users = try? context.fetch(fetchRequest)
-    return users?.first
+    do {
+      let users = try context.fetch(fetchRequest)
+      return users.first
+    } catch {
+        fatalError("Failed to fetch Users: \(error)")
+    }
   }
   
   func updateUserProfileUI(execute: @escaping (String, String) -> Void){
-    let context = privateManagedObjectContext
+    let context = persistentContainer.viewContext
     context.perform {
       let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
       let allUsers = try? context.fetch(fetchRequest)
       if let user = allUsers?.first {
-        print(user.name as Any)
-        self.mainManagedObjectContext.perform{
-          execute(user.name ?? "nil", user.info ?? "")
-        }
+        print("\(user.name as Any) FROM updateUserProfileUI")
+        execute(user.name ?? "nil", user.info ?? "")
       } else {
         print("Error updating UserProfileUI, no users")
       }
     }
   }
   
-  func getUserManagedObject(by name: String) -> User? {
-    let context = privateManagedObjectContext
-    let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
-    fetchRequest.predicate = NSPredicate(format: "name == %@", name)
-    let users = try? context.fetch(fetchRequest)
-    return users?.first
-  }
-  
-  func createUserManagedObject(context: NSManagedObjectContext, name: String, info: String?) -> User{
-    if let user = getFirstUserManagedObject() {
-      return user
-    }
-    let user = User(context: context)
-    user.name = name
-    user.info = info
-    return user
-  }
-  
-  func editFirstUserManagedObject(name: String?, info: String?) {
-    if let user = getFirstUserManagedObject() {
+  func saveUserProfile(name: String?, info: String?, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void) {
+    if let user = fetchUserManagedObject() {
       if let userName = name { user.name = userName }
       if let userInfo = info { user.info = userInfo }
-    } else { _ = createUserManagedObject(context: privateManagedObjectContext, name: name ?? "Noname", info: info) }
+    } else {
+      let user = User(context: backgroundContext)
+      user.name = name ?? "Noname"
+      user.info = info
+    }
+    
+    saveBackgroundContext(successCompletion: success, failCompletion: failure)
+  }
+}
+
+extension StorageManager: ChannelCaching {
+  
+  func saveChannel(channelFB: ChannelFB, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void) {
+    if let channelCached = fetchChannelByIdentifier(identifier: channelFB.identifier) {
+      if channelCached.name != channelFB.name { channelCached.name = channelFB.name}
+      if channelCached.lastActivity != channelFB.lastActivity { channelCached.lastActivity = channelFB.lastActivity}
+      if channelCached.lastMessage != channelFB.lastMessage { channelCached.lastMessage = channelFB.lastMessage}
+    } else {
+      let channelNew = Channel(context: backgroundContext)
+      channelNew.identifier = channelFB.identifier
+      channelNew.name = channelFB.name
+      channelNew.lastActivity = channelFB.lastActivity
+      channelNew.lastMessage = channelFB.lastMessage
+    }
+
+    saveBackgroundContext(successCompletion: success, failCompletion: failure)
+  }
+  
+  func fetchChannelByIdentifier(identifier: String) -> Channel?{
+    let context = backgroundContext
+    let fetchRequest = NSFetchRequest<Channel>(entityName: String(describing: Channel.self))
+    fetchRequest.predicate = NSPredicate(format: "identifier == %@", identifier)
+    do {
+      let channel = try context.fetch(fetchRequest)
+      return channel.first
+    } catch {
+      fatalError("Failed to fetch Channel by id:\(identifier). Error: \(error)")
+    }
   }
 
-  func getAllUsersManagedObjects() -> [User?] {
-    let fetchRequest = NSFetchRequest<User>(entityName: String(describing: User.self))
-    do {
-      let allUsers = try privateManagedObjectContext.fetch(fetchRequest)
-      for user in allUsers {
-        print("name - \(user.name ?? "nil"); info = \(user.info ?? "nil")")
-        }
-      print(allUsers.count)
-      return allUsers
-    } catch {
-      print(error)
+}
+
+extension StorageManager {
+  
+  func saveMessage(messageFB: MessageFB, messageId: String, parentChannelIdentifier: String, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void) {
+    if let messageCached = fetchMessageByIdentifier(identifier: messageId) {
+      if messageCached.content != messageFB.content { messageCached.content = messageFB.content}
+      if messageCached.created != messageFB.created { messageCached.created = messageFB.created}
+      if messageCached.senderID != messageFB.senderID { messageCached.senderID = messageFB.senderID}
+      if messageCached.senderName != messageFB.senderName { messageCached.senderName = messageFB.senderName }
+    } else {
+      if let parentChannel = fetchChannelByIdentifier(identifier: parentChannelIdentifier){
+        let messageNew = Message(context: backgroundContext)
+        messageNew.channel = parentChannel
+        messageNew.content = messageFB.content
+        messageNew.created = messageFB.created
+        messageNew.senderID = messageFB.senderID
+        messageNew.senderName = messageFB.senderName
+        messageNew.identifier = messageId
+      } else {
+        print("ERROR fetching Channel by Identifier. New message not cached")
+        return
+      }
     }
-    return [nil]
+
+    saveBackgroundContext(successCompletion: success, failCompletion: failure)
   }
+  
+  func fetchMessageByIdentifier(identifier: String) -> Message?{
+    let context = backgroundContext
+    let fetchRequest: NSFetchRequest<Message> = Message.fetchRequest()
+    fetchRequest.predicate = NSPredicate(format: "identifier == %@", identifier)
+    do {
+      let channel = try context.fetch(fetchRequest)
+      return channel.first
+    } catch {
+      fatalError("Failed to fetch Channel by id:\(identifier). Error: \(error)")
+    }
+  }
+
 }

@@ -15,29 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        // Application moved from <NotRunning> to <Inactive>
+        
+        let mainViewController = ConversationsListViewController(nibName: "ConversationsListViewController", bundle: nil)
+        let navigationViewController = UINavigationController(rootViewController: mainViewController)
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = navigationViewController
+        window?.makeKeyAndVisible()
+        
         return true
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Application moved from <Inactive> to <Active>
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Application moved from <Active> to <Inactive>
-    }
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Application moved from <Active> to <Background>
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // "Application moved from <Background> to <Foreground>
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        // "Application moved from <Suspended> to <NotRunning>
     }
 
     // MARK: - Core Data stack

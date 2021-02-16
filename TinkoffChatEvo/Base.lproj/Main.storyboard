@@ -1,24 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ProfileViewController" customModule="TinkoffChatEvo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlaceholderUser" translatesAutoresizingMaskIntoConstraints="NO" id="LBc-jd-vpF">
+                                <rect key="frame" x="20" y="20" width="280" height="280"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="LBc-jd-vpF" secondAttribute="height" multiplier="1:1" id="Ndd-Vc-X9i"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFO-iA-yrx" userLabel="Camera Button">
+                                <rect key="frame" x="207.5" y="207.5" width="92.5" height="92.5"/>
+                                <color key="backgroundColor" red="0.2454464734" green="0.28555738930000002" blue="0.94094562530000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="QFO-iA-yrx" secondAttribute="height" multiplier="1:1" id="rts-1C-jg3"/>
+                                </constraints>
+                                <state key="normal" image="slr-Camera"/>
+                                <state key="selected" image="slr-Camera"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="addImageCameraButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CvA-3T-6Tj"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZcC-cB-If2">
+                                <rect key="frame" x="20" y="354.5" width="280" height="81.5"/>
+                                <string key="text">👨‍💻 Хочу научится прогать под iOS
+🧠 Работать с новым технологиями
+👩‍🚀 Wubba Lubba Dub Dub!</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhz-Ov-Opy">
+                                <rect key="frame" x="20" y="498" width="280" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Led-vs-ck2"/>
+                                </constraints>
+                                <state key="normal" title="Редактировать">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Максим Лебедев" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fa-v1-D3W">
+                                <rect key="frame" x="20" y="308" width="280" height="38.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qhz-Ov-Opy" secondAttribute="bottom" constant="20" id="6dg-ah-ibo"/>
+                            <constraint firstItem="QFO-iA-yrx" firstAttribute="trailing" secondItem="LBc-jd-vpF" secondAttribute="trailing" id="879-M5-38L"/>
+                            <constraint firstItem="9fa-v1-D3W" firstAttribute="leading" secondItem="LBc-jd-vpF" secondAttribute="leading" id="8aO-Yo-HLR"/>
+                            <constraint firstItem="Qhz-Ov-Opy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ATi-aC-8Jq"/>
+                            <constraint firstItem="9fa-v1-D3W" firstAttribute="top" secondItem="LBc-jd-vpF" secondAttribute="bottom" constant="8" id="Aoy-LY-4Uu"/>
+                            <constraint firstItem="ZcC-cB-If2" firstAttribute="trailing" secondItem="9fa-v1-D3W" secondAttribute="trailing" id="Ew5-KZ-WiA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Qhz-Ov-Opy" secondAttribute="trailing" constant="20" id="IXS-0p-ckq"/>
+                            <constraint firstItem="ZcC-cB-If2" firstAttribute="top" secondItem="9fa-v1-D3W" secondAttribute="bottom" constant="8" id="JhH-g5-zVg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LBc-jd-vpF" secondAttribute="trailing" constant="20" id="L6X-0d-j56"/>
+                            <constraint firstItem="9fa-v1-D3W" firstAttribute="trailing" secondItem="LBc-jd-vpF" secondAttribute="trailing" id="LJz-hg-q7n"/>
+                            <constraint firstItem="LBc-jd-vpF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="MwK-Wq-VYW"/>
+                            <constraint firstItem="QFO-iA-yrx" firstAttribute="width" secondItem="LBc-jd-vpF" secondAttribute="width" multiplier="0.33" placeholder="YES" id="P4h-uw-TQ6"/>
+                            <constraint firstItem="LBc-jd-vpF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="RpK-EU-Pid"/>
+                            <constraint firstItem="QFO-iA-yrx" firstAttribute="bottom" secondItem="LBc-jd-vpF" secondAttribute="bottom" id="SNL-vQ-2D3"/>
+                            <constraint firstItem="ZcC-cB-If2" firstAttribute="leading" secondItem="9fa-v1-D3W" secondAttribute="leading" id="YKI-sc-whh"/>
+                            <constraint firstItem="Qhz-Ov-Opy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ZcC-cB-If2" secondAttribute="bottom" constant="8" id="ys2-6r-hCa"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="avatarImageView" destination="LBc-jd-vpF" id="Mta-ph-8vc"/>
+                        <outlet property="cameraButton" destination="QFO-iA-yrx" id="J9H-ml-P7u"/>
+                        <outlet property="descriptonProfile" destination="ZcC-cB-If2" id="oS3-qp-0Qf"/>
+                        <outlet property="editButton" destination="Qhz-Ov-Opy" id="jc2-HA-a50"/>
+                        <outlet property="nameProfile" destination="9fa-v1-D3W" id="BKn-pQ-DLE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="125.625" y="114.08450704225352"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="PlaceholderUser" width="300" height="300"/>
+        <image name="slr-Camera" width="64" height="64"/>
+    </resources>
 </document>

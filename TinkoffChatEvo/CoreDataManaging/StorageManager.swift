@@ -9,26 +9,7 @@
 import Foundation
 import CoreData
 
-protocol UserManaging {
-  func updateUserProfileUI(execute: @escaping (String, String) -> Void)
-  func saveUserProfile(name: String?,
-                       info: String?,
-                       successCompletion success: @escaping () -> Void,
-                       failCompletion failure: @escaping (Error) -> Void)
-  var userName: String { get }
-}
-
-protocol ChannelCaching {
-  func saveChannel(channelFB: ChannelFB, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void)
-  func fetchChannelByIdentifier(identifier: String) -> Channel?
-}
-
-protocol MessageCaching {
-  func saveMessage(channelFB: MessageFB, documentId: String, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void)
-  func fetchMessageByIdentifier(identifier: String) -> Message?
-}
-
-class StorageManager{
+class StorageManager {
   // MARK: - Core Data stack
   /*
   lazy var appDocumentsDirectory: URL = {
@@ -222,7 +203,7 @@ extension StorageManager: ChannelCaching {
 
 }
 
-extension StorageManager {
+extension StorageManager: MessageCaching {
   
   func saveMessage(messageFB: MessageFB, messageId: String, parentChannelIdentifier: String, successCompletion success: @escaping () -> Void, failCompletion failure: @escaping (Error) -> Void) {
     if let messageCached = fetchMessageByIdentifier(identifier: messageId) {

@@ -55,7 +55,7 @@ class FirebaseManager {
         print("Error fetching snapshot results: \(error!)")
         return
       }
-      
+
       print(snapshot.documents)
       /*let models = snapshot.documents.map { (document) -> MessageFB in
         if let model = MessageFB(dictionary: document.data()) {

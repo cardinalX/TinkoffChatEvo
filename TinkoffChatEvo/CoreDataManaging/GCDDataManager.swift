@@ -26,7 +26,7 @@ class GCDDataManager {
                           failWriteCompletion failure: @escaping (Error) -> Void,
                           updateUICompletion: @escaping ([String],[String]) -> Void) {
     for (index, data) in data.enumerated(){
-      addWriterTask(from: data, fileName: fileNames[index], success: success, failure: failure)
+      addWriterTask(from: data, to: fileNames[index])
     }
     writersGroup.notify(queue: DispatchQueue.main){
       if (self.errors.isEmpty) {
@@ -44,20 +44,41 @@ class GCDDataManager {
   }
   
   ///Для одиночных добавления задач записи и чтения
-  func saveAndLoadData(from data: String,
-                       fileName: String,
-                       completion: @escaping (String) -> Void) {
-    addWriterTask(from: data, fileName: fileName, success: {}, failure: {_ in })
+  func addDataToSaveAndLoad(from data: String,
+                     fileName: String,
+                     completion: @escaping (String) -> Void) {
+    addWriterTask(from: data, to: fileName)
     addReaderTask(fileName: fileName, execute: completion)
   }
   
   ///Синхронизирует процессы записи и по завершении выполняет соотвествующий успеху или неудачи closure
-  func writersGroupCompletion(successWriteCompletion success: @escaping () -> Void,
-                       failWriteCompletion failure: @escaping (Error) -> Void) {
+  func saveDataSyncronize(successWriteCompletion success: @escaping () -> Void,
+                          failWriteCompletion failure: @escaping (Error) -> Void) {
     writersGroup.notify(queue: DispatchQueue.main){
       if self.errors.isEmpty {
         success()
       } else { failure(self.errors[0]) }
+    }
+  }
+  
+  /*///Для завершения загрузки массива данных из файла и обновления UI
+  func loadDataSyncronize(updateUICompletion: @escaping ([String],[String]) -> Void) {
+    readersGroup.notify(queue: DispatchQueue.main){
+      if (self.errors.isEmpty) { data
+          updateUICompletion(data, fileNames)
+      }
+    }
+  }*/
+  
+  ///Для загрузки массива данных из файла и обновления UI
+  func loadDataArr(from data: [String], fileNames: [String], updateUICompletion: @escaping ([String],[String]) -> Void) {
+    for fileName in fileNames{
+      addReaderTask(fileName: fileName, execute: {_ in})
+    }
+    readersGroup.notify(queue: DispatchQueue.main){
+      if (self.errors.isEmpty) {
+          updateUICompletion(data, fileNames)
+      }
     }
   }
   
@@ -72,9 +93,9 @@ class GCDDataManager {
   }
   
   func addWriterTask(from data: String,
-                     fileName: String,
-                     success: @escaping () -> Void,
-                     failure: @escaping (Error) -> Void) {
+                     to fileName: String){
+                     //success: @escaping () -> Void,
+                     //failure: @escaping (Error) -> Void) {
     queue.async(group: writersGroup, flags: [.barrier, .enforceQoS]) {
       if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
         let fileURL = directory.appendingPathComponent(fileName)
@@ -89,7 +110,6 @@ class GCDDataManager {
         }
       }
     }
-    
   }
   
   // MARK: FileManagement

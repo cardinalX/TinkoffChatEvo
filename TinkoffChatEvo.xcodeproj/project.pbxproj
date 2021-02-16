@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5005653F23F722F20090B1E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005653E23F722F20090B1E8 /* AppDelegate.swift */; };
 		5005654323F722F20090B1E8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005654223F722F20090B1E8 /* ProfileViewController.swift */; };
 		5005654923F722F20090B1E8 /* TinkoffChatEvo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5005654723F722F20090B1E8 /* TinkoffChatEvo.xcdatamodeld */; };
 		5005654B23F722F40090B1E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5005654A23F722F40090B1E8 /* Assets.xcassets */; };
@@ -23,6 +22,10 @@
 		8962F00424098D91008A4879 /* ConversationsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8962F00224098D91008A4879 /* ConversationsListViewController.xib */; };
 		896B13CC241D61C200C4D88C /* GCDDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896B13CB241D61C200C4D88C /* GCDDataManager.swift */; };
 		89AF7616240EB19500DF7FE8 /* ProfileViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89AF7614240EB19400DF7FE8 /* ProfileViewController.storyboard */; };
+		89F1BDB624310EF600D4D430 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1BDB524310EF600D4D430 /* AppDelegate.swift */; };
+		89F1BDB824310FB200D4D430 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1BDB724310FB200D4D430 /* StorageManager.swift */; };
+		89F1BDBC2431104D00D4D430 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1BDBA2431104D00D4D430 /* User+CoreDataClass.swift */; };
+		89F1BDBD2431104D00D4D430 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1BDBB2431104D00D4D430 /* User+CoreDataProperties.swift */; };
 		F0386E252403163F00F8814C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0386E232403163F00F8814C /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +41,6 @@
 
 /* Begin PBXFileReference section */
 		5005653B23F722F20090B1E8 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5005653E23F722F20090B1E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5005654223F722F20090B1E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5005654823F722F20090B1E8 /* TinkoffChatEvo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TinkoffChatEvo.xcdatamodel; sourceTree = "<group>"; };
 		5005654A23F722F40090B1E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,7 +59,10 @@
 		8962F00224098D91008A4879 /* ConversationsListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsListViewController.xib; sourceTree = "<group>"; };
 		896B13CB241D61C200C4D88C /* GCDDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDDataManager.swift; sourceTree = "<group>"; };
 		89AF7615240EB19400DF7FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProfileViewController.storyboard; sourceTree = "<group>"; };
-		89C69C3E241524FE009439D2 /* hw4_Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = hw4_Playground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		89F1BDB524310EF600D4D430 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		89F1BDB724310FB200D4D430 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		89F1BDBA2431104D00D4D430 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		89F1BDBB2431104D00D4D430 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F0386E232403163F00F8814C /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,7 +87,6 @@
 		5005653223F722F20090B1E8 = {
 			isa = PBXGroup;
 			children = (
-				89C69C3E241524FE009439D2 /* hw4_Playground.playground */,
 				5005653D23F722F20090B1E8 /* TinkoffChatEvo */,
 				5005655723F722F50090B1E8 /* TinkoffChatEvoTests */,
 				5005653C23F722F20090B1E8 /* Products */,
@@ -101,17 +105,12 @@
 		5005653D23F722F20090B1E8 /* TinkoffChatEvo */ = {
 			isa = PBXGroup;
 			children = (
+				89F1BDB424310ECF00D4D430 /* Startup */,
 				89613069240BF46F00FF25B7 /* Views */,
-				896B13C8241D5FAF00C4D88C /* DataManagers */,
-				5005654223F722F20090B1E8 /* ProfileViewController.swift */,
-				5005653E23F722F20090B1E8 /* AppDelegate.swift */,
-				F0386E232403163F00F8814C /* CameraViewController.swift */,
-				8961306E240C0C3100FF25B7 /* ListConversation */,
-				8961306F240C0C4900FF25B7 /* Conversation */,
-				5005654A23F722F40090B1E8 /* Assets.xcassets */,
-				5005654C23F722F40090B1E8 /* LaunchScreen.storyboard */,
+				89F1BDB924310FE900D4D430 /* Controllers */,
+				896B13C8241D5FAF00C4D88C /* CoreDataManaging */,
+				89F1BDBE2431129900D4D430 /* SupportFiles */,
 				5005654F23F722F40090B1E8 /* Info.plist */,
-				5005654723F722F20090B1E8 /* TinkoffChatEvo.xcdatamodeld */,
 			);
 			path = TinkoffChatEvo;
 			sourceTree = "<group>";
@@ -155,12 +154,44 @@
 			path = Conversation;
 			sourceTree = "<group>";
 		};
-		896B13C8241D5FAF00C4D88C /* DataManagers */ = {
+		896B13C8241D5FAF00C4D88C /* CoreDataManaging */ = {
 			isa = PBXGroup;
 			children = (
+				89F1BDBA2431104D00D4D430 /* User+CoreDataClass.swift */,
+				89F1BDBB2431104D00D4D430 /* User+CoreDataProperties.swift */,
+				89F1BDB724310FB200D4D430 /* StorageManager.swift */,
 				896B13CB241D61C200C4D88C /* GCDDataManager.swift */,
 			);
-			path = DataManagers;
+			path = CoreDataManaging;
+			sourceTree = "<group>";
+		};
+		89F1BDB424310ECF00D4D430 /* Startup */ = {
+			isa = PBXGroup;
+			children = (
+				89F1BDB524310EF600D4D430 /* AppDelegate.swift */,
+			);
+			path = Startup;
+			sourceTree = "<group>";
+		};
+		89F1BDB924310FE900D4D430 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8961306E240C0C3100FF25B7 /* ListConversation */,
+				8961306F240C0C4900FF25B7 /* Conversation */,
+				5005654223F722F20090B1E8 /* ProfileViewController.swift */,
+				F0386E232403163F00F8814C /* CameraViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		89F1BDBE2431129900D4D430 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				5005654723F722F20090B1E8 /* TinkoffChatEvo.xcdatamodeld */,
+				5005654C23F722F40090B1E8 /* LaunchScreen.storyboard */,
+				5005654A23F722F40090B1E8 /* Assets.xcassets */,
+			);
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,14 +299,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89F1BDB624310EF600D4D430 /* AppDelegate.swift in Sources */,
 				89613072240C0E7B00FF25B7 /* MessageViewCell.swift in Sources */,
+				89F1BDBD2431104D00D4D430 /* User+CoreDataProperties.swift in Sources */,
 				8961306C240BFCE300FF25B7 /* ConversationViewController.swift in Sources */,
 				5005654323F722F20090B1E8 /* ProfileViewController.swift in Sources */,
 				8962F00324098D91008A4879 /* ConversationsListViewController.swift in Sources */,
 				89626F1F2409BD6F00CEFF9F /* ConversationCell.swift in Sources */,
 				F0386E252403163F00F8814C /* CameraViewController.swift in Sources */,
+				89F1BDB824310FB200D4D430 /* StorageManager.swift in Sources */,
+				89F1BDBC2431104D00D4D430 /* User+CoreDataClass.swift in Sources */,
 				896B13CC241D61C200C4D88C /* GCDDataManager.swift in Sources */,
-				5005653F23F722F20090B1E8 /* AppDelegate.swift in Sources */,
 				5005654923F722F20090B1E8 /* TinkoffChatEvo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

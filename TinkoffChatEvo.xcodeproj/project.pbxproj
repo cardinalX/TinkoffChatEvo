@@ -55,6 +55,7 @@
 		8962F00124098D91008A4879 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
 		8962F00224098D91008A4879 /* ConversationsListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationsListViewController.xib; sourceTree = "<group>"; };
 		89AF7615240EB19400DF7FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ProfileViewController.storyboard; sourceTree = "<group>"; };
+		89C69C3E241524FE009439D2 /* hw4_Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = hw4_Playground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F0386E232403163F00F8814C /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +80,7 @@
 		5005653223F722F20090B1E8 = {
 			isa = PBXGroup;
 			children = (
+				89C69C3E241524FE009439D2 /* hw4_Playground.playground */,
 				5005653D23F722F20090B1E8 /* TinkoffChatEvo */,
 				5005655723F722F50090B1E8 /* TinkoffChatEvoTests */,
 				5005653C23F722F20090B1E8 /* Products */,
